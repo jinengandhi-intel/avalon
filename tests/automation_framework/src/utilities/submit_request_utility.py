@@ -164,9 +164,13 @@ def submit_register_sdk(dummy, input_json):
     return worker_register_result
 
 
-def submit_setstatus_sdk(dummy, input_json):
+def submit_setstatus_sdk(set_status_params, input_json):
     logger.info("SDK code path\n")
-    jrpc_req_id = input_json["id"]
+    logger.info("Worker status params %s \n", set_status_params)
+    if input_json is None:
+        jrpc_req_id = 3
+    else:
+        jrpc_req_id = input_json["id"]
     status_dict = {1: WorkerStatus.ACTIVE, 2: WorkerStatus.OFF_LINE,
                    3: WorkerStatus.DECOMMISSIONED,
                    4: WorkerStatus.COMPROMISED}
@@ -175,8 +179,8 @@ def submit_setstatus_sdk(dummy, input_json):
     logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
     worker_setstatus_result = worker_registry.worker_set_status(
-        input_json["params"]["workerId"],
-        status_dict[input_json["params"]["status"]])
+        eval(str(set_status_params))["worker_id"],
+        status_dict[eval(str(set_status_params))["status"]])
     logger.info("\n Worker setstatus response: {}\n".format(
         json.dumps(worker_setstatus_result, indent=4)))
     return worker_setstatus_result
@@ -213,7 +217,7 @@ def submit_retrieve_sdk(worker_id, input_json=None):
 
         if "error" in worker_retrieve_result:
             logger.error("Unable to retrieve worker details\n")
-            sys.exit(1)
+            return worker_retrieve_result
     if constants.proxy_mode and globals.blockchain_type == 'fabric':
         worker_obj.load_worker(json.loads(worker_retrieve_result[4]))
     else:

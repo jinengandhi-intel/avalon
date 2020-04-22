@@ -596,15 +596,29 @@ class WorkOrderSubmit():
             self, input_json, worker_obj, pre_test_response):
 
         logger.info("JSON object %s \n", input_json)
-        logger.info(" pre_test_response %s \n", pre_test_response)
-        self.set_worker_id(worker_obj.worker_id)
         self.set_workload_id(input_json["params"]["workloadId"])
+        if "workOrderId" in input_json["params"].keys():
+            if input_json["params"]["workOrderId"] == "":
+                work_order_id = secrets.token_hex(32)
+            else:
+                work_order_id = input_json["params"]["workOrderId"]
+        if "workerId" in input_json["params"].keys():
+            if input_json["params"]["workerId"] == "":
+                self.set_worker_id(worker_obj.worker_id)
+            else:
+                self.set_worker_id(input_json["params"]["workerId"])
+        if "dataEncryptionAlgorithm" in input_json["params"].keys():
+            if input_json["params"]["dataEncryptionAlgorithm"] == "":
+                data_encryption_algo = "AES-GCM-256"
+            else:
+                data_encryption_algo = \
+                    input_json["params"]["dataEncryptionAlgorithm"]
         in_data = input_json["params"]["inData"]
         worker_encrypt_key = worker_obj.encryption_key
         logger.info("workload_id %s \n", self.get_workload_id())
         # Convert workloadId to hex
         workload_id = self.get_workload_id().encode("UTF-8").hex()
-        work_order_id = secrets.token_hex(32)
+        # work_order_id = secrets.token_hex(32)
         requester_id = secrets.token_hex(32)
         requester_nonce = secrets.token_hex(16)
         # Create work order params
@@ -613,7 +627,7 @@ class WorkOrderSubmit():
             self.session_key, self.session_iv, requester_nonce,
             result_uri=" ", notify_uri=" ",
             worker_encryption_key=worker_encrypt_key,
-            data_encryption_algorithm="AES-GCM-256"
+            data_encryption_algorithm=data_encryption_algo
         )
         # logger.info("In data %s \n", in_data)
         # Add worker input data

@@ -14,6 +14,9 @@
 
 import json
 import logging
+import avalon_crypto_utils.crypto_utility as crypto_utils
+from src.libs import constants
+import globals
 
 logger = logging.getLogger(__name__)
 
@@ -26,14 +29,15 @@ class WorkerSetStatus():
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_set_status"
 
-    def add_json_values(self, input_json_temp, worker_obj, tamper):
+    def add_json_values(self, input_json_temp, pre_test_response, tamper):
 
         if "workerId" in input_json_temp["params"].keys():
             if input_json_temp["params"]["workerId"] != "":
                 self.set_worker_id(input_json_temp["params"]["workerId"])
             else:
-                worker_id = worker_obj.worker_id
-                self.set_worker_id(worker_id)
+                self.set_worker_id(
+                    crypto_utils.strip_begin_end_public_key
+                    (pre_test_response["result"]["ids"][0]))
 
         if "id" in input_json_temp.keys():
             self.set_request_id(input_json_temp["id"])
@@ -73,7 +77,7 @@ class WorkerSetStatus():
     def configure_data(
             self, input_json, worker_obj, lookup_response):
         logger.info(" Request json %s \n", input_json)
-        self.add_json_values(input_json, worker_obj, self.tamper)
+        self.add_json_values(input_json, lookup_response, self.tamper)
         final_json = json.loads(self.to_string())
         logger.info(" Final json %s \n", final_json)
         return final_json
@@ -81,4 +85,33 @@ class WorkerSetStatus():
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
         logger.info(" Request json %s \n", input_json)
-        return input_json
+        if constants.proxy_mode and \
+            globals.blockchain_type == "ethereum":
+            if "result" in pre_test_response and \
+                "ids" in pre_test_response["result"].keys():
+                if pre_test_response["result"]["totalCount"] != 0:
+                    worker_id = pre_test_response["result"]["ids"]
+                    # Filter workers by status(active) field
+                    # Return first worker whose status is active
+                else:
+                    logger.error("No workers found")
+            else:
+                logger.error("Failed to lookup worker")
+        elif constants.proxy_mode and \
+            globals.blockchain_type == "fabric":
+            worker_id = pre_test_response[2][0]
+        else:
+            if "result" in pre_test_response and \
+                "ids" in pre_test_response["result"].keys():
+                if pre_test_response["result"]["totalCount"] != 0:
+                    worker_id = pre_test_response["result"]["ids"][0]
+                else:
+                    logger.error("ERROR: No workers found")
+                    worker_id = None
+            else:
+                logger.error("ERROR: Failed to lookup worker")
+                worker_id = None
+        if "status" in input_json["params"].keys():
+            status = input_json["params"]["status"]
+        set_status_params = {"worker_id": worker_id, "status": status}
+        return set_status_params

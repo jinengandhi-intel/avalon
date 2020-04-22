@@ -16,9 +16,7 @@ import json
 import logging
 from src.libs import constants
 import globals
-import avalon_sdk.worker.worker_details as worker
 import avalon_crypto_utils.crypto_utility as crypto_utils
-from avalon_sdk.worker.worker_details import WorkerType, WorkerStatus
 logger = logging.getLogger(__name__)
 
 
@@ -30,14 +28,15 @@ class WorkerRetrieve():
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_retrieve"
 
-    def add_json_values(self, input_json_temp, worker_obj, tamper):
+    def add_json_values(self, input_json_temp, pre_test_response, tamper):
 
         if "workerId" in input_json_temp["params"].keys():
             if input_json_temp["params"]["workerId"] != "":
                 self.set_worker_id(input_json_temp["params"]["workerId"])
             else:
-                worker_id = worker_obj.worker_id
-                self.set_worker_id(worker_id)
+                self.set_worker_id(
+                    crypto_utils.strip_begin_end_public_key
+                    (pre_test_response["result"]["ids"][0]))
 
         if "id" in input_json_temp.keys():
             self.set_request_id(input_json_temp["id"])
@@ -67,13 +66,14 @@ class WorkerRetrieve():
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
-        worker_obj = worker.SGXWorkerDetails()
+        # worker_obj = worker.SGXWorkerDetails()
         if input_json is not None:
             self.add_json_values(
-                input_json, worker_obj, self.tamper)
-        self.set_worker_id(
-            crypto_utils.strip_begin_end_public_key
-            (pre_test_response["result"]["ids"][0]))
+                input_json, pre_test_response, self.tamper)
+        else:
+            self.set_worker_id(
+                crypto_utils.strip_begin_end_public_key
+                (pre_test_response["result"]["ids"][0]))
 
         input_worker_retrieve = json.loads(self.to_string())
         logger.info('*****Worker details Updated with Worker ID***** \
@@ -82,6 +82,14 @@ class WorkerRetrieve():
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
+        if input_json is not None:
+            if "workerId" not in input_json["params"].keys():
+                worker_id = None
+            else:
+                if input_json["params"]["workerId"] != "":
+                    worker_id = input_json["params"]["workerId"]
+            return worker_id
+
         if constants.proxy_mode and \
             globals.blockchain_type == "ethereum":
             if "result" in pre_test_response and \

@@ -148,8 +148,8 @@ def pre_test_env(input_file):
     impl_type = impl_instance()
 
     if request_method == "WorkerRetrieve" or \
-            request_method == "WorkerUpdate":
-
+            request_method == "WorkerUpdate" or \
+            request_method == "WorkerSetStatus":
         lookup_response = impl_type.worker_lookup()
         logger.info("******Received Response******\n%s\n", lookup_response)
         return lookup_response
@@ -165,14 +165,13 @@ def pre_test_env(input_file):
         wo_submit = impl_type.work_order_submit(worker_obj)
         return worker_obj, wo_submit
 
-    if  request_method == "WorkOrderReceiptRetrieve":
+    if request_method == "WorkOrderReceiptRetrieve":
         lookup_response = impl_type.worker_lookup()
         worker_obj = impl_type.worker_retrieve(lookup_response)
         wo_submit = impl_type.work_order_submit(worker_obj)
         wo_create_receipt = impl_type.work_order_create_receipt(wo_submit)
         return worker_obj, wo_submit
 
-    if request_method == "WorkerSetStatus" or \
-            request_method == "WorkerRegister":
+    if request_method == "WorkerRegister":
         logger.info("No setup required for \n%s\n", request_method)
         return 0

@@ -1120,3 +1120,337 @@ class TestClass():
                     "Invalid data format for responseTimeoutMSecs")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_dataEncryptionAlgorithm_list
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_dataEncryptionAlgorithm_list(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_multiple_dataEncryptionAlgorithm.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.FAILURE.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_two_workload_in_workloadId
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_two_workload_in_workloadId(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_two_workloadid.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_WorkOrderId_null
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.p1
+    @pytest.mark.set1
+    def test_work_order_submit_WorkOrderId_null(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_submit_WorkOrderId_null.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                check_negative_test_responses(
+                    result_response,
+                    "Invalid work order Id")
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_workerId_null_randomString
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_workerId_null_randomString (self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "workorder_workerId_null_number_randomString.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                check_negative_test_responses(
+                    result_response,
+                    "Work order Id not found in the database. Hence invalid parameter")
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_workloadId_specialcharacters
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_workloadId_specialcharacters(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_workloadId_specialcharacters.json")
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                check_negative_test_responses(
+                    result_response,
+                    "Invalid workload id")
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_specialcharacter_data_echoClient
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_specialcharacter_data_echoClient(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_submit_specialcharacter_data_echoClient.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_inData_outData_encryptedDataEncryptionKey_null_echoClient
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_inData_outData_encryptedDataEncryptionKey_null_echoClient(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_both_in_out_Data_EncryptionKey_null_echo.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_dataEncryptionAlgorithm_list_same_algo_twice
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_dataEncryptionAlgorithm_list_same_algo_twice(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_submit_dataEncryptionAlgorithm_list_same_algo_twice.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.FAILURE.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_inData_outData_encryptedDataEncryptionKey_hyphen_echoClient
+    @pytest.mark.listener
+    @pytest.mark.set1
+    def test_work_order_submit_inData_outData_encryptedDataEncryptionKey_hyphen_echoClient(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_submit_inData_outData_encryptedDataEncryptionKey_hyphen_echoClient.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+        assert (
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_encryptedDataEncryptionKey_not_set_echoClient
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_encryptedDataEncryptionKey_not_set_echoClient(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_submit_encryptedDataEncryptionKey_not_set_echoClient.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                check_negative_test_responses(
+                    result_response,
+                    "Work order Id not found in the database. Hence invalid parameter")
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_submit
+    @pytest.mark.test_work_order_submit_encryptedDataEncryptionKey_empty_echoClient
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    @pytest.mark.set1
+    def test_work_order_submit_encryptedDataEncryptionKey_empty_echoClient(self):
+        request_file = os.path.join(
+            constants.work_order_input_file,
+            "work_order_submit_encryptedDataEncryptionKey_empty_echoClient.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            constants.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+        assert (
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')

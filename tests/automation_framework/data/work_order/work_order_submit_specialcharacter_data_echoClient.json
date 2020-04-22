@@ -1,16 +1,15 @@
 {
     "jsonrpc": "2.0",
     "method": "WorkOrderSubmit",
-    "id": 11,
+    "id": 91,
     "params": {
         "responseTimeoutMSecs": 6000,
-        "payloadFormat": "JSON-RPC",
+        "payloadFormat": "json-rpc",
         "resultUri": "resulturi",
         "notifyUri": "notifyuri",
         "workOrderId": "",
-        "workerId": "",
-        "workloadId": "heart-disease-eval",
-	"workloadId": "echo-result",
+        "workerId":"",
+        "workloadId": "echo-result",
         "requesterId": "0x3456",
         "workerEncryptionKey": "",
         "dataEncryptionAlgorithm": "AES-GCM-256",
@@ -20,15 +19,9 @@
         "encryptedRequestHash": "",
         "requesterSignature": "",
         "inData": [
-		   {"index": 2,
-	            "dataHash": "",
-                    "data": "Hello World",
-                    "encryptedDataEncryptionKey": "",
-                    "iv": ""
-                   },
                    {"index": 1,
-		    "dataHash": "",
-                    "data": "Hello Again",
+                    "dataHash": "",
+                    "data": "@#$&!!",
                     "encryptedDataEncryptionKey": "",
                     "iv": ""
                    }

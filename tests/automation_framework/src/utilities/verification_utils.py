@@ -249,4 +249,14 @@ def check_negative_test_responses(response, expected_res):
         if response["error"]["message"] == "Invalid workload id":
             return TestStep.SUCCESS.value
 
+    if expected_res == "Invalid work order Id":
+        if response["error"]["message"] == "Invalid work order Id":
+            return TestStep.SUCCESS.value
 
+    if expected_res == "Work order Id not found in the database. Hence invalid parameter":
+        if response["error"]["message"] == "Work order Id not found in the database. Hence invalid parameter":
+            return TestStep.SUCCESS.value
+
+    if expected_res == "Worker Id not found in the database. Hence invalid parameter":
+        if response["error"]["message"] == "Worker Id not found in the database. Hence invalid parameter":
+            return TestStep.SUCCESS.value
