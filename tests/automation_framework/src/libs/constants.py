@@ -47,7 +47,7 @@ wo_result_output_json_file_name = "worker_get_result"
 # Direct test mode = listener or client_sdk
 direct_test_mode = "sdk"
 
-proxy_mode = True
+proxy_mode = False
 
 # Config file path
 conffiles = [TCFHOME + "/sdk/avalon_sdk/tcf_connector.toml"]
