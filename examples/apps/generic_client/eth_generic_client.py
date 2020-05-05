@@ -506,6 +506,10 @@ def Main(args=None):
                 wo_params.to_jrpc_string(jrpc_req_id))
     work_order = _create_work_order_instance(blockchain, config)
     jrpc_req_id += 1
+    logger.info(" work order id %s \n", wo_params.get_work_order_id())
+    logger.info(" worker id %s \n", wo_params.get_worker_id())
+    logger.info(" Requester ID %s \n", wo_params.get_requester_id())
+    logger.info(" To string %s \n", wo_params.to_string())
     wo_id = wo_params.get_worker_id()
     response = work_order.work_order_submit(
         wo_params.get_work_order_id(),

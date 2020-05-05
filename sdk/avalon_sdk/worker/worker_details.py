@@ -235,5 +235,6 @@ class SGXWorkerDetails(WorkerDetails):
                         from worker's verification key and converted to hex '''
         logger.info("Hashing Algorithm : %s", self.hashing_algorithm)
         logger.info("Signing Algorithm : %s", self.signing_algorithm)
+        logger.info("Worker ID : %s", self.worker_id)
 
 # -----------------------------------------------------------------------------

@@ -113,6 +113,7 @@ class EthereumWorkOrderProxyImpl(WorkOrderProxy):
         Returns:
         0 on success and non-zero on error.
         """
+        logging.info("Inside Ethereum work order submit\n")
         if (self.__contract_instance is not None):
 
             if not _is_valid_work_order_json(work_order_id, worker_id,

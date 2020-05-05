@@ -87,6 +87,7 @@ The steps below will set up a Python virtual environment to run Avalon.
    [PREREQUISITES document](PREREQUISITES.md)
 
 2. Change to your Avalon source repository cloned above:
+
    ```bash
    cd avalon
    ```
