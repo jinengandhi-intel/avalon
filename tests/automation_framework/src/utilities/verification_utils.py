@@ -209,6 +209,10 @@ def check_worker_retrieve_receipt_response(response):
 
 def check_negative_test_responses(response, expected_res):
 
+    if expected_res == "Invalid data format for session key iv":
+        if response["error"]["message"] == "Invalid data format for session key iv":
+            return TestStep.SUCCESS.value
+
     if expected_res == "CreateWorkloadProcessor function returned null":
         if response["error"]["message"] == "CreateWorkloadProcessor function returned null":
             return TestStep.SUCCESS.value
@@ -273,7 +277,20 @@ def check_negative_test_responses(response, expected_res):
         if response["error"]["message"] == "Missing in data parameter data":
             return TestStep.SUCCESS.value
 
-    if expected_res == "Invalid params":
-        if response["error"]["message"] == "Invalid params":
+    if expected_res == "Invalid data format for work order id":
+        if response["error"]["message"] == "Invalid data format for work order id" or\
+            ( response["error"]["message"] == "Server error" and
+              response["error"]["data"]["message"] == "'workOrderId'"):
             return TestStep.SUCCESS.value
 
+    if expected_res == "Missing parameter encryptedRequestHash":
+        if response["error"]["message"] == "Missing parameter encryptedRequestHash":
+            return TestStep.SUCCESS.value
+
+    if expected_res == "Invalid data format for requesterSignature":
+        if response["error"]["message"] == "Invalid data format for requesterSignature":
+            return TestStep.SUCCESS.value
+
+    if expected_res == "Crypto Error (deserializeECDSAPublicKey): Could not deserialize public ECDSA key":
+        if response["error"]["message"] == "Crypto Error (deserializeECDSAPublicKey): Could not deserialize public ECDSA key":
+            return TestStep.SUCCESS.value        

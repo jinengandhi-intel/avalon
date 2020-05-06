@@ -38,6 +38,7 @@ class WorkOrderSubmit():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_submit"
+        self.final_hash = ""
 
     def add_json_values(self, input_json_temp, worker_obj,
                         private_key, tamper):
@@ -266,12 +267,14 @@ class WorkOrderSubmit():
         return final_hash_str
 
     def _compute_requester_signature(self):
-        self.public_key = self.private_key.GetPublicKey().Serialize()
-        signature_result = self.private_key.SignMessage(self.final_hash)
-        self.requester_signature = crypto.byte_array_to_base64(
-            signature_result)
-        self.params_obj["requesterSignature"] = self.requester_signature
-        self.params_obj["verifyingKey"] = self.public_key
+        if self.get_requester_signature() is not None:
+            self.public_key = self.private_key.GetPublicKey().Serialize()
+            signature_result = self.private_key.SignMessage(self.final_hash)
+            self.requester_signature = crypto.byte_array_to_base64(
+                signature_result)
+            if self.params_obj["requesterSignature"] == "":
+                self.params_obj["requesterSignature"] = self.requester_signature
+            self.params_obj["verifyingKey"] = self.public_key
 
     def byte_array_to_hex_str(self, in_byte_array):
         '''
@@ -597,6 +600,7 @@ class WorkOrderSubmit():
 
         logger.info("JSON object %s \n", input_json)
         self.set_workload_id(input_json["params"]["workloadId"])
+        work_order_id = ""
         if "workOrderId" in input_json["params"].keys():
             if input_json["params"]["workOrderId"] == "":
                 work_order_id = secrets.token_hex(32)
@@ -614,7 +618,11 @@ class WorkOrderSubmit():
                 data_encryption_algo = \
                     input_json["params"]["dataEncryptionAlgorithm"]
         in_data = input_json["params"]["inData"]
-        worker_encrypt_key = worker_obj.encryption_key
+        if "workerEncryptionKey" in input_json["params"].keys():
+            if input_json["params"]["workerEncryptionKey"] == "":
+                worker_encrypt_key = worker_obj.encryption_key
+            else:
+                worker_encrypt_key = input_json["params"]["workerEncryptionKey"]
         logger.info("workload_id %s \n", self.get_workload_id())
         # Convert workloadId to hex
         workload_id = self.get_workload_id().encode("UTF-8").hex()
