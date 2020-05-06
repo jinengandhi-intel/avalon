@@ -278,11 +278,9 @@ def check_negative_test_responses(response, expected_res):
             return TestStep.SUCCESS.value
 
     if expected_res == "Invalid data format for work order id":
-        if response["error"]["message"] == "Invalid data format for work order id":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid params":
-        if response["error"]["message"] == "Invalid params":
+        if response["error"]["message"] == "Invalid data format for work order id" or\
+            ( response["error"]["message"] == "Server error" and
+              response["error"]["data"]["message"] == "'workOrderId'"):
             return TestStep.SUCCESS.value
 
     if expected_res == "Missing parameter encryptedRequestHash":

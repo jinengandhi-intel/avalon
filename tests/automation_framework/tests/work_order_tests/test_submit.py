@@ -1870,6 +1870,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.test_workordersubmit_workorderId_remove
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_workordersubmit_workorderId_remove(self):
         request_file = os.path.join(
             constants.work_order_input_file,
@@ -2053,7 +2054,6 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.test_workordersubmit_mandatoryfields_remove
-    @pytest.mark.sdk
     def test_workordersubmit_mandatoryfields_remove(self):
         request_file = os.path.join(
             constants.work_order_input_file,

@@ -598,22 +598,6 @@ class WorkOrderSubmit():
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
 
-        if "workloadId" not in input_json["params"].keys():
-            work_order_id = ""
-            workload_id = ""
-            requester_id = secrets.token_hex(32)
-            requester_nonce = secrets.token_hex(16)
-            worker_encrypt_key = worker_obj.encryption_key
-            data_encryption_algo = "AES-GCM-256"
-            wo_params = WorkOrderParams(
-                work_order_id, self.get_worker_id(), workload_id, requester_id,
-                self.session_key, self.session_iv, requester_nonce,
-                result_uri=" ", notify_uri=" ",
-                worker_encryption_key=worker_encrypt_key,
-                data_encryption_algorithm=data_encryption_algo
-        )
-            return wo_params
-
         logger.info("JSON object %s \n", input_json)
         self.set_workload_id(input_json["params"]["workloadId"])
         work_order_id = ""
