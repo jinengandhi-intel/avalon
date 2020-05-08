@@ -226,14 +226,10 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
-                verify_test(
-                    result_response, 0,
-                    self.test_obj.build_request_output['pre_test_output'],
-                    self.test_obj.build_request_output['action_obj'])
+                check_negative_test_responses(
+                    submit_response,
+                    "Invalid data format for requesterNonce")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -376,12 +372,9 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
+                    submit_response,
                     "Invalid workload id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -462,13 +455,10 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
                     submit_response,
-                    "Invalid Request")
+                    "Invalid data format for worker encryption key")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -731,25 +721,16 @@ class TestClass():
             self.test_obj.setup_and_build_request_wo_submit(
                 read_json(request_file))
 
-        # submit_response = submit_request(
-        #     self.test_obj.uri_client,
-        #     read_json(request_file),
-        #     constants.wo_submit_output_json_file_name,
-        #     read_json(request_file))
-
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        # result_response = self.test_obj.getresult(
-        #     self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
                     submit_response,
-                    "Server error")
+                    "Invalid data format for in/out data")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1135,13 +1116,10 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
-                    "Invalid work order Id")
+                    submit_response,
+                    "Invalid data format for work order id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1165,13 +1143,10 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
-                    "Work order Id not found in the database. Hence invalid parameter")
+                    submit_response,
+                    "Invalid data format for Worker id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1194,12 +1169,9 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
+                    submit_response,
                     "Invalid workload id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1346,13 +1318,10 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
-                    "Work order Id not found in the database. Hence invalid parameter")
+                    submit_response,
+                    "Invalid data format for data hash of in data")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1434,8 +1403,6 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
         assert (
                 check_negative_test_responses(
                     submit_response,
@@ -1462,8 +1429,6 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
         assert (
                 check_negative_test_responses(
                     submit_response,
@@ -1490,8 +1455,6 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
         assert (
                 check_negative_test_responses(
                     submit_response,
@@ -1575,13 +1538,10 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
-                    "Invalid workload id")
+                    submit_response,
+                    "Invalid data format for work load id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1603,12 +1563,9 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
+                    submit_response,
                     "Invalid workload id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1630,12 +1587,9 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
+                    submit_response,
                     "Invalid workload id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1659,13 +1613,10 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
-                    "Invalid work order Id")
+                    submit_response,
+                    "Invalid data format for work order id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1690,13 +1641,10 @@ class TestClass():
             constants.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
                 check_negative_test_responses(
-                    result_response,
-                    "Invalid work order Id")
+                    submit_response,
+                    "Invalid data format for work order id")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1784,6 +1732,7 @@ class TestClass():
                    "Invalid Request")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
+
 
     @pytest.mark.workordersubmit
     @pytest.mark.test_workordersubmit_requestersignature_difflength

@@ -14,7 +14,7 @@
         "workerEncryptionKey": "",
         "dataEncryptionAlgorithm": "AES-GCM-256",
         "encryptedSessionKey": "",
-        "sessionKeyIv": "Iv",
+        "sessionKeyIv": "",
         "requesterNonce": "",
         "encryptedRequestHash": "",
         "requesterSignature": "",
