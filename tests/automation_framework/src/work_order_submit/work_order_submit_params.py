@@ -93,8 +93,7 @@ class WorkOrderSubmit():
                     input_json_temp["params"]
                     ["workloadId"].encode('UTF-8').hex())
             else:
-                workload_id = "echo-client"
-                self.set_workload_id(workload_id.encode('UTF-8').hex())
+                self.set_workload_id(input_json_temp["params"]["workloadId"])
 
         if "requesterId" in input_params_list:
             if input_json_temp["params"]["requesterId"] != "":

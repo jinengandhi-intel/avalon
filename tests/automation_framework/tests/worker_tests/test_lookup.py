@@ -140,7 +140,6 @@ class TestClass():
     @pytest.mark.worker_lookup
     @pytest.mark.test_worker_lookup_diff_unit_length
     @pytest.mark.listener
-    @pytest.mark.sdk
     def test_worker_lookup_diff_unit_length(self):
         request_file = os.path.join(
             constants.worker_input_file,

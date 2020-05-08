@@ -293,4 +293,25 @@ def check_negative_test_responses(response, expected_res):
 
     if expected_res == "Crypto Error (deserializeECDSAPublicKey): Could not deserialize public ECDSA key":
         if response["error"]["message"] == "Crypto Error (deserializeECDSAPublicKey): Could not deserialize public ECDSA key":
-            return TestStep.SUCCESS.value        
+            return TestStep.SUCCESS.value  
+
+    if expected_res == "Invalid data format for requesterNonce":
+        if response["error"]["message"] == "Invalid data format for requesterNonce":
+            return TestStep.SUCCESS.value
+
+    if expected_res == "Invalid data format for worker encryption key":
+        if response["error"]["message"] == "Invalid data format for worker encryption key":
+            return TestStep.SUCCESS.value
+
+    if expected_res == "Invalid data format for work load id":
+        if response["error"]["message"] == "Invalid data format for work load id":
+            return TestStep.SUCCESS.value
+
+    if expected_res == "Invalid data format for in/out data":
+        if response["error"]["message"] == "Invalid data format for in/out data":
+            return TestStep.SUCCESS.value
+
+    if expected_res == "Invalid data format for Worker id":
+        if response["error"]["message"] == "Invalid data format for Worker id":
+            return TestStep.SUCCESS.value
+      
