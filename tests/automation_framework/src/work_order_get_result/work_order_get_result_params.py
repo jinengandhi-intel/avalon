@@ -17,7 +17,7 @@ import logging
 import random
 
 from src.utilities.submit_request_utility import \
-    submit_getresult_sdk
+    workorder_getresult_sdk
 logger = logging.getLogger(__name__)
 
 

@@ -15,7 +15,7 @@
 import pytest
 import logging
 import os
-from src.libs import constants
+import globals
 from src.worker_lookup.worker_lookup_params \
     import WorkerLookUp
 from src.utilities.verification_utils \
@@ -40,7 +40,7 @@ class TestClass():
     @pytest.mark.p1
     def test_worker_retrieve(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_retrieve.json")
 
         err_cd = self.test_obj.setup_and_build_request_retrieve(
@@ -49,7 +49,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_retrieve_response(submit_response)
@@ -66,7 +66,7 @@ class TestClass():
     @pytest.mark.set1
     def test_worker_retrieve_empty_params(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_retrieve_empty_params.json")
 
         err_cd = self.test_obj.setup_and_build_request_retrieve(
@@ -75,7 +75,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -85,3 +85,4 @@ class TestClass():
             is TestStep.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
+

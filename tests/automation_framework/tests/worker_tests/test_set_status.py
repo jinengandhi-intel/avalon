@@ -15,7 +15,7 @@
 import pytest
 import logging
 import os
-from src.libs import constants
+import globals
 from src.utilities.verification_utils \
     import check_worker_lookup_response, check_worker_retrieve_response, \
     validate_response_code
@@ -35,7 +35,7 @@ class TestClass():
     @pytest.mark.test_worker_set_status
     def test_worker_set_status(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_set_status.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_status(
@@ -44,7 +44,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -59,7 +59,7 @@ class TestClass():
     @pytest.mark.listener
     def test_worker_set_status_unknown_parameter(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_set_status_unknown_parameter.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_status(
@@ -68,7 +68,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -83,7 +83,7 @@ class TestClass():
     @pytest.mark.listener
     def test_worker_set_status_invalid_parameter(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_set_status_invalid_parameter.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_status(
@@ -92,7 +92,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -108,7 +108,7 @@ class TestClass():
     @pytest.mark.set1
     def test_worker_set_status_params_status_0(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_set_status_params_status_0.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_status(
@@ -117,7 +117,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -133,7 +133,7 @@ class TestClass():
     @pytest.mark.set1
     def test_worker_set_status_params_status_2(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_set_status_params_status_2.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_status(
@@ -142,7 +142,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -158,7 +158,7 @@ class TestClass():
     @pytest.mark.set1
     def test_worker_set_status_params_status_3(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_set_status_params_status_3.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_status(
@@ -167,7 +167,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -183,7 +183,7 @@ class TestClass():
     @pytest.mark.set1
     def test_worker_set_status_params_status_4(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_set_status_params_status_4.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_status(
@@ -192,7 +192,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -208,7 +208,7 @@ class TestClass():
     @pytest.mark.set1
     def test_worker_set_status_params_status_5(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_set_status_params_status_5.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_status(
@@ -217,7 +217,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -226,3 +226,4 @@ class TestClass():
                 is TestStep.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
+

@@ -15,7 +15,7 @@
 import pytest
 import logging
 import os
-from src.libs import constants
+import globals
 from src.libs.avalon_test_wrapper \
     import read_json, submit_request
 from src.libs.test_base import TestBase
@@ -35,7 +35,7 @@ class TestClass():
     @pytest.mark.p1
     def test_work_order_success(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_success.json")
 
         err_cd = \
@@ -45,7 +45,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -65,7 +65,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_inData_DataEncryptionKey_hyphen_echo(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_inData_DataEncryptionKey_hyphen_echo.json")
 
         err_cd = \
@@ -75,7 +75,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -95,7 +95,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_data_datahash_null(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_data_datahash_null.json")
 
         err_cd = \
@@ -105,7 +105,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -121,7 +121,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_requesterId_null(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_requester_id_null.json")
 
         err_cd = \
@@ -131,7 +131,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -152,7 +152,7 @@ class TestClass():
     def test_work_order_submit_sessionkeyiv_and_iv_indata_hex_string(
             self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_iv_indata_hex_string.json")
 
         err_cd = \
@@ -162,7 +162,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -182,7 +182,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_verify_signature(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_verify_signature.json")
 
         err_cd = \
@@ -192,7 +192,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -213,7 +213,7 @@ class TestClass():
     def test_work_order_submit_requesterNonce_all_special_characters(
             self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_requesterNonce_all_special_characters.json")
 
         err_cd = \
@@ -223,7 +223,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -239,7 +239,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_alternate_worker_signing_algorithm(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_alternate_worker_signing_algorithm.json")
 
         err_cd = \
@@ -249,7 +249,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -269,7 +269,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_alternate_hashing_algorithm(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_alternate_hashing_algorithm.json")
 
         err_cd = \
@@ -279,7 +279,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -299,7 +299,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_without_requester_private_key(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_without_requester_private_key.json")
 
         err_cd = \
@@ -309,7 +309,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -329,7 +329,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_twice_params(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_twice_params.json")
 
         err_cd = \
@@ -339,7 +339,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -359,7 +359,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_Submit_invalid_parameter_Workloadid(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_Submit_invalid_parameter_Workloadid.json")
 
         err_cd = \
@@ -369,7 +369,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -384,7 +384,7 @@ class TestClass():
     @pytest.mark.listener
     def test_work_order_methodename_list(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_methodename_list.json")
 
         # err_cd = \
@@ -394,7 +394,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             read_json(request_file),
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         # result_response = self.test_obj.getresult(
@@ -413,7 +413,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_signing_wrong(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_signing_wrong.json")
 
         err_cd = \
@@ -423,7 +423,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -442,7 +442,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_workerEncryptionKey_special_character(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_workerEncryptionKey_special_character.json")
 
         err_cd = \
@@ -452,7 +452,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -469,7 +469,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_worker_encryption_key (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_worker_encryption_key.json")
 
         err_cd = \
@@ -479,7 +479,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -500,7 +500,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_alternate_dataEncryption_algorithm (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_alternate_dataEncryption_algorithm.json")
 
         err_cd = \
@@ -510,7 +510,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -530,7 +530,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_50_index_indata (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_50_index_indata.json")
 
         err_cd = \
@@ -540,7 +540,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -561,7 +561,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_changing_order_index (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_changing_order_index.json")
 
         err_cd = \
@@ -571,7 +571,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -592,7 +592,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_index0_indata (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_index0_indata.json")
 
         err_cd = \
@@ -602,7 +602,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -623,7 +623,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_empty_indata (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_empty_indata.json")
 
         err_cd = \
@@ -633,7 +633,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -653,7 +653,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_no_indata (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_no_indata.json")
 
         err_cd = \
@@ -663,7 +663,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -683,7 +683,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_empty_indata_outdata (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_empty_indata_outdata.json")
 
         err_cd = \
@@ -693,7 +693,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -714,7 +714,7 @@ class TestClass():
     # @pytest.mark.sdk (AttributeError: 'dict' object has no attribute 'to_jrpc_string)
     def test_work_order_with_indata_unknown_parameter_value (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_indata_unknown_parameter_value.json")
 
         err_cd = \
@@ -724,7 +724,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -741,7 +741,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_negative_index (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_negative_index.json")
 
         err_cd = \
@@ -751,7 +751,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -772,7 +772,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_with_empty_indata_hash (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_empty_indata_hash.json")
 
         err_cd = \
@@ -782,7 +782,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -802,7 +802,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_datahash_random_str (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_datahash_random_str.json")
 
         err_cd = \
@@ -812,7 +812,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -829,7 +829,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_multiple_data_echoresult (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_multiple_data_echoresult.json")
 
         err_cd = \
@@ -839,7 +839,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -860,7 +860,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_echoclient (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_echoclient.json")
 
         err_cd = \
@@ -870,7 +870,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -890,7 +890,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_diff_text_data_indata_echoClient (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_diff_text_data_indata_echoClient.json")
 
         err_cd = \
@@ -900,7 +900,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -921,7 +921,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_specialcharacter_data_single_index_indata (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_specialcharacter_data_single_index_indata.json")
 
         err_cd = \
@@ -931,7 +931,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -952,7 +952,7 @@ class TestClass():
     # @pytest.mark.sdk
     def test_work_order_special_char_iv_echoresult (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_special_char_iv_echoresult.json")
 
         err_cd = \
@@ -962,7 +962,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -981,7 +981,7 @@ class TestClass():
     @pytest.mark.listener
     def test_work_order_submit_requesterId_param_remove (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_requesterId_param_remove.json")
 
         err_cd = \
@@ -991,7 +991,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1010,7 +1010,7 @@ class TestClass():
     @pytest.mark.listener
     def test_work_order_with_response_timeout_str (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_with_response_timeout_str.json")
 
         err_cd = \
@@ -1020,7 +1020,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1040,7 +1040,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_dataEncryptionAlgorithm_list(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_multiple_dataEncryptionAlgorithm.json")
 
         err_cd = \
@@ -1050,7 +1050,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1071,7 +1071,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_two_workload_in_workloadId(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_two_workloadid.json")
 
         err_cd = \
@@ -1081,7 +1081,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1103,7 +1103,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_WorkOrderId_null(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_WorkOrderId_null.json")
 
         err_cd = \
@@ -1113,7 +1113,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1130,7 +1130,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_workerId_null_randomString (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workorder_workerId_null_number_randomString.json")
 
         err_cd = \
@@ -1140,7 +1140,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1157,7 +1157,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_workloadId_specialcharacters(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_workloadId_specialcharacters.json")
         err_cd = \
             self.test_obj.setup_and_build_request_wo_submit(
@@ -1166,7 +1166,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1183,7 +1183,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_specialcharacter_data_echoClient(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_specialcharacter_data_echoClient.json")
 
         err_cd = \
@@ -1193,7 +1193,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1214,7 +1214,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_inData_outData_encryptedDataEncryptionKey_null_echoClient(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_both_in_out_Data_EncryptionKey_null_echo.json")
 
         err_cd = \
@@ -1224,7 +1224,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1245,7 +1245,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_dataEncryptionAlgorithm_list_same_algo_twice(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_dataEncryptionAlgorithm_list_same_algo_twice.json")
 
         err_cd = \
@@ -1255,7 +1255,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1275,7 +1275,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_inData_outData_encryptedDataEncryptionKey_hyphen_echoClient(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_inData_outData_encryptedDataEncryptionKey_hyphen_echoClient.json")
 
         err_cd = \
@@ -1285,7 +1285,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1305,7 +1305,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_encryptedDataEncryptionKey_not_set_echoClient(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_encryptedDataEncryptionKey_not_set_echoClient.json")
 
         err_cd = \
@@ -1315,7 +1315,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1332,7 +1332,7 @@ class TestClass():
     @pytest.mark.set1
     def test_work_order_submit_encryptedDataEncryptionKey_empty_echoClient(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_encryptedDataEncryptionKey_empty_echoClient.json")
 
         err_cd = \
@@ -1342,7 +1342,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1361,7 +1361,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_with_outdata(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_with_outdata.json")
 
         err_cd = \
@@ -1371,7 +1371,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1390,7 +1390,7 @@ class TestClass():
     @pytest.mark.listener
     def test_work_order_submit_remove_both_data_datahash_in_inData (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_remove_both_data_datahash_in_inData.json")
 
         err_cd = \
@@ -1400,7 +1400,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1416,7 +1416,7 @@ class TestClass():
     @pytest.mark.listener
     def test_work_order_submit_with_one_valid_and_other_empty_data_and_datahash_in_indata (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_with_one_valid_and_other_empty_data_and_datahash_in_indata.json")
 
         err_cd = \
@@ -1426,7 +1426,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1442,7 +1442,7 @@ class TestClass():
     @pytest.mark.listener
     def test_work_order_submit_remove_both_data_datahash_Single_index_in_inData (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_remove_both_data_datahash_Single_index_in_inData.json")
 
         err_cd = \
@@ -1452,7 +1452,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1468,7 +1468,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_indata_data_index2_random_str(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_indata_data_index2_random_str.json")
 
         err_cd = \
@@ -1478,7 +1478,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1497,7 +1497,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_indata_data_index1_random_str(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_indata_data_index1_random_str.json")
 
         err_cd = \
@@ -1507,7 +1507,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1526,7 +1526,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_workload_id_empty_string(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_workload_id_empty_string.json")
         err_cd = \
             self.test_obj.setup_and_build_request_wo_submit(
@@ -1535,7 +1535,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1551,7 +1551,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_workload_id_hex_string(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_workload_id_hex_string.json")
         err_cd = \
             self.test_obj.setup_and_build_request_wo_submit(
@@ -1560,7 +1560,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1575,7 +1575,7 @@ class TestClass():
     @pytest.mark.listener
     def test_work_order_submit_workLoad_null_string(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_workLoad_null_string.json")
         err_cd = \
             self.test_obj.setup_and_build_request_wo_submit(
@@ -1584,7 +1584,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1600,7 +1600,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_WorkOrder_increased_hexlength(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_WorkOrder_increased_hexlength.json")
 
         err_cd = \
@@ -1610,7 +1610,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1627,7 +1627,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_same_WorkOrderID_WorkloadId (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_same_WorkOrderID_WorkloadId.json")
 
 
@@ -1638,7 +1638,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1654,7 +1654,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_indata_index1_data_different_hexlength(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_indata_index1_data_different_hexlength.json")
 
         err_cd = \
@@ -1664,7 +1664,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1685,7 +1685,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_requesterId_som_special_characters(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_requesterId_som_special_characters.json")
 
         err_cd = \
@@ -1695,7 +1695,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1711,7 +1711,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_work_order_submit_requesterNonce_param_empty(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_requesterNonce_param_empty.json")
 
         err_cd = \
@@ -1721,7 +1721,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1739,7 +1739,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workordersubmit_requestersignature_difflength(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_verify_requesterSignature_diff_length.json")
 
         err_cd = \
@@ -1749,7 +1749,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1766,7 +1766,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workordersubmit_verifyingkey_nullstr(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_submit_verifyingkey_null_str.json")
 
         err_cd = \
@@ -1776,7 +1776,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
         assert (
                check_negative_test_responses(
@@ -1793,7 +1793,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_workordersubmit_indata_outdata(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_indata_outdata.json")
 
         err_cd = \
@@ -1803,7 +1803,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1822,7 +1822,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workordersubmit_workorderId_remove(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_workorderId_remove.json")
 
         err_cd = \
@@ -1832,7 +1832,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))        
         assert (
                   check_negative_test_responses(
@@ -1847,7 +1847,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workordersubmit_sessionkeyiv_allspecialchar(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_sessionkeyiv_allspecialchar.json")
 
         err_cd = \
@@ -1857,7 +1857,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1873,7 +1873,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_workordersubmit_requesterId_variouslengthhex (self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_requesterId_variouslengthhex.json")
 
         err_cd = \
@@ -1883,7 +1883,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
@@ -1900,7 +1900,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workordersubmit_workerEncryptionKey_notdefaulthex(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_workerEncryptionKey_notdefaulthex.json")
 
         err_cd = \
@@ -1910,7 +1910,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
         assert (
                 check_negative_test_responses(
@@ -1926,7 +1926,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_workordersubmit_requesterNonce_notdefaultlength(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_requesterNonce_notdefaultlength.json")
 
         err_cd = \
@@ -1936,7 +1936,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
         assert (
                 check_negative_test_responses(
@@ -1951,7 +1951,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workordersubmit_requesterSignature_no(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_encryptedRequestHash_norequesterSignature.json")
 
         err_cd = \
@@ -1961,7 +1961,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
@@ -1980,7 +1980,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workordersubmit_encryptedRequestHash_no(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_requesterSignature_noencryptedRequestHash.json")
 
         err_cd = \
@@ -1990,7 +1990,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
         assert (
                   check_negative_test_responses(
@@ -2005,7 +2005,7 @@ class TestClass():
     @pytest.mark.test_workordersubmit_mandatoryfields_remove
     def test_workordersubmit_mandatoryfields_remove(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_mandatoryfields_remove.json")
 
         err_cd = \
@@ -2015,7 +2015,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
         assert (
                   check_negative_test_responses(
@@ -2029,7 +2029,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workordersubmit_id_remove(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_id_remove.json")
 
         err_cd = \
@@ -2039,7 +2039,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
         assert (
                   check_negative_test_responses(
@@ -2054,7 +2054,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_workordersubmit_workeridworkloadid_same(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_workeridworkloadid_same.json")
         err_cd = \
             self.test_obj.setup_and_build_request_wo_submit(
@@ -2063,7 +2063,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
         assert (
                   check_negative_test_responses(
@@ -2079,7 +2079,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_workordersubmit_indata_firstinparams(self):
         request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "workordersubmit_indata_firstinparams.json")
 
         err_cd = \
@@ -2089,7 +2089,7 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         result_response = self.test_obj.getresult(

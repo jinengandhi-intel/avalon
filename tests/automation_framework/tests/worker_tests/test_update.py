@@ -15,7 +15,7 @@
 import pytest
 import logging
 import os
-from src.libs import constants
+import globals
 from src.utilities.verification_utils \
     import check_worker_lookup_response, check_worker_retrieve_response, \
     validate_response_code
@@ -37,7 +37,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_worker_update(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_update.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_update(
@@ -46,7 +46,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -63,7 +63,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_worker_update_unknown_parameter(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_update_unknown_parameter.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_update(
@@ -72,7 +72,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -89,7 +89,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_worker_update_invalid_parameter(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_update_invalid_parameter.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_update(
@@ -98,7 +98,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -115,7 +115,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_worker_update_empty_details(self):
         request_file = os.path.join(
-            constants.worker_input_file,
+            globals.worker_input_file,
             "worker_update_empty_details.json")
 
         err_cd = self.test_obj.setup_and_build_request_worker_update(
@@ -124,7 +124,7 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.worker_lookup_output_json_file_name,
+            globals.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
@@ -133,4 +133,5 @@ class TestClass():
                 is TestStep.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
+
 

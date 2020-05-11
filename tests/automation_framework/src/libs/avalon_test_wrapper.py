@@ -1,13 +1,14 @@
+import globals
+import os
 import json
 import logging
-import os
+import re
 from src.worker_lookup.worker_lookup_params \
     import WorkerLookUp
 from src.work_order_receipt.work_order_receipt_params \
-    import WorkOrderReceipt
+    import WorkOrderReceiptCreate
 from src.work_order_receipt.work_order_receipt_retrieve_params \
     import WorkOrderReceiptRetrieve
-from src.libs import constants
 from src.worker_retrieve.worker_retrieve_params \
     import WorkerRetrieve
 from src.worker_register.worker_register_params \
@@ -21,14 +22,13 @@ from src.work_order_get_result.work_order_get_result_params \
 from src.work_order_submit.work_order_submit_params \
     import WorkOrderSubmit
 from src.utilities.submit_request_utility import \
-    submit_request_listener, submit_lookup_sdk, \
-    submit_retrieve_sdk, submit_create_receipt_sdk, \
-    submit_work_order_sdk, submit_register_sdk, \
-    submit_setstatus_sdk, submit_retrieve_receipt_sdk, \
-    submit_update_sdk, submit_getresult_sdk
+    submit_request_listener, worker_lookup_sdk, \
+    worker_retrieve_sdk, workorder_receiptcreate_sdk, \
+    workorder_submit_sdk, worker_register_sdk, \
+    worker_setstatus_sdk, workorder_receiptretrieve_sdk, \
+    worker_update_sdk, workorder_getresult_sdk
 from src.libs.direct_listener import ListenerImpl
 from src.libs.direct_sdk import SDKImpl
-import globals
 import types
 import avalon_sdk.worker.worker_details as worker
 TCFHOME = os.environ.get("TCF_HOME", "../../")
@@ -62,26 +62,8 @@ def build_request_obj(input_json_obj,
     worker_lookup SDK function requires worker_type parameter
     worker_retrieve SDK function requires worker_id parameter.
     """
-    request_method = input_json_obj["method"]
-    if request_method == "WorkerUpdate":
-        action_obj = WorkerUpdate()
-    elif request_method == "WorkerSetStatus":
-        action_obj = WorkerSetStatus()
-    elif request_method == "WorkerRegister":
-        action_obj = WorkerRegister()
-    elif request_method == "WorkerLookUp":
-        action_obj = WorkerLookUp()
-    elif request_method == "WorkerRetrieve":
-        action_obj = WorkerRetrieve()
-    elif request_method == "WorkOrderSubmit":
-        action_obj = WorkOrderSubmit()
-    elif request_method == "WorkOrderGetResult":
-        action_obj = WorkOrderGetResult()
-    elif request_method == "WorkOrderReceiptCreate":
-        action_obj = WorkOrderReceipt()
-    elif request_method == "WorkOrderReceiptRetrieve":
-        action_obj = WorkOrderReceiptRetrieve()
-    if constants.direct_test_mode == "listener":
+    action_obj = eval(input_json_obj["method"]+"()")
+    if globals.direct_test_mode == "listener":
         request_obj = action_obj.configure_data(
             input_json_obj, pre_test_output, pre_test_response)
     else:
@@ -97,85 +79,60 @@ def submit_request(uri_client, output_obj, output_file, input_file):
     as an output from build_request_obj function.
     """
     request_method = input_file["method"]
-    if constants.direct_test_mode == "listener":
+    if globals.direct_test_mode == "listener":
         submit_response = submit_request_listener(
             uri_client, output_obj, output_file)
     else:
-        if request_method == "WorkerLookUp":
-            submit_response = submit_lookup_sdk(
-                output_obj, input_file)
-        elif request_method == "WorkerRetrieve":
-            submit_response = submit_retrieve_sdk(
-                output_obj, input_file)
-        elif request_method == "WorkOrderSubmit":
-            submit_response = submit_work_order_sdk(
-                output_obj, input_file)
-        elif request_method == "WorkOrderReceiptCreate":
-            submit_response = submit_create_receipt_sdk(
-                output_obj, input_file)
-        elif request_method == "WorkOrderReceiptRetrieve":
-            submit_response = submit_retrieve_receipt_sdk(
-                output_obj, input_file)
-        elif request_method == "WorkerRegister":
-            submit_response = submit_register_sdk(
-                output_obj, input_file)
-        elif request_method == "WorkerSetStatus":
-            submit_response = submit_setstatus_sdk(
-                output_obj, input_file)
-        elif request_method == "WorkerUpdate":
-            submit_response = submit_update_sdk(
-                output_obj, input_file)
-        elif request_method == "WorkOrderGetResult":
-            submit_response = submit_getresult_sdk(
-                output_obj, input_file)
+        work_type = (re.findall('WorkOrder|Worker', request_method))[0]
+        work_func = re.split(work_type, request_method)[1]
+        calling_function = "{}_{}_sdk".format(work_type, work_func).lower()
+        submit_response = eval(calling_function)(output_obj, input_file)
     return submit_response
 
 
-
 def impl_instance():
-    if constants.direct_test_mode == "sdk":
+    if globals.direct_test_mode == "sdk":
         logger.info("Inside SDK instance\n")
         return SDKImpl()
-    elif constants.direct_test_mode == "listener":
+    elif globals.direct_test_mode == "listener":
         logger.info("Inside Listener instance\n")
         return ListenerImpl()
 
 
-def pre_test_env(input_file):
+def pre_test_worker_env(input_file):
     """
     This function sets up the environment required to run the test.
     For ex: Work Order Submit test requires worker_lookup, retrieve
     the worker details and pass that as the output.
     """
+    response = None
     request_method = input_file["method"]
     impl_type = impl_instance()
-
-    if request_method == "WorkerRetrieve" or \
-            request_method == "WorkerUpdate" or \
-            request_method == "WorkerSetStatus":
-        lookup_response = impl_type.worker_lookup()
-        logger.info("******Received Response******\n%s\n", lookup_response)
-        return lookup_response
-
-    if request_method == "WorkOrderSubmit":
-        lookup_response = impl_type.worker_lookup()
-        worker_obj = impl_type.worker_retrieve(lookup_response)
-        return worker_obj
-
-    if request_method == "WorkOrderReceiptCreate" or \
-            request_method == "WorkOrderGetResult":
-        lookup_response = impl_type.worker_lookup()
-        worker_obj = impl_type.worker_retrieve(lookup_response)
-        wo_submit = impl_type.work_order_submit(worker_obj)
-        return worker_obj, wo_submit
-
-    if request_method == "WorkOrderReceiptRetrieve":
-        lookup_response = impl_type.worker_lookup()
-        worker_obj = impl_type.worker_retrieve(lookup_response)
-        wo_submit = impl_type.work_order_submit(worker_obj)
-        wo_create_receipt = impl_type.work_order_create_receipt(wo_submit)
-        return worker_obj, wo_submit
 
     if request_method == "WorkerRegister":
         logger.info("No setup required for \n%s\n", request_method)
         return 0
+
+    if request_method != "WorkerLookUp":
+        response = impl_type.worker_lookup()
+        logger.info("******Received Response******\n%s\n", response)
+
+    if request_method not in ["WorkerLookUp", "WorkerRetrieve", "WorkerUpdate",
+                              "WorkerSetStatus"]:
+        response = impl_type.worker_retrieve(response)
+    return response
+
+def pre_test_workorder_env(input_file, output):
+    """
+        This function sets up the environment required to run the test for
+        submit function or receipt and result function
+        For ex: Work Order Submit test requires worker_lookup, retrieve
+        the worker details and pass that as the output.
+        """
+    request_method = input_file["method"]
+    impl_type = impl_instance()
+    wo_submit = impl_type.work_order_submit(output)
+
+    if request_method == "WorkOrderReceiptRetrieve":
+        impl_type.work_order_create_receipt(wo_submit)
+    return wo_submit

@@ -16,11 +16,11 @@ import json
 import logging
 import random
 import os
+import globals
 import avalon_crypto_utils.crypto.crypto as crypto
 import avalon_crypto_utils.crypto_utility as crypto_utils
 from src.utilities.tamper_utility import tamper_request
 import avalon_crypto_utils.crypto_utility as enclave_helper
-from src.libs import constants
 import secrets
 from avalon_sdk.work_order.work_order_params import WorkOrderParams
 
@@ -579,14 +579,14 @@ class WorkOrderSubmit():
         private_key = enclave_helper.generate_signing_keys()
         if input_json is None:
             with open(os.path.join(
-                    constants.work_order_input_file,
+                    globals.work_order_input_file,
                     "work_order_success.json"), "r") as file:
                 input_json = file.read().rstrip('\n')
 
             input_json = json.loads(input_json)
 
         self.add_json_values(input_json, worker_obj, private_key,
-                             constants.wo_submit_tamper)
+                             globals.wo_submit_tamper)
         input_work_order = self.compute_signature(
             self.tamper)
         logger.info('Compute Signature complete \n')
@@ -671,3 +671,4 @@ class WorkOrderSubmit():
         wo_params.add_encrypted_request_hash()
 
         return wo_params
+
