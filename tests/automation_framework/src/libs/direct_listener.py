@@ -1,9 +1,9 @@
 import os
+import globals
 import logging
 import json
 from src.worker_lookup.worker_lookup_params \
     import WorkerLookUp
-from src.libs import constants
 from src.utilities.submit_request_utility import \
     submit_request_listener
 from src.worker_retrieve.worker_retrieve_params \
@@ -14,7 +14,6 @@ from src.work_order_get_result.work_order_get_result_params \
     import WorkOrderGetResult
 import time
 from src.utilities.generic_utils import GetResultWaitTime
-import globals
 import avalon_sdk.worker.worker_details as worker
 logger = logging.getLogger(__name__)
 
@@ -37,7 +36,7 @@ class ListenerImpl():
 
         lookup_response = submit_request_listener(
             globals.uri_client, test_final_json,
-            constants.worker_lookup_output_json_file_name)
+            globals.worker_lookup_output_json_file_name)
         return lookup_response
 
     def worker_retrieve(self, lookup_response):
@@ -50,7 +49,7 @@ class ListenerImpl():
                                        \n%s\n', input_worker_retrieve)
         retrieve_response = submit_request_listener(
             globals.uri_client, input_worker_retrieve,
-            constants.worker_retrieve_output_json_file_name)
+            globals.worker_retrieve_output_json_file_name)
         logger.info('*****Worker retrieve response***** \
                                        \n%s\n', retrieve_response)
 
@@ -61,7 +60,7 @@ class ListenerImpl():
     def work_order_submit(self, worker_obj):
         submit_obj = WorkOrderSubmit()
         submit_request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_success.json")
         submit_request_json = self.read_json(submit_request_file)
         submit_json = submit_obj.configure_data(
@@ -69,16 +68,16 @@ class ListenerImpl():
             pre_test_response=None)
         submit_response = submit_request_listener(
             globals.uri_client, submit_json,
-            constants.wo_submit_output_json_file_name)
+            globals.wo_submit_output_json_file_name)
         input_work_order_submit = submit_obj.compute_signature(
-            constants.wo_submit_tamper)
+            globals.wo_submit_tamper)
         logger.info("******Work Order submitted*****\n%s\n", submit_response)
         return input_work_order_submit
 
     def work_order_get_result(self, wo_submit):
         wo_getresult_obj = WorkOrderGetResult()
         wo_getresult_request_file = os.path.join(
-            constants.work_order_input_file,
+            globals.work_order_input_file,
             "work_order_getresult.json")
         wo_getresult_request_json = self.read_json(wo_getresult_request_file)
         wo_submit=json.dumps(wo_submit)
@@ -88,6 +87,6 @@ class ListenerImpl():
         # submit work order get result request and retrieve response
         response = submit_request_listener(
             globals.uri_client, wo_getresult_json,
-            constants.wo_result_output_json_file_name)
+            globals.wo_result_output_json_file_name)
         logger.info("******Received Response*****\n%s\n", response)
         return response

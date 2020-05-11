@@ -14,7 +14,6 @@
 
 import json
 import logging
-from src.libs import constants
 import globals
 import avalon_crypto_utils.crypto_utility as crypto_utils
 logger = logging.getLogger(__name__)
@@ -90,7 +89,7 @@ class WorkerRetrieve():
                     worker_id = input_json["params"]["workerId"]
             return worker_id
 
-        if constants.proxy_mode and \
+        if globals.proxy_mode and \
             globals.blockchain_type == "ethereum":
             if "result" in pre_test_response and \
                 "ids" in pre_test_response["result"].keys():
@@ -102,7 +101,7 @@ class WorkerRetrieve():
                     logger.error("No workers found")
             else:
                 logger.error("Failed to lookup worker")
-        elif constants.proxy_mode and \
+        elif globals.proxy_mode and \
             globals.blockchain_type == "fabric":
             worker_id = pre_test_response[2][0]
         else:
@@ -118,3 +117,4 @@ class WorkerRetrieve():
                 worker_id = None
 
         return worker_id
+

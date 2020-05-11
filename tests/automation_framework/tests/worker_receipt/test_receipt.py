@@ -15,7 +15,7 @@
 import pytest
 import logging
 import os
-from src.libs import constants
+import globals
 from src.libs.avalon_test_wrapper \
     import read_json, submit_request
 from src.utilities.generic_utils import TestStep
@@ -36,7 +36,7 @@ class TestClass():
     @pytest.mark.p1
     def test_work_order_create_receipt(self):
         request_file = os.path.join(
-            constants.work_order_receipt,
+            globals.work_order_receipt,
             "work_order_receipt.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -45,7 +45,7 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
@@ -58,7 +58,7 @@ class TestClass():
     @pytest.mark.p1
     def test_work_order_retrieve_receipt(self):
         request_file = os.path.join(
-            constants.work_order_receipt,
+            globals.work_order_receipt,
             "work_order_receipt_retrieve.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt_retrieve(
@@ -67,7 +67,7 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_retrieve_receipt_response(receipt_response)
@@ -79,7 +79,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_create_work_order_receipt_invalid_requester_id(self):
         request_file = os.path.join(
-            constants.work_order_receipt,
+            globals.work_order_receipt,
             "work_order_receipt_invalid_requester_id.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -88,7 +88,7 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
@@ -101,7 +101,7 @@ class TestClass():
     def test_create_work_order_receipt_hexstr_workorderRequesthash(
             self):
         request_file = os.path.join(
-            constants.work_order_receipt,
+            globals.work_order_receipt,
             "work_order_receipt_hexstr_workorderRequesthash.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -110,7 +110,7 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
@@ -122,7 +122,7 @@ class TestClass():
     @pytest.mark.sdk
     def test_create_work_order_receipt_wrong_rverificationkey(self):
         request_file = os.path.join(
-            constants.work_order_receipt,
+            globals.work_order_receipt,
             "work_order_receipt_wrong_rverificationkey.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -131,9 +131,10 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            constants.wo_submit_output_json_file_name,
+            globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
+
