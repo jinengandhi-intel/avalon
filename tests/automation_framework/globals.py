@@ -6,6 +6,8 @@ TCFHOME = os.environ.get("TCF_HOME", "../../")
 
 uri_client = HttpJrpcClient("http://avalon-listener:1947")
 
+uri_client_sdk = "http://avalon-listener:1947"
+
 work_order_input_file = os.path.join(os.getcwd(), 'data', 'work_order')
 
 worker_input_file = os.path.join(os.getcwd(), 'data', 'worker')

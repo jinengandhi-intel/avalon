@@ -25,6 +25,14 @@ logger = logging.getLogger(__name__)
 TCFHOME = os.environ.get("TCF_HOME", "../../")
 
 
+def config_file_read():
+    config = pconfig.parse_configuration_files(
+        globals.conffiles, globals.confpaths)
+    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
+    config["tcf"]["json_rpc_uri"] = globals.uri_client_sdk
+    return config
+
+
 def _create_worker_registry_instance(blockchain_type, config):
     # create worker registry instance for direct/proxy model
     if globals.proxy_mode and blockchain_type == 'fabric':
@@ -114,10 +122,7 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
         req_id = 3
     else:
         req_id = input_json_obj["id"]
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
-
+    config = config_file_read()
     work_order = _create_work_order_instance(globals.blockchain_type, config)
     logger.info(" work order id %s \n", wo_params.get_work_order_id())
     logger.info(" worker id %s \n", wo_params.get_worker_id())
@@ -145,9 +150,7 @@ def worker_lookup_sdk(worker_type, input_json=None):
         jrpc_req_id = 3
     else:
         jrpc_req_id = input_json["id"]
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
+    config = config_file_read()
     worker_dict = {'SGX': WorkerType.TEE_SGX,
                    'MPC': WorkerType.MPC, 'ZK': WorkerType.ZK}
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
@@ -171,9 +174,7 @@ def worker_lookup_sdk(worker_type, input_json=None):
 def worker_register_sdk(dummy, input_json):
     logger.info("SDK code path\n")
     jrpc_req_id = input_json["id"]
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
+    config = config_file_read()
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
     worker_register_result = worker_registry.worker_register(
         input_json["params"]["workerId"], input_json["params"]["workerType"],
@@ -195,9 +196,7 @@ def worker_setstatus_sdk(set_status_params, input_json):
     status_dict = {1: WorkerStatus.ACTIVE, 2: WorkerStatus.OFF_LINE,
                    3: WorkerStatus.DECOMMISSIONED,
                    4: WorkerStatus.COMPROMISED}
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
+    config = config_file_read()
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
     worker_setstatus_result = worker_registry.worker_set_status(
         eval(str(set_status_params))["worker_id"],
@@ -214,9 +213,7 @@ def worker_retrieve_sdk(worker_id, input_json=None):
         jrpc_req_id = 11
     else:
         jrpc_req_id = input_json["id"]
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
+    config = config_file_read()
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
     if globals.proxy_mode and globals.blockchain_type == 'ethereum':
         for w_id in worker_id:
@@ -260,9 +257,7 @@ def worker_update_sdk(update_params, input_json=None):
         jrpc_req_id = 11
     else:
         jrpc_req_id = input_json["id"]
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
+    config = config_file_read()
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
     if not globals.proxy_mode:
         worker_update_result = worker_registry.worker_update(
@@ -277,9 +272,7 @@ def worker_update_sdk(update_params, input_json=None):
 def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
     logger.info("SDK code path\n")
     jrpc_req_id = input_json["id"]
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
+    config = config_file_read()
     # Create receipt
     wo_receipt = _create_work_order_receipt_instance(globals.blockchain_type, config)
     # Submit work order create receipt jrpc request
@@ -304,9 +297,7 @@ def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
 def workorder_receiptretrieve_sdk(workorderId, input_json):
     logger.info("SDK code path\n")
     jrpc_req_id = input_json["id"]
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
+    config = config_file_read()
     # Create receipt
     wo_receipt = _create_work_order_receipt_instance(globals.blockchain_type, config)
 
@@ -321,11 +312,7 @@ def workorder_receiptretrieve_sdk(workorderId, input_json):
 def workorder_getresult_sdk(workorderId, input_json):
     logger.info("SDK code path\n")
     jrpc_req_id = input_json["id"]
-    config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
-
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
-
+    config = config_file_read()
     work_order = _create_work_order_instance(globals.blockchain_type, config)
     logger.info("----- Validating WorkOrderGetResult Response ------")
 
@@ -335,4 +322,3 @@ def workorder_getresult_sdk(workorderId, input_json):
     logger.info("******Received Response*****\n%s\n", get_result_res)
 
     return get_result_res
-

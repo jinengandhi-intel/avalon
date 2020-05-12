@@ -20,7 +20,7 @@ organization = "Intel"
 
 [tcf]
 #Uri for the worker registry
-json_rpc_uri = "http://avalon-listener:1947"
+json_rpc_uri = "http://localhost:1947"
 
 #Block chain type, it identifies which blockchain to use
 [blockchain]
