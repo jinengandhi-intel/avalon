@@ -58,11 +58,11 @@ pipeline {
                 git clone https://github.com/hyperledger/avalon.git
                 cd avalon
 
-                if docker ps -a | grep -q 'avalon-shell'; then
-                    docker stop $(docker ps -a -q)
-                    docker rm $(docker ps -a -q)
-                fi
-                docker system prune -af
+                # if docker ps -a | grep -q 'avalon-shell'; then
+                #    docker stop $(docker ps -a -q)
+                #    docker rm $(docker ps -a -q)
+                # fi
+                # docker system prune -af
 
                 mkdir -p $NIGHTLY_WORKSPACE_DIR/val_repo
                 cd $NIGHTLY_WORKSPACE_DIR/val_repo
@@ -76,38 +76,22 @@ pipeline {
             }
         }
 
-        stage('Build avalon components') {
-            steps {
-                parallel (
-                    "Build Avalon Proxy Model Components": {
-                        script {
-                            sh '''
-                            cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
-                            echo `pwd`
-                            docker-compose -f ci/docker-compose-proxy-model-build-val.yaml build
-                            '''
-                        }
-                    },
-                    "Start fabric network": {
-                        script {
-                            sh '''
-                            cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
-                            export TCF_HOME=$NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
-                            echo `pwd`
-                            ./scripts/start_fabric.sh -w ./ -u
-                            '''
-                        }
-                    }
-                )
-            }
-        }
-
-        stage('Run Avalon proxy Model Tests') {
+        stage('Build Avalon Direct Model Components') {
             steps {
                 sh '''
                 cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
                 echo `pwd`
-                INSTALL_TYPE="" $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/bin/run_tests -p
+                docker-compose -f ci/docker-compose-direct-model-build.yaml build
+                '''
+            }
+        }
+
+        stage('Run Avalon Direct Model Tests') {
+            steps {
+                sh '''
+                cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
+                echo `pwd`
+                INSTALL_TYPE="" $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/bin/run_tests -d
                 '''
             }
         }
@@ -126,13 +110,6 @@ pipeline {
     }
 
     post {
-        always {
-            echo 'Cleaning up fabric network'
-            sh '''
-            cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
-            ./scripts/start_fabric.sh -w ./ -c
-            '''
-        }
         success {
             archiveArtifacts '*.tgz, *.zip'
         }
