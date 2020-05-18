@@ -18,7 +18,7 @@
 pipeline {
     agent {
         node {
-            label 'avalon_01'
+            label 'avalon_docker'
         }
     }
 
@@ -38,7 +38,6 @@ pipeline {
         stage ('Prepare Build Parameters') {
             steps {
                 script {
-                    env.JK_RUNID = "Nightly_" + new Date().format("yyyy-MM-dd") + "." + env.BUILD_NUMBER.toString()
                     env.NIGHTLY_WORKSPACE_DIR = "/home/intel/automation_nightly/" + env.JK_RUNID
                     println "###################################################################################################################"
                     println "#=================================================================================================================="
@@ -101,8 +100,8 @@ pipeline {
                 sh '''
                 cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
                 REPO=$(git remote show -n origin | grep Fetch | awk -F'[/.]' '{print $6}')
-                git archive HEAD --format=zip -9 --output=$WORKSPACE\$JK_RUNID_$REPO.zip
-                git archive HEAD --format=tgz -9 --output=$WORKSPACE\$JK_RUNID_$REPO.tgz
+                git archive HEAD --format=zip -9 --output=$WORKSPACE/${JK_RUNID}_${REPO}.zip
+                git archive HEAD --format=tgz -9 --output=$WORKSPACE/${JK_RUNID}_${REPO}.tgz
                 '''
             }
         }
