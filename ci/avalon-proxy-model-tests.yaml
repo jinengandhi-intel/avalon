@@ -22,6 +22,7 @@ services:
       - ../vars/keyfiles:/keyfiles
       - ../vars/profiles/mychannel_network_for_pysdk.json:/project/avalon/sdk/avalon_sdk/connector/blockchains/fabric/network.json
       - ../vars/blockmark:/project/avalon/examples/apps/generic_client/blockmark
+      - ./../logs:/project/avalon/tests/automation_framework
     entrypoint: "bash -c \"\
         ./tools/run_proxy_model_tests.sh \""
     depends_on:
