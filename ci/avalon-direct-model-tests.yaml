@@ -18,6 +18,9 @@ services:
   avalon-direct-model-tests:
     image: avalon-shell:${ISOLATION_ID}
     working_dir: "/project/avalon/"
+    volumes:
+      # Below volume mappings are required for DISPLAY settings by heart disease GUI client
+      - ./../logs:/project/avalon/tests/automation_framework
     entrypoint: "bash -c \"\
         ./tools/run_tests.sh -l avalon-listener \""
     depends_on:
