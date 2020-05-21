@@ -50,12 +50,13 @@ class ListenerImpl():
         retrieve_response = submit_request_listener(
             globals.uri_client, input_worker_retrieve,
             globals.worker_retrieve_output_json_file_name)
-        logger.info('*****Worker retrieve response***** \
-                                       \n%s\n', retrieve_response)
 
         worker_obj.load_worker(retrieve_response['result']['details'])
+        retrieve_response['workerId'] = input_worker_retrieve["params"]["workerId"]
 
-        return worker_obj
+        logger.info('*****Worker retrieve response***** \
+                                       \n%s\n', retrieve_response)
+        return retrieve_response
 
     def work_order_submit(self, worker_obj):
         submit_obj = WorkOrderSubmit()

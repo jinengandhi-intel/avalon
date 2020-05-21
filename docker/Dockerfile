@@ -38,6 +38,7 @@ RUN apt-get update \
     python3-requests \
     python3-colorlog \
     python3-twisted \
+    python3-yaml \
  && apt-get clean
 
 # Make Python3 default
@@ -57,6 +58,7 @@ RUN apt-get update \
     pkg-config \
     python3-pip \
     python3-dev \
+    python3-yaml \
     make \
  && apt-get clean
 

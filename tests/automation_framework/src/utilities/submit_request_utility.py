@@ -139,7 +139,7 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
         wo_params.to_string(),
         id=req_id
     )
-
+    response["workOrderId"] = response.get("result", {}).get("workOrderId", {})
     logger.info('**********Received Response*********\n%s\n', response)
     return response
 
@@ -250,10 +250,8 @@ def worker_retrieve_sdk(worker_id, input_json=None):
         worker_obj.load_worker(worker_retrieve_result['result']['details'])
     worker_obj.worker_id = worker_id
     logger.info("\n Worker ID\n%s\n", worker_obj.worker_id)
-    if input_json is None:
-        return worker_obj
-    else:
-        return worker_retrieve_result
+    worker_retrieve_result["workerId"] = worker_id
+    return worker_retrieve_result
 
 
 def worker_update_sdk(update_params, input_json=None):

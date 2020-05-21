@@ -1,0 +1,16 @@
+listener_config:
+  workerId : ''
+  workerType : 1
+  organizationId : ''
+  applicationTypeId : ''
+  workerEncryptionKey : ''
+  detailshashingAlgorithm :
+  detailssigningAlgorithm :
+  detailskeyEncryptionAlgorithm :
+  detailsdataEncryptionAlgorithm :
+sdk_config:
+  workerId : ''
+  organizationId : ''
+  applicationTypeId : ''
+  workerType : 'SGX'
+  details : ''

@@ -23,6 +23,7 @@ from src.utilities.tamper_utility import tamper_request
 import avalon_crypto_utils.crypto_utility as enclave_helper
 import secrets
 from avalon_sdk.work_order.work_order_params import WorkOrderParams
+import src.utilities.worker_utilities as wconfig
 
 logger = logging.getLogger(__name__)
 NO_OF_BYTES = 16
@@ -39,189 +40,78 @@ class WorkOrderSubmit():
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_submit"
         self.final_hash = ""
+        self.private_key = ''
+        self.worker_obj = ''
+        self.encrypted_session_key = ''
 
-    def add_json_values(self, input_json_temp, worker_obj,
+    def add_json_values(self, input_json_temp, pre_test_response,
                         private_key, tamper):
 
         self.private_key = private_key
-        self.worker_obj = worker_obj
-
         input_params_list = input_json_temp["params"].keys()
-        if "responseTimeoutMSecs" in input_params_list:
-            if input_json_temp["params"]["responseTimeoutMSecs"] != "":
-                self.set_response_timeout_msecs(
-                    input_json_temp["params"]["responseTimeoutMSecs"])
-            else:
-                self.set_response_timeout_msecs(6000)
-
-        if "payloadFormat" in input_params_list:
-            if input_json_temp["params"]["payloadFormat"] != "":
-                self.set_payload_format(
-                    input_json_temp["params"]["payloadFormat"])
-            else:
-                self.set_payload_format("JSON-RPC")
-
-        if "resultUri" in input_params_list:
-            if input_json_temp["params"]["resultUri"] != "":
-                self.set_result_uri(input_json_temp["params"]["resultUri"])
-            else:
-                self.set_result_uri("")
-
-        if "notifyUri" in input_params_list:
-            if input_json_temp["params"]["notifyUri"] != "":
-                self.set_notify_uri(input_json_temp["params"]["notifyUri"])
-            else:
-                self.set_notify_uri("")
-
-        if "workOrderId" in input_params_list:
-            if input_json_temp["params"]["workOrderId"] != "":
-                self.set_work_order_id(input_json_temp["params"]
-                                       ["workOrderId"])
-            else:
-                work_order_id = hex(random.randint(1, 2 ** 64 - 1))
-                self.set_work_order_id(work_order_id)
-
-        if "workerId" in input_params_list:
-            if input_json_temp["params"]["workerId"] != "":
-                self.set_worker_id(input_json_temp["params"]["workerId"])
-            else:
-                self.set_worker_id(worker_obj.worker_id)
-
-        if "workloadId" in input_params_list:
-            if input_json_temp["params"]["workloadId"] != "":
-                self.set_workload_id(
-                    input_json_temp["params"]
-                    ["workloadId"].encode('UTF-8').hex())
-            else:
-                self.set_workload_id(input_json_temp["params"]["workloadId"])
-
-        if "requesterId" in input_params_list:
-            if input_json_temp["params"]["requesterId"] != "":
-                self.set_requester_id(input_json_temp["params"]["requesterId"])
-            else:
-                self.set_requester_id("0x3456")
-
-        if "workerEncryptionKey" in input_params_list:
-            if input_json_temp["params"]["workerEncryptionKey"] != "":
-                self.set_worker_encryption_key(
-                    input_json_temp["params"]["workerEncryptionKey"].encode(
-                        "UTF-8").hex())
-            else:
-                self.set_worker_encryption_key(
-                    crypto_utils.strip_begin_end_public_key(
-                        worker_obj.encryption_key).encode("UTF-8").hex())
-
-        if "dataEncryptionAlgorithm" in input_params_list:
-            if input_json_temp["params"]["dataEncryptionAlgorithm"] != "":
-                self.set_data_encryption_algorithm(
-                    input_json_temp["params"]["dataEncryptionAlgorithm"])
-            else:
-                self.set_data_encryption_algorithm("AES-GCM-256")
-
-        if "sessionKeyIv" in input_params_list:
-            if input_json_temp["params"]["sessionKeyIv"] != "":
-                self.set_session_key_iv(
-                    input_json_temp["params"]["sessionKeyIv"])
-            else:
-                self.set_session_key_iv(self.byte_array_to_hex_str(
-                    self.session_iv))
+        input_json = input_json_temp["params"]
 
         if "encryptedSessionKey" in input_params_list:
-            if input_json_temp["params"]["encryptedSessionKey"] != "":
-                self.set_encrypted_session_key(
-                    input_json_temp["params"]["encryptedSessionKey"])
-                self.encrypted_session_key = (
-                    input_json_temp["params"]["encryptedSessionKey"])
+            if input_json["encryptedSessionKey"] != "":
+                self.encrypted_session_key = input_json["encryptedSessionKey"]
             else:
                 self.encrypted_session_key = (
                     self.generate_encrypted_key(self.session_key,
-                                                worker_obj.encryption_key))
-                self.set_encrypted_session_key(self.byte_array_to_hex_str(
-                    self.encrypted_session_key))
+                        pre_test_response['result']['details']['workerTypeData']['encryptionKey']))
 
-        if "requesterNonce" in input_params_list:
-            if input_json_temp["params"]["requesterNonce"] != "":
-                self.set_requester_nonce(
-                    input_json_temp["params"]["requesterNonce"])
-            else:
-                self.set_requester_nonce(
-                    secrets.token_hex(16))
+        config_yaml = self.get_default_params(pre_test_response, input_json)
+        for c_key, c_value in config_yaml.items():
+            if c_key in input_params_list:
+                value = input_json[c_key] if input_json[c_key] else c_value
+                if (c_key == "workloadId") and (input_json[c_key] != "") :
+                    value = value.encode("UTF-8").hex()
+                wconfig.set_parameter(self.params_obj, c_key, value)
+
+        self.params_obj["workerEncryptionKey"] = self.params_obj["workerEncryptionKey"].encode("UTF-8").hex()
 
         if "inData" in input_params_list:
-            if input_json_temp["params"]["inData"] != "":
-                input_json_inData = input_json_temp["params"]["inData"]
+            if input_json["inData"] != "":
+                input_json_inData = input_json["inData"]
                 self.add_in_data(input_json_inData)
             else:
                 self.params_obj["inData"] = ""
 
         if "outData" in input_params_list:
-            if input_json_temp["params"]["outData"] != "":
-                input_json_outData = input_json_temp["params"]["outData"]
+            if input_json["outData"] != "":
+                input_json_outData = input_json["outData"]
                 self.add_out_data(input_json_outData)
             else:
                 self.params_obj["outData"] = ""
 
         if "encryptedRequestHash" in input_params_list:
-            if input_json_temp["params"]["encryptedRequestHash"] != "":
-                self.params_obj["encryptedRequestHash"] = \
-                    input_json_temp["params"]["encryptedRequestHash"]
+            if input_json["encryptedRequestHash"] != "":
+                self.params_obj["encryptedRequestHash"] = input_json["encryptedRequestHash"]
             else:
-                self._compute_encrypted_request_hash()
-
-        if "requesterSignature" in input_params_list:
-            if input_json_temp["params"]["requesterSignature"] != "":
-                self.params_obj["requesterSignature"] = \
-                    input_json_temp["params"]["requesterSignature"]
-            else:
-                self.params_obj["requesterSignature"] = ""
-
-        if "verifyingKey" in input_params_list:
-            if input_json_temp["params"]["verifyingKey"] != "":
-                self.params_obj["verifyingKey"] = \
-                    input_json_temp["params"]["verifyingKey"]
+                self.params_obj["encryptedRequestHash"] = self._compute_encrypted_request_hash()
 
         if "default" in tamper.keys():
             if "params" in tamper["default"].keys():
                 for key, value in tamper["default"]["params"]:
-                    param = key
-                    value = value
-            self.set_unknown_parameter(param, value)
-
-    def set_unknown_parameter(self, param, value):
-        self.params_obj[param] = value
+                    wconfig.set_parameter(self.params_obj, key, value)
 
     def _compute_encrypted_request_hash(self):
-        first_string = self.get_requester_nonce()
-        worker_order_id = self.get_work_order_id()
-        if worker_order_id is not None:
-            first_string = first_string + worker_order_id
-        else:
-            first_string = first_string + ""
+        first_string = wconfig.get_parameter(self.params_obj, "requesterNonce")
+        worker_order_id = wconfig.get_parameter(self.params_obj, "workOrderId") or ""
+        worker_id = wconfig.get_parameter(self.params_obj, "workerId") or ""
+        workload_id = wconfig.get_parameter(self.params_obj, "workloadId") or ""
+        requester_id = wconfig.get_parameter(self.params_obj, "requesterId") or ""
 
-        worker_id = self.get_worker_id()
-        if worker_id is not None:
-            first_string = first_string + worker_id
-        else:
-            first_string = first_string + ""
-
-        workload_id = self.get_workload_id()
-        if workload_id is not None:
-            first_string = first_string + workload_id
-        else:
-            first_string = first_string + ""
-
-        requester_id = self.get_requester_id()
-        if requester_id is not None:
-            first_string = first_string + requester_id
-        else:
-            first_string = first_string + ""
+        first_string = first_string + worker_order_id
+        first_string = first_string + worker_id
+        first_string = first_string + workload_id
+        first_string = first_string + requester_id
 
         concat_hash = bytes(first_string, "UTF-8")
         self.hash_1 = crypto.byte_array_to_base64(
             crypto.compute_message_hash(concat_hash))
 
-        in_data = self.get_in_data()
-        out_data = self.get_out_data()
+        in_data = wconfig.get_parameter(self.params_obj, "inData")
+        out_data = wconfig.get_parameter(self.params_obj, "outData")
 
         self.hash_2 = ""
         if in_data is not None:
@@ -240,7 +130,7 @@ class WorkOrderSubmit():
                 self.final_hash, self.session_key,
                 self.session_iv))
 
-        self.params_obj["encryptedRequestHash"] = self.encrypted_request_hash
+        return self.encrypted_request_hash
 
     def _compute_hash_string(self, data):
         final_hash_str = ""
@@ -266,7 +156,7 @@ class WorkOrderSubmit():
         return final_hash_str
 
     def _compute_requester_signature(self):
-        if self.get_requester_signature() is not None:
+        if wconfig.get_parameter(self.params_obj, "requesterSignature") is not None:
             self.public_key = self.private_key.GetPublicKey().Serialize()
             signature_result = self.private_key.SignMessage(self.final_hash)
             self.requester_signature = crypto.byte_array_to_base64(
@@ -306,56 +196,6 @@ class WorkOrderSubmit():
         """
         pub_enc_key = crypto.PKENC_PublicKey(encryption_key)
         return pub_enc_key.EncryptMessage(key)
-
-    def set_response_timeout_msecs(self, response_timeout_msecs):
-        self.params_obj["responseTimeoutMSecs"] = \
-            response_timeout_msecs
-
-    def set_payload_format(self, payload_format):
-        self.params_obj["payloadFormat"] = payload_format
-
-    def set_result_uri(self, result_uri):
-        self.params_obj["resultUri"] = result_uri
-
-    def set_notify_uri(self, notify_uri):
-        self.params_obj["notifyUri"] = notify_uri
-
-    def set_worker_id(self, worker_id):
-        self.params_obj["workerId"] = worker_id
-
-    def set_work_order_id(self, work_order_id):
-        self.params_obj["workOrderId"] = work_order_id
-
-    def set_workload_id(self, workload_id):
-        self.params_obj["workloadId"] = workload_id
-
-    def set_requester_id(self, requester_id):
-        self.params_obj["requesterId"] = requester_id
-
-    def set_worker_encryption_key(self, worker_encryption_key):
-        self.params_obj["workerEncryptionKey"] = worker_encryption_key
-
-    def set_data_encryption_algorithm(self, data_encryption_algorithm):
-        self.params_obj["dataEncryptionAlgorithm"] = \
-            data_encryption_algorithm
-
-    def set_encrypted_session_key(self, encrypted_session_key):
-        self.params_obj["encryptedSessionKey"] = encrypted_session_key
-
-    def set_session_key_iv(self, session_iv):
-        self.params_obj["sessionKeyIv"] = session_iv
-
-    def set_requester_nonce(self, requester_nonce):
-        self.params_obj["requesterNonce"] = requester_nonce
-
-    def add_encrypted_request_hash(self, encrypted_request_hash):
-        self.params_obj["encryptedRequestHash"] = encrypted_request_hash
-
-    def add_requester_signature(self, requester_signature):
-        self.params_obj["requesterSignature"] = requester_signature
-
-    def set_verifying_key(self, verifying_key):
-        self.params_obj["verifyingKey"] = verifying_key
 
     def add_in_data(self, input_json_inData):
         if "inData" not in self.params_obj:
@@ -430,7 +270,7 @@ class WorkOrderSubmit():
                 enc_data = self.encrypt_data(data, data_key, data_iv)
                 base64_enc_data = (crypto.byte_array_to_base64(enc_data))
                 if 'dataHash' in data_item:
-                    if not data_item[dataHash]:
+                    if not data_item['dataHash']:
                         dataHash_enc_data = (self.byte_array_to_hex_str(
                             crypto.compute_message_hash(data)))
                     else:
@@ -466,112 +306,23 @@ class WorkOrderSubmit():
               encryption operation.
         """
         logger.debug("encrypted_session_key: %s", encryption_key)
-        if iv is not None:
-            encrypted_data = crypto.SKENC_EncryptMessage(encryption_key,
-                                                         iv, data)
-        else:
-            encrypted_data = crypto.SKENC_EncryptMessage(encryption_key,
-                                                         0, data)
+        val = iv if iv else 0
+        encrypted_data = crypto.SKENC_EncryptMessage(encryption_key, val, data)
+
         return encrypted_data
-
-    def get_verifying_key(self):
-        if "verifyingKey" in self.params_obj:
-            return self.params_obj["verifyingKey"]
-        else:
-            return None
-
-    def get_params(self):
-        params_copy = self.params_obj.copy()
-        if "inData" in params_copy:
-            params_copy.pop("inData")
-        if "outData" in params_copy:
-            params_copy.pop("outData")
-        return params_copy
-
-    def get_in_data(self):
-        if "inData" in self.params_obj:
-            return self.params_obj["inData"]
-        else:
-            return None
-
-    def get_out_data(self):
-        if "outData" in self.params_obj:
-            return self.params_obj["outData"]
-        else:
-            return None
-
-    def get_requester_nonce(self):
-        return self.params_obj["requesterNonce"]
-
-    def get_worker_id(self):
-        if "workerId" in self.params_obj:
-            return self.params_obj["workerId"]
-        else:
-            return None
-
-    def get_workload_id(self):
-        if "workloadId" in self.params_obj:
-            return self.params_obj["workloadId"]
-        else:
-            return None
-
-    def get_requester_id(self):
-        if "requesterId" in self.params_obj:
-            return self.params_obj["requesterId"]
-        else:
-            return None
-
-    def get_session_key_iv(self):
-        return self.params_obj["sessionKeyIv"]
-
-    def get_work_order_id(self):
-        if "workOrderId" in self.params_obj:
-            return self.params_obj["workOrderId"]
-        else:
-            return None
-
-    def get_encrypted_session_key(self):
-        return self.params_obj["encryptedSessionKey"]
-
-    def get_encrypted_request_hash(self):
-        if "encryptedRequestHash" in self.params_obj:
-            return self.params_obj["encryptedRequestHash"]
-        else:
-            return None
-
-    def get_requester_signature(self):
-        if "requesterSignature" in self.params_obj:
-            return self.params_obj["requesterSignature"]
-        else:
-            return None
 
     def compute_signature(self, tamper):
 
         self._compute_requester_signature()
 
         json_rpc_request = self.id_obj
-        json_rpc_request["params"] = self.get_params()
+        json_rpc_request["params"] = wconfig.get_params(self)
 
-        input_after_sign = self.to_string()
+        input_after_sign = wconfig.to_string(self, True)
         tamper_instance = 'after_sign'
         tampered_request = tamper_request(input_after_sign, tamper_instance,
                                           tamper)
         return tampered_request
-
-    def to_string(self):
-        json_rpc_request = self.id_obj
-        json_rpc_request["params"] = self.get_params()
-
-        in_data = self.get_in_data()
-        out_data = self.get_out_data()
-
-        if in_data is not None:
-            json_rpc_request["params"]["inData"] = in_data
-
-        if out_data is not None:
-            json_rpc_request["params"]["outData"] = out_data
-
-        return json.dumps(json_rpc_request, indent=4)
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
@@ -585,10 +336,9 @@ class WorkOrderSubmit():
 
             input_json = json.loads(input_json)
 
-        self.add_json_values(input_json, worker_obj, private_key,
+        self.add_json_values(input_json, pre_test_response, private_key,
                              globals.wo_submit_tamper)
-        input_work_order = self.compute_signature(
-            self.tamper)
+        input_work_order = self.compute_signature(self.tamper)
         logger.info('Compute Signature complete \n')
 
         final_json_str = json.loads(input_work_order)
@@ -596,64 +346,36 @@ class WorkOrderSubmit():
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
-
+        output = {}
+        data = input_json["params"]
         logger.info("JSON object %s \n", input_json)
-        self.set_workload_id(input_json["params"]["workloadId"])
-        work_order_id = ""
-        if "workOrderId" in input_json["params"].keys():
-            if input_json["params"]["workOrderId"] == "":
-                work_order_id = secrets.token_hex(32)
-            else:
-                work_order_id = input_json["params"]["workOrderId"]
-        if "workerId" in input_json["params"].keys():
-            if input_json["params"]["workerId"] == "":
-                self.set_worker_id(worker_obj.worker_id)
-            else:
-                self.set_worker_id(input_json["params"]["workerId"])
-        if "dataEncryptionAlgorithm" in input_json["params"].keys():
-            if input_json["params"]["dataEncryptionAlgorithm"] == "":
-                data_encryption_algo = "AES-GCM-256"
-            else:
-                data_encryption_algo = \
-                    input_json["params"]["dataEncryptionAlgorithm"]
-        in_data = input_json["params"]["inData"]
-        if "workerEncryptionKey" in input_json["params"].keys():
-            if input_json["params"]["workerEncryptionKey"] == "":
-                worker_encrypt_key = worker_obj.encryption_key
-            else:
-                worker_encrypt_key = input_json["params"]["workerEncryptionKey"]
-        logger.info("workload_id %s \n", self.get_workload_id())
-        # Convert workloadId to hex
-        workload_id = self.get_workload_id().encode("UTF-8").hex()
-        # work_order_id = secrets.token_hex(32)
-        #requester_id = secrets.token_hex(32)
-        #requester_nonce = secrets.token_hex(16)
-        requester_nonce = ""
-        requester_id = ""
-        if "requesterId" in input_json["params"].keys():
-            if input_json["params"]["requesterId"] == "":
-                requester_id = secrets.token_hex(32)
-            else:
-                requester_id = input_json["params"]["requesterId"]
-        logger.info("requester id ---- %s", requester_id)
+        
+        if pre_test_response:
+            config_yaml = self.get_default_params(pre_test_response, data)
+        else:
+            config_yaml = self.get_default_params(worker_obj, data)
+        for c_key, c_value in config_yaml.items():
+            if c_key in data.keys():
+                output[c_key] = data[c_key] if data[c_key] else c_value
 
-        if "requesterNonce" in input_json["params"].keys():
-            if input_json["params"]["requesterNonce"] == "":
-                requester_nonce = secrets.token_hex(16)
-            else:
-                requester_nonce = input_json["params"]["requesterNonce"]
-        logger.info("requester_nonce ---- %s", requester_nonce)
+        # Convert workloadId to hex
+        workload_id = output["workloadId"].encode("UTF-8").hex()
+        logger.info("workload_id %s \n", workload_id)
+        logger.info("requester id ---- %s", output["requesterId"])
+        logger.info("requester_nonce ---- %s", output["requesterNonce"])
 
         # Create work order params
+        work_order_id = output["workOrderId"] if "workOrderId" in output.keys() else ""
         wo_params = WorkOrderParams(
-            work_order_id, self.get_worker_id(), workload_id, requester_id,
-            self.session_key, self.session_iv, requester_nonce,
+            work_order_id, output["workerId"], workload_id, output["requesterId"],
+            self.session_key, self.session_iv, output["requesterNonce"],
             result_uri=" ", notify_uri=" ",
-            worker_encryption_key=worker_encrypt_key,
-            data_encryption_algorithm=data_encryption_algo
+            worker_encryption_key=output["workerEncryptionKey"],
+            data_encryption_algorithm=output["dataEncryptionAlgorithm"]
         )
-        # logger.info("In data %s \n", in_data)
+
         # Add worker input data
+        in_data = input_json["params"]["inData"]
         for rows in in_data:
             for k, v in rows.items():
                 if k == "data":
@@ -672,3 +394,23 @@ class WorkOrderSubmit():
 
         return wo_params
 
+    def get_default_params(self, pre_response, input_dict):
+        d_params = wconfig.read_config(__file__, pre_response)
+        try:
+            d_params["requesterNonce"] = secrets.token_hex(16)
+            d_params["requesterId"]    = secrets.token_hex(32)
+            d_params["workerEncryptionKey"] = pre_response.get("result", {}).get("details",
+                    {}).get("workerTypeData", {}).get('encryptionKey', {})
+            d_params["workOrderId"] = secrets.token_hex(32)
+            if "workloadId" in input_dict.keys():
+                d_params["workloadId"] = input_dict["workloadId"]
+
+            if globals.direct_test_mode == "listener":
+                d_params["workerEncryptionKey"]  = crypto_utils.strip_begin_end_public_key(d_params["workerEncryptionKey"])
+                d_params["sessionKeyIv"]         = self.byte_array_to_hex_str(self.session_iv)
+                if self.encrypted_session_key:
+                    d_params["encryptedSessionKey"]  = self.byte_array_to_hex_str(self.encrypted_session_key)
+
+        except Exception as e:
+            logger.error("Exception Occurred inside get_default_params ", e)
+        return d_params
