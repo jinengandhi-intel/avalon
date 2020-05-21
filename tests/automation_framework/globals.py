@@ -1,6 +1,6 @@
 import os
 from http_client.http_jrpc_client \
-        import HttpJrpcClient
+    import HttpJrpcClient
 
 TCFHOME = os.environ.get("TCF_HOME", "../../")
 
@@ -71,4 +71,8 @@ proxy_mode = False
 conffiles = [TCFHOME + "/sdk/avalon_sdk/tcf_connector.toml"]
 confpaths = ["."]
 
-
+if direct_test_mode == "listener":
+    currentPath = os.path.dirname(__file__)
+    result_path = os.path.join(currentPath, "results")
+    if not os.path.exists(result_path):
+        os.mkdir(result_path)

@@ -84,7 +84,7 @@ def is_valid_params(request_elements, keys_count=None):
 
 
 def verify_work_order_signature(response, worker_obj):
-    verify_key = worker_obj.verification_key
+    verify_key = worker_obj['result']['details']['workerTypeData']['verificationKey']
 
     try:
         verify_obj = signature.ClientSignature()

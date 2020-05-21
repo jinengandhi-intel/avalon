@@ -201,7 +201,7 @@ RUN echo "Building Avalon SDK\n" \
 FROM base_image as final_image
 
 RUN apt-get update \
- && apt-get install -y -q python3-pip git \
+ && apt-get install -y -q python3-pip git python3-yaml\
  && pip3 install json-rpc web3 py-solc-x nose2 pytest pytest-json-report \
  && echo "Install fabric python sdk\n" \
  && pip3 install virtualenv \

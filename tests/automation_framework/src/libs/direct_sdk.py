@@ -40,21 +40,21 @@ class SDKImpl():
             pre_test_response=lookup_response)
         logger.info('*****Worker details Updated with Worker ID***** \
                                            \n%s\n', worker_id)
-        worker_obj = worker_retrieve_sdk(worker_id)
+        retrieve_response = worker_retrieve_sdk(worker_id)
         # worker_obj.load_worker(retrieve_response['result']['details'])
         # if globals.proxy_mode and \
         #    globals.blockchain_type == "ethereum":
-        return worker_obj
+        return retrieve_response
 
-    def work_order_submit(self, worker_obj):
+    def work_order_submit(self, response_output):
         submit_obj = WorkOrderSubmit()
         submit_request_file = os.path.join(
             globals.work_order_input_file,
             "work_order_success.json")
         submit_request_json = self.read_json(submit_request_file)
         wo_params = submit_obj.configure_data_sdk(
-            input_json=submit_request_json, worker_obj=worker_obj,
-            pre_test_response=None)
+            input_json=submit_request_json, worker_obj=None,
+            pre_test_response=response_output)
         submit_response = workorder_submit_sdk(wo_params)
         # input_work_order_submit = submit_obj.compute_signature(
         #    globals.wo_submit_tamper)

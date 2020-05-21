@@ -31,7 +31,7 @@ class TestBase():
     def setup_and_build_request_wo_submit(self, input_file):
         pre_test_output = pre_test_worker_env(input_file)
         request_obj, action_obj = build_request_obj(
-            input_file, pre_test_output=pre_test_output)
+            input_file, pre_test_response=pre_test_output)
         self.build_request_output.update(
             {'request_obj': request_obj,
              'pre_test_output': pre_test_output,

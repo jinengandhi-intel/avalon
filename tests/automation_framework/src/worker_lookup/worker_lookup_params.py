@@ -14,10 +14,12 @@
 
 import json
 import logging
+import src.utilities.worker_utilities as wconfig
 
 
 logger = logging.getLogger(__name__)
-
+WORKER_TYPE = "workerType"
+ID = "id"
 
 class WorkerLookUp():
     def __init__(self):
@@ -27,47 +29,13 @@ class WorkerLookUp():
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_lookup"
 
-    def add_json_values(self, input_json_temp, tamper):
-
-        if "workerType" in input_json_temp["params"].keys():
-            if input_json_temp["params"]["workerType"] != "":
-                self.set_worker_type(input_json_temp["params"]["workerType"])
-            else:
-                self.set_worker_type(1)
-
-        if "id" in input_json_temp.keys():
-            self.set_request_id(input_json_temp["id"])
-
-        for key in tamper["params"].keys():
-            param = key
-            value = tamper["params"][key]
-            self.set_unknown_parameter(param, value)
-
-    def set_unknown_parameter(self, param, value):
-        self.params_obj[param] = value
-
-    def set_worker_type(self, worker_type):
-        self.params_obj["workerType"] = worker_type
-
-    def set_request_id(self, request_id):
-        self.id_obj["id"] = request_id
-
-    def get_params(self):
-        return self.params_obj.copy()
-
-    def to_string(self):
-        json_rpc_request = self.id_obj
-        json_rpc_request["params"] = self.get_params()
-
-        return json.dumps(json_rpc_request, indent=4)
-
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
         if input_json is None:
-            self.set_worker_type(1)
+            wconfig.set_parameter(self.params_obj, WORKER_TYPE, 1)
         else:
-            self.add_json_values(input_json, self.tamper)
-        final_json = json.loads(self.to_string())
+            wconfig.add_json_values(self, input_json, pre_test_response)
+        final_json = json.loads(wconfig.to_string(self))
         return final_json
 
     def configure_data_sdk(

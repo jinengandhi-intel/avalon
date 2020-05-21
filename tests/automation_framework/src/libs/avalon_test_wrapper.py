@@ -115,7 +115,7 @@ def pre_test_worker_env(input_file):
 
     if request_method != "WorkerLookUp":
         response = impl_type.worker_lookup()
-        logger.info("******Received Response******\n%s\n", response)
+        logger.info("******Received WorkerLookUp Response******\n%s\n", response)
 
     if request_method not in ["WorkerLookUp", "WorkerRetrieve", "WorkerUpdate",
                               "WorkerSetStatus"]:

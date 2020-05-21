@@ -11,6 +11,7 @@ from error_code.error_status import ReceiptCreateStatus
 import avalon_crypto_utils.crypto_utility as crypto_utility
 from avalon_sdk.work_order_receipt.work_order_receipt \
     import WorkOrderReceiptRequest
+import src.utilities.worker_utilities as wconfig
 logger = logging.getLogger(__name__)
 
 
@@ -38,10 +39,6 @@ class WorkOrderReceiptCreate():
         # %s ------2. %s\n", input_json_temp,  type(wo_submit))
         final_hash_str = \
             self.sig_obj.calculate_request_hash(input_request_wo_submit)
-        nonce = None
-        requester_nonce = nonce
-        if nonce is None:
-            requester_nonce = str(random.randint(1, 10 ** 10))
 
         # public_key =  signing_key.GetPublicKey().Serialize()
         input_json_temp = input_json_temp["params"]
@@ -62,114 +59,33 @@ class WorkOrderReceiptCreate():
         )
 
         input_params_list = input_json_temp.keys()
+        config_yaml = self.get_default_params()
+        for c_key, c_val in config_yaml.items():
+            if c_key in input_params_list:
+                value = input_json_temp[c_key] if input_json_temp[c_key] != "" else c_val
+                wconfig.set_parameter(self.params_obj, c_key, value)
+
         if "workOrderId" in input_params_list:
-            # if input_json_temp["workOrderId"] != "" :
-            self.set_work_order_id(input_request_wo_submit
-                                   ["params"]["workOrderId"])
-            # else :
-            #    work_order_id = hex(random.randint(1, 2**64 -1))
-            #    self.set_work_order_id(work_order_id)
-
-        if "workerId" in input_params_list:
-            if input_json_temp["workerId"] != "" or \
-                    input_json_temp["workerServiceId"] != "":
-                self.set_worker_id(input_json_temp["workerId"])
-                self.set_worker_id(input_json_temp["workerServiceId"])
-            else:
-                self.set_worker_id(worker_obj.worker_id)
-
-        if "requesterId" in input_params_list:
-            if input_json_temp["requesterId"] != "":
-                self.set_requester_id(input_json_temp["requesterId"])
-            else:
-                self.set_requester_id("0x3456")
-
-        if "signatureRules" in input_params_list:
-            if input_json_temp["signatureRules"] != "":
-                self.set_signatureRules(input_json_temp["signatureRules"])
-            else:
-                self.set_signatureRules("SHA-256/SECP256K1")
-
-        if "receiptCreateStatus" in input_params_list:
-            if input_json_temp["receiptCreateStatus"] != "":
-                self.set_receiptCreateStatus(input_json_temp
-                                             ["receiptCreateStatus"])
-            else:
-                self.set_receiptCreateStatus(0)
+            wconfig.set_parameter(self.params_obj, "workOrderId", input_request_wo_submit["params"]["workOrderId"])
 
         if "workOrderRequestHash" in input_params_list:
-            # if input_json_temp["workOrderRequestHash"] != "":
-            #    self.set_workOrderRequestHash(input_json_temp["workOrderRequestHash"])
-            # else:
-            self.set_workOrderRequestHash(final_hash_str)
-
-        if "requesterGeneratedNonce" in input_params_list:
-            # if input_json_temp["requesterGeneratedNonce"] != "":
-            #    self.set_requesterGeneratedNonce(input_json_temp["requesterGeneratedNonce"])
-            # else:
-            self.set_requesterGeneratedNonce(requester_nonce)
+            wconfig.set_parameter(self.params_obj, "workOrderRequestHash", final_hash_str)
 
         if "requesterSignature" in input_params_list:
-            # if input_json_temp["requesterSignature"] != "":
-            # self.set_requesterSignature(input_json_temp["requesterSignature"])
-            # else:
-            self.set_requesterSignature(wo_receipt_sign)
-
-        # if "receiptVerificationKey" in input_params_list:
-        #    self.set_receiptVerificationKey(private_key)
-
-    # def set_receiptVerificationKey(self, receiptVerificationKey):
-    #    self.params_obj["receiptVerificationKey"] = receiptVerificationKey
-
-    def set_requesterSignature(self, requesterSignature):
-        self.params_obj["requesterSignature"] = requesterSignature
-
-    def set_requesterGeneratedNonce(self, requesterGeneratedNonce):
-        self.params_obj["requesterGeneratedNonce"] = requesterGeneratedNonce
-
-    def set_workOrderRequestHash(self, workOrderRequestHash):
-        self.params_obj["workOrderRequestHash"] = workOrderRequestHash
-
-    def set_receiptCreateStatus(self, receiptCreateStatus):
-        self.params_obj["receiptCreateStatus"] = receiptCreateStatus
-
-    def set_signatureRules(self, signatureRules):
-        self.params_obj["signatureRules"] = signatureRules
-
-    def set_requester_id(self, requester_id):
-        self.params_obj["requesterId"] = requester_id
-
-    def set_worker_id(self, worker_id):
-        self.params_obj["workerId"] = worker_id
-        self.params_obj["workerServiceId"] = worker_id
-
-    def set_work_order_id(self, work_order_id):
-        self.params_obj["workOrderId"] = work_order_id
-
-    def get_work_order_id(self):
-        if "workOrderId" in self.params_obj:
-            return self.params_obj["workOrderId"]
+            wconfig.set_parameter(self.params_obj, "requesterSignature", wo_receipt_sign)
 
     def compute_signature(self, tamper):
 
         self._compute_requester_signature()
 
         json_rpc_request = self.id_obj
-        json_rpc_request["params"] = self.get_params()
+        json_rpc_request["params"] = wconfig.get_params(self)
 
-        input_after_sign = self.to_string()
+        input_after_sign = wconfig.to_string(self)
         tamper_instance = 'after_sign'
         tampered_request = tamper_request(input_after_sign, tamper_instance,
                                           tamper)
         return tampered_request
-
-    def to_string(self):
-        json_rpc_request = self.id_obj
-        json_rpc_request["params"] = self.get_params()
-        return json.dumps(json_rpc_request, indent=4)
-
-    def get_params(self):
-        return self.params_obj.copy()
 
     def _compute_requester_signature(self):
         self.public_key = self.private_key.GetPublicKey().Serialize()
@@ -214,3 +130,9 @@ class WorkOrderReceiptCreate():
 
         return wo_create_receipt
 
+    def get_default_params(self, worker_obj):
+        default_params = wconfig.read_config_file(__file__, worker_obj)
+        if globals.direct_test_mode == "listener":
+            default_params["workerServiceId"] = worker_obj.worker_id
+            default_params["requesterGeneratedNonce"] = str(random.randint(1, 10 ** 10))
+        return default_params

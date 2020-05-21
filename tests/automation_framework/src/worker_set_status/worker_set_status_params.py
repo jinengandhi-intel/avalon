@@ -15,6 +15,7 @@
 import json
 import logging
 import avalon_crypto_utils.crypto_utility as crypto_utils
+import src.utilities.worker_utilities as wconfig
 import globals
 
 logger = logging.getLogger(__name__)
@@ -28,55 +29,12 @@ class WorkerSetStatus():
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_set_status"
 
-    def add_json_values(self, input_json_temp, pre_test_response, tamper):
-
-        for keys in input_json_temp["params"].keys():
-            if "workerId" in keys:
-                if input_json_temp["params"]["workerId"] != "":
-                    self.set_worker_id(input_json_temp["params"]["workerId"])
-                else:
-                    self.set_worker_id(
-                        crypto_utils.strip_begin_end_public_key
-                        (pre_test_response["result"]["ids"][0]))
-
-            elif "id" in keys:
-                self.set_request_id(input_json_temp["id"])
-            elif "status" in keys:
-                if input_json_temp["params"]["status"] != "":
-                    self.set_status(input_json_temp["params"]["status"])
-                else:
-                    self.set_status(1)
-            else:
-                param = keys
-                value = input_json_temp["params"][keys]
-                self.set_unknown_parameter(param, value)
-                
-    def set_unknown_parameter(self, param, value):
-        self.params_obj[param] = value
-
-    def set_worker_id(self, worker_id):
-        self.params_obj["workerId"] = worker_id
-
-    def set_request_id(self, request_id):
-        self.id_obj["id"] = request_id
-
-    def set_status(self, status):
-        self.params_obj["status"] = status
-
-    def get_params(self):
-        return self.params_obj.copy()
-
-    def to_string(self):
-        json_rpc_request = self.id_obj
-        json_rpc_request["params"] = self.get_params()
-
-        return json.dumps(json_rpc_request, indent=4)
-
     def configure_data(
             self, input_json, worker_obj, lookup_response):
         logger.info(" Request json %s \n", input_json)
-        self.add_json_values(input_json, lookup_response, self.tamper)
-        final_json = json.loads(self.to_string())
+        lookup_response["workerId"] = lookup_response["result"]["ids"][0]
+        wconfig.add_json_values(self, input_json, lookup_response)
+        final_json = json.loads(wconfig.to_string(self))
         logger.info(" Final json %s \n", final_json)
         return final_json
 
