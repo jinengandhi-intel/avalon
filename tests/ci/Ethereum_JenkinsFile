@@ -51,16 +51,17 @@ pipeline {
         stage('Checkout Master & Validation Repo') {
             steps {
                 sh '''
-                mkdir -p $NIGHTLY_WORKSPACE_DIR/dev_repo
-                cd $NIGHTLY_WORKSPACE_DIR/dev_repo
-                git clone https://github.com/hyperledger/avalon.git
-                cd avalon
 
                 if docker ps -a | grep -q 'avalon-shell'; then
                     docker stop $(docker ps -a -q)
                     docker rm $(docker ps -a -q)
                 fi
                 docker system prune -af
+
+                mkdir -p $NIGHTLY_WORKSPACE_DIR/dev_repo
+                cd $NIGHTLY_WORKSPACE_DIR/dev_repo
+                git clone https://github.com/hyperledger/avalon.git
+                cd avalon
 
                 mkdir -p $NIGHTLY_WORKSPACE_DIR/val_repo
                 cd $NIGHTLY_WORKSPACE_DIR/val_repo
@@ -70,6 +71,7 @@ pipeline {
                 sed -i "s/blockchain_type = ''/blockchain_type = 'ethereum'/g" tests/automation_framework/globals.py
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_besu_proxy_model_tests.sh $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/
+                cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_tests $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/bin/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/automation_framework $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/docker/Dockerfile $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/docker/
                 '''
@@ -93,7 +95,7 @@ pipeline {
                 cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
                 mkdir logs
                 echo `pwd`
-                docker-compose -f ci/docker-compose-proxy-model-build-val.yaml build
+                docker-compose -f ci/docker-compose-besu-proxy-model-build.yaml build
                 '''
             }
         }

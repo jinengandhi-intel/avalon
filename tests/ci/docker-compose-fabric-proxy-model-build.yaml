@@ -15,7 +15,7 @@
 version: '3.5'
 
 services:
-  avalon-proxy-model-tests:
+  avalon-fabric-proxy-model-tests:
     image: avalon-shell:${ISOLATION_ID}
     build:
       context: ..
