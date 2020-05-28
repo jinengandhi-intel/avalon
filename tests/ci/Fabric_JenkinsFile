@@ -70,9 +70,9 @@ pipeline {
                 cd avalon
                 sed -i "s/proxy_mode = False/proxy_mode = True/g" tests/automation_framework/globals.py
                 sed -i "s/blockchain_type = ''/blockchain_type = 'fabric'/g" tests/automation_framework/globals.py
-                cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/ci/docker-compose-proxy-model-build-val.yaml $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/ci/
+                cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/automation_framework $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
-                cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_proxy_model_tests.sh $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/
+                cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_fabric_proxy_model_tests.sh $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/docker/Dockerfile $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/docker/
                 '''
             }
@@ -87,7 +87,7 @@ pipeline {
                             cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
                             mkdir logs
                             echo `pwd`
-                            docker-compose -f ci/docker-compose-proxy-model-build-val.yaml build
+                            docker-compose -f tests/ci/docker-compose-fabric-proxy-model-build.yaml build
                             '''
                         }
                     },

@@ -15,16 +15,11 @@
 version: '3.5'
 
 services:
-  avalon-proxy-model-tests:
+  avalon-besu-proxy-model-tests:
     image: avalon-shell:${ISOLATION_ID}
     working_dir: "/project/avalon/"
-    volumes:
-      - ../vars/keyfiles:/keyfiles
-      - ../vars/profiles/mychannel_network_for_pysdk.json:/project/avalon/sdk/avalon_sdk/connector/blockchains/fabric/network.json
-      - ../vars/blockmark:/project/avalon/examples/apps/generic_client/blockmark
-      - ../logs:/project/avalon/logs
     entrypoint: "bash -c \"\
-        ./tools/run_proxy_model_tests.sh \""
+        ./tools/run_besu_proxy_model_tests.sh \""
     depends_on:
       - avalon-enclave-manager
       - avalon-listener
@@ -82,15 +77,11 @@ services:
       - no_proxy
     command: |
       bash -c "
-        avalon_blockchain_connector -b fabric -u http://avalon-listener:1947
+        avalon_blockchain_connector -b ethereum -u http://avalon-listener:1947
         tail -f /dev/null
-        "
+      "
     volumes:
-      # Fabric crypto materials has to be shared to connector to
-      # interact with fabric blockchain
-      - ../vars/keyfiles:/keyfiles
-      - ../vars/profiles/mychannel_network_for_pysdk.json:/project/avalon/sdk/avalon_sdk/connector/blockchains/fabric/network.json
-      - ../vars/blockmark:/project/avalon/blockchain_connector/blockmark
+      - ../:/project/avalon
     depends_on:
       - avalon-listener
       - avalon-enclave-manager
@@ -98,4 +89,4 @@ services:
 networks:
   default:
     external:
-      name: minifab
+      name: besu_local_net

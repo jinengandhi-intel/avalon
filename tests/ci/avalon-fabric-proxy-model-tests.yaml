@@ -15,13 +15,14 @@
 version: '3.5'
 
 services:
-  avalon-proxy-model-tests:
+  avalon-fabric-proxy-model-tests:
     image: avalon-shell:${ISOLATION_ID}
     working_dir: "/project/avalon/"
     volumes:
       - ../vars/keyfiles:/keyfiles
       - ../vars/profiles/mychannel_network_for_pysdk.json:/project/avalon/sdk/avalon_sdk/connector/blockchains/fabric/network.json
       - ../vars/blockmark:/project/avalon/examples/apps/generic_client/blockmark
+      - ../logs:/project/avalon/logs
     entrypoint: "bash -c \"\
         ./tools/run_fabric_proxy_model_tests.sh \""
     depends_on:
