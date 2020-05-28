@@ -246,11 +246,14 @@ def worker_retrieve_sdk(worker_id, input_json=None):
             return worker_retrieve_result
     if globals.proxy_mode and globals.blockchain_type == 'fabric':
         worker_obj.load_worker(json.loads(worker_retrieve_result[4]))
+        worker_retrieve_result = json.loads(worker_retrieve_result[4])
     else:
         worker_obj.load_worker(worker_retrieve_result['result']['details'])
+        worker_retrieve_result = worker_retrieve_result['result']['details']
     worker_obj.worker_id = worker_id
-    logger.info("\n Worker ID\n%s\n", worker_obj.worker_id)
     worker_retrieve_result["workerId"] = worker_id
+    logger.info("\n Worker ID\n%s\n", worker_id)
+
     return worker_retrieve_result
 
 
