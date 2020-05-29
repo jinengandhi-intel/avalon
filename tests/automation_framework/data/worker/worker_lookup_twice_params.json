@@ -1,7 +1,10 @@
 {
     "jsonrpc": "2.0",
-    "methodName": "WorkerLookUp",
+    "method": "WorkerLookUp",
     "id": 3,
+    "params": {
+        "workerType": 1
+    },
     "params": {
         "workerType": 1
     }

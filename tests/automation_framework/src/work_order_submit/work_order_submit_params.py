@@ -67,7 +67,7 @@ class WorkOrderSubmit():
                     value = value.encode("UTF-8").hex()
                 wconfig.set_parameter(self.params_obj, c_key, value)
 
-        self.params_obj["workerEncryptionKey"] = self.params_obj["workerEncryptionKey"].encode("UTF-8").hex()
+        self.params_obj["workerEncryptionKey"] = self.params_obj.get("workerEncryptionKey", '').encode("UTF-8").hex()
 
         if "inData" in input_params_list:
             if input_json["inData"] != "":

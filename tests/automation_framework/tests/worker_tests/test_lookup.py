@@ -21,6 +21,8 @@ from src.utilities.verification_utils \
 from src.libs.avalon_test_wrapper \
     import read_json, submit_request
 from src.utilities.generic_utils import TestStep
+from src.utilities.verification_utils \
+    import check_negative_test_responses
 import operator
 from src.libs.test_base import TestBase
 
@@ -157,6 +159,50 @@ class TestClass():
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_worker_lookup_response(response, operator.eq, 0)
+                is TestStep.SUCCESS.value)
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.worker
+    @pytest.mark.worker_lookup
+    @pytest.mark.test_worker_lookup_method_field_change
+    @pytest.mark.listener
+    def test_worker_lookup_method_field_change(self):
+        test_id = '18278'
+        request_file = os.path.join(
+            globals.worker_input_file,
+            "worker_lookup_method_field_change.json")
+
+        msg_response = self.test_obj.post_json_msg(request_file)
+
+        logger.info("**********Received Response*********\n%s\n", msg_response)
+
+        assert (
+                check_negative_test_responses(
+                    msg_response,
+                    "Invalid parameter methodName")
+                is TestStep.SUCCESS.value)
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.worker
+    @pytest.mark.worker_lookup
+    @pytest.mark.test_worker_lookup_twice_params
+    @pytest.mark.listener
+    def test_worker_lookup_twice_params(self):
+        test_id = '18279'
+        request_file = os.path.join(
+            globals.worker_input_file,
+            "worker_lookup_twice_params.json")
+
+        msg_response = self.test_obj.post_json_msg(request_file)
+
+        logger.info("**********Received Response*********\n%s\n", msg_response)
+
+        assert (
+                check_negative_test_responses(
+                    msg_response,
+                    "Duplicate parameter params")
                 is TestStep.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
