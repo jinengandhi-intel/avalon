@@ -2079,3 +2079,156 @@ class TestClass():
                     self.test_obj.build_request_output['action_obj'])
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.test_workordersubmit_params_unknownparameter
+    @pytest.mark.listener
+    def test_workordersubmit_params_unknownparameter(self):
+        test_id = '18700'
+        request_file = os.path.join(
+            globals.work_order_input_file,
+            "workordersubmit_params_unknownparameter.json")
+
+        msg_response = self.test_obj.post_json_msg(request_file)
+
+        assert (
+                check_negative_test_responses(
+                    msg_response,
+                    "Invalid parameter unknownEncoding")
+                is TestStep.SUCCESS.value)
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.test_workordersubmit_workerId_notdefaultlength_postmsg
+    def test_workordersubmit_workerId_notdefaultlength_postmsg(self):
+        request_file = os.path.join(
+            globals.work_order_input_file,
+            "workordersubmit_workerId_notdefaultlength_postmsg.json")
+
+        msg_response = self.test_obj.post_json_msg(request_file)
+
+        assert (
+                check_negative_test_responses(
+                    msg_response,
+                    "Invalid data format for workerId")
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.test_workordersubmit_workerId_notdefaultlength
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    def test_workordersubmit_workerId_notdefaultlength(self):
+        test_id = '18741'
+        request_file = os.path.join(
+            globals.work_order_input_file,
+            "workordersubmit_workerId_notdefaultlength.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            globals.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                verify_test(
+                    result_response, 2,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.test_workordersubmit_payloadFormat_notJSONRPC
+    @pytest.mark.listener
+    def test_workordersubmit_payloadFormat_notJSONRPC(self):
+        test_id = '18750'
+        request_file = os.path.join(
+            globals.work_order_input_file,
+            "workordersubmit_payloadFormat_notJSONRPC.json")
+
+        msg_response = self.test_obj.post_json_msg(request_file)
+
+        assert (
+                check_negative_test_responses(
+                    msg_response,
+                    "Invalid payload format")
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.test_workordersubmit_params_empty
+    @pytest.mark.listener
+    def test_workordersubmit_params_empty(self):
+        test_id = '18762'
+        request_file = os.path.join(
+            globals.work_order_input_file,
+            "workordersubmit_params_empty.json")
+
+        msg_response = self.test_obj.post_json_msg(request_file)
+
+        assert (
+                check_negative_test_responses(
+                    msg_response,
+                    "Invalid parameter params")
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.test_workordersubmit_OutDataDataEncryptionKey_hyphenecho
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    def test_workordersubmit_OutDataDataEncryptionKey_hyphenecho(self):
+        test_id = '18784'
+        request_file = os.path.join(
+            globals.work_order_input_file,
+            "workordersubmit_OutDataDataEncryptionKey_hyphenecho.json")
+
+        err_cd = \
+            self.test_obj.setup_and_build_request_wo_submit(
+                read_json(request_file))
+
+        submit_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            globals.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'])
+
+        assert (
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.test_workordersubmit_params_twiceechoclient
+    @pytest.mark.listener
+    def test_workordersubmit_params_twiceechoclient(self):
+        test_id = '18791'
+        request_file = os.path.join(
+            globals.work_order_input_file,
+            "workordersubmit_params_twiceechoclient.json")
+
+        msg_response = self.test_obj.post_json_msg(request_file)
+
+        assert (
+                check_negative_test_responses(
+                    msg_response,
+                    "Duplicate parameter params")
+                is TestStep.SUCCESS.value)
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
+

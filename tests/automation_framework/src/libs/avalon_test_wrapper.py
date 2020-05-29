@@ -62,7 +62,7 @@ def build_request_obj(input_json_obj,
     worker_lookup SDK function requires worker_type parameter
     worker_retrieve SDK function requires worker_id parameter.
     """
-    action_obj = eval(input_json_obj["method"]+"()")
+    action_obj = eval(input_json_obj.get("method")+"()")
     if globals.direct_test_mode == "listener":
         request_obj = action_obj.configure_data(
             input_json_obj, pre_test_output, pre_test_response)
@@ -78,7 +78,7 @@ def submit_request(uri_client, output_obj, output_file, input_file):
     For listener, output_obj is the JSON obj, for SDK it is the parameter that is received
     as an output from build_request_obj function.
     """
-    request_method = input_file["method"]
+    request_method = input_file.get("method")
     if globals.direct_test_mode == "listener":
         submit_response = submit_request_listener(
             uri_client, output_obj, output_file)
@@ -106,7 +106,7 @@ def pre_test_worker_env(input_file):
     the worker details and pass that as the output.
     """
     response = None
-    request_method = input_file["method"]
+    request_method = input_file.get("method")
     impl_type = impl_instance()
 
     if request_method == "WorkerRegister":
