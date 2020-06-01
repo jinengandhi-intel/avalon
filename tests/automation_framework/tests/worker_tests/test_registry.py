@@ -505,3 +505,29 @@ class TestClass():
                 is TestStep.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.worker
+    @pytest.mark.workerregister
+    @pytest.mark.test_workerregister_proofDataType_null
+    @pytest.mark.listener
+    @pytest.mark.sdk
+    def test_workerregister_proofDataType_null(self):
+        request_file = os.path.join(
+            globals.worker_input_file,
+            "workerregister_proofDataType_null.json")
+
+        err_cd = self.test_obj.setup_and_build_request_register(
+            read_json(request_file))
+
+        response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            globals.worker_lookup_output_json_file_name,
+            read_json(request_file))
+
+        logger.info("**********Received Response*********\n%s\n", response)
+
+        assert (validate_response_code(response, 2)
+                is TestStep.SUCCESS.value)
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
