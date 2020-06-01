@@ -462,7 +462,7 @@ class TestClass():
     def test_workerregister_proofDataType_empty(self):
         request_file = os.path.join(
             globals.worker_input_file,
-            "workerregister_proofData_empty.json")
+            "workerregister_proofDataType_empty.json")
 
         err_cd = self.test_obj.setup_and_build_request_register(
             read_json(request_file))
@@ -488,7 +488,7 @@ class TestClass():
     def test_workerregister_proofDataType_invalid(self):
         request_file = os.path.join(
             globals.worker_input_file,
-            "workerregister_proofData_invalid.json")
+            "workerregister_proofDataType_invalid.json")
 
         err_cd = self.test_obj.setup_and_build_request_register(
             read_json(request_file))

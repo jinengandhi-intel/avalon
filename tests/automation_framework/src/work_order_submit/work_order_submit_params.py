@@ -349,11 +349,8 @@ class WorkOrderSubmit():
         output = {}
         data = input_json["params"]
         logger.info("JSON object %s \n", input_json)
-        
-        if pre_test_response:
-            config_yaml = self.get_default_params(pre_test_response, data)
-        else:
-            config_yaml = self.get_default_params(worker_obj, data)
+
+        config_yaml = self.get_default_params(pre_test_response, data)
         for c_key, c_value in config_yaml.items():
             if c_key in data.keys():
                 output[c_key] = data[c_key] if data[c_key] else c_value
@@ -400,7 +397,7 @@ class WorkOrderSubmit():
             d_params["requesterNonce"] = secrets.token_hex(16)
             d_params["requesterId"]    = secrets.token_hex(32)
             d_params["workerEncryptionKey"] = pre_response.get("result", {}).get("details",
-                    {}).get("workerTypeData", {}).get('encryptionKey', {})
+                    {}).get("workerTypeData", {}).get('encryptionKey')
             d_params["workOrderId"] = secrets.token_hex(32)
             if "workloadId" in input_dict.keys():
                 d_params["workloadId"] = input_dict["workloadId"]
