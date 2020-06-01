@@ -208,7 +208,7 @@ def check_worker_retrieve_receipt_response(response):
 
 
 def check_negative_test_responses(response, expected_res):
-    error_msg = response["error"]["message"]
+    error_msg = response.get("error", {}).get("message")
     if expected_res == "Invalid data format for work order id":
         if error_msg == "Invalid data format for work order id" or\
             (error_msg == "Server error" and
