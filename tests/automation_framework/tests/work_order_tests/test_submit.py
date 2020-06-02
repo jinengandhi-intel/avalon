@@ -468,14 +468,10 @@ class TestClass():
             globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
-                verify_test(
-                    result_response, 0,
-                    self.test_obj.build_request_output['pre_test_output'],
-                    self.test_obj.build_request_output['action_obj'])
+                check_negative_test_responses(
+                    submit_response,
+                    "Invalid params Worker Encryption Key")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1688,12 +1684,10 @@ class TestClass():
             globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
         assert (
-               check_negative_test_responses(
-                   result_response,
-                   "Invalid Request")
+                check_negative_test_responses(
+                    submit_response,
+                    "Invalid data format for requesterNonce")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -2183,14 +2177,14 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_OutDataDataEncryptionKey_hyphenecho
+    @pytest.mark.test_workordersubmit_OutDataDataEncryptionKey_hyphen
     @pytest.mark.listener
     @pytest.mark.sdk
-    def test_workordersubmit_OutDataDataEncryptionKey_hyphenecho(self):
+    def test_workordersubmit_OutDataDataEncryptionKey_hyphen(self):
         test_id = '18784'
         request_file = os.path.join(
             globals.work_order_input_file,
-            "workordersubmit_OutDataDataEncryptionKey_hyphenecho.json")
+            "workordersubmit_OutDataDataEncryptionKey_hyphen.json")
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_submit(
