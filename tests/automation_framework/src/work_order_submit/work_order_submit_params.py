@@ -358,9 +358,6 @@ class WorkOrderSubmit():
 
         # Convert workloadId to hex
         workload_id = output["workloadId"].encode("UTF-8").hex()
-        # work_order_id = output["workOrderId"] if "workOrderId" in output.keys() else ""
-        # requesterNonce = output["requesterNonce"] if "requesterNonce" in output.keys() else ""
-        # workerEncryptionKey = output["workerEncryptionKey"] if "workerEncryptionKey" in output.keys() else ""
         work_order_id = output.get("workOrderId")
         requesterNonce = output.get("requesterNonce")
         workerEncryptionKey = output.get("workerEncryptionKey")
