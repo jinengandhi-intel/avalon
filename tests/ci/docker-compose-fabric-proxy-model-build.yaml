@@ -18,7 +18,7 @@ services:
   avalon-fabric-proxy-model-tests:
     image: avalon-shell:${ISOLATION_ID}
     build:
-      context: ..
+      context: ../..
       dockerfile: docker/Dockerfile
       args:
         - http_proxy
@@ -28,7 +28,7 @@ services:
   avalon-enclave-manager:
     image: avalon-enclave-manager:${ISOLATION_ID}
     build:
-      context: ..
+      context: ../..
       dockerfile: enclave_manager/Dockerfile
       args:
         - http_proxy
@@ -41,7 +41,7 @@ services:
   avalon-lmdb:
     image: avalon-lmdb:${ISOLATION_ID}
     build:
-      context: ..
+      context: ../..
       dockerfile: shared_kv_storage/Dockerfile
       args:
         - http_proxy
@@ -51,7 +51,7 @@ services:
   avalon-listener:
     image: avalon-listener:${ISOLATION_ID}
     build:
-      context: ..
+      context: ../..
       dockerfile: ./listener/Dockerfile
       args:
         - http_proxy
@@ -61,7 +61,7 @@ services:
   avalon-blockchain-connector:
     image: avalon-blockchain-connector:${ISOLATION_ID}
     build:
-      context: ..
+      context: ../..
       dockerfile: ./blockchain_connector/Dockerfile
       args:
         - http_proxy
