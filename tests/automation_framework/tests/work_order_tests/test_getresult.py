@@ -255,3 +255,24 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
+
+    @pytest.mark.workordergetresult
+    @pytest.mark.listener
+    @pytest.mark.test_workordergetresult_workorderId_empty
+    def test_workordergetresult_workorderId_empty(self):
+        test_id = '18729'
+        request_file = os.path.join(
+            globals.work_order_input_file,
+            "workordergetresult_workorderId_empty.json")
+
+        msg_response = self.test_obj.post_json_msg(request_file)
+
+        logger.info("**********Received Response*********\n%s\n", msg_response)
+
+        assert (
+                check_negative_test_responses(
+                    msg_response,
+                    "Invalid work order Id")
+                is TestStep.SUCCESS.value)
+
+        logger.info('\t\t!!! Test completed !!!\n\n')

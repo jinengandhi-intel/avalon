@@ -208,110 +208,12 @@ def check_worker_retrieve_receipt_response(response):
 
 
 def check_negative_test_responses(response, expected_res):
-
-    if expected_res == "Invalid data format for session key iv":
-        if response["error"]["message"] == "Invalid data format for session key iv":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "CreateWorkloadProcessor function returned null":
-        if response["error"]["message"] == "CreateWorkloadProcessor function returned null":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid Request":
-        if response["error"]["message"] == "Invalid Request":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Indata is empty":
-        if response["error"]["message"] == "Indata is empty":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Server error":
-        if response["error"]["message"] == "Server error":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Missing parameter requesterId":
-        if response["error"]["message"] == "Missing parameter requesterId":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for responseTimeoutMSecs":
-        if response["error"]["message"] == "Invalid data format for responseTimeoutMSecs":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Missing parameter inData":
-        if response["error"]["message"] == "Missing parameter inData":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Unsupported dataEncryptionAlgorithm found in the request":
-        if response["error"]["message"] == "Unsupported dataEncryptionAlgorithm found in the request":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for initialization vector of in data":
-        if response["error"]["message"] == "Invalid data format for initialization vector of in data":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid workload id":
-        if response["error"]["message"] == "Invalid workload id":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for data hash of in data":
-        if response["error"]["message"] == "Invalid data format for data hash of in data":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for requester id":
-        if response["error"]["message"] == "Invalid data format for requester id":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid work order Id":
-        if response["error"]["message"] == "Invalid work order Id":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Work order Id not found in the database. Hence invalid parameter":
-        if response["error"]["message"] == "Work order Id not found in the database. Hence invalid parameter":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Worker Id not found in the database. Hence invalid parameter":
-        if response["error"]["message"] == "Worker Id not found in the database. Hence invalid parameter":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Missing in data parameter data":
-        if response["error"]["message"] == "Missing in data parameter data":
-            return TestStep.SUCCESS.value
-
+    error_msg = response.get("error", {}).get("message")
     if expected_res == "Invalid data format for work order id":
-        if response["error"]["message"] == "Invalid data format for work order id" or\
-            ( response["error"]["message"] == "Server error" and
-              response["error"]["data"]["message"] == "'workOrderId'"):
+        if error_msg == "Invalid data format for work order id" or\
+            (error_msg == "Server error" and
+                response["error"]["data"]["message"] == "'workOrderId'"):
             return TestStep.SUCCESS.value
 
-    if expected_res == "Missing parameter encryptedRequestHash":
-        if response["error"]["message"] == "Missing parameter encryptedRequestHash":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for requesterSignature":
-        if response["error"]["message"] == "Invalid data format for requesterSignature":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Crypto Error (deserializeECDSAPublicKey): Could not deserialize public ECDSA key":
-        if response["error"]["message"] == "Crypto Error (deserializeECDSAPublicKey): Could not deserialize public ECDSA key":
-            return TestStep.SUCCESS.value  
-
-    if expected_res == "Invalid data format for requesterNonce":
-        if response["error"]["message"] == "Invalid data format for requesterNonce":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for worker encryption key":
-        if response["error"]["message"] == "Invalid data format for worker encryption key":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for work load id":
-        if response["error"]["message"] == "Invalid data format for work load id":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for in/out data":
-        if response["error"]["message"] == "Invalid data format for in/out data":
-            return TestStep.SUCCESS.value
-
-    if expected_res == "Invalid data format for Worker id":
-        if response["error"]["message"] == "Invalid data format for Worker id":
-            return TestStep.SUCCESS.value
-      
+    if expected_res == error_msg:
+        return TestStep.SUCCESS.value

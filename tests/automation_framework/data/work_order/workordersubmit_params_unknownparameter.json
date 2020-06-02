@@ -15,8 +15,9 @@
         "dataEncryptionAlgorithm": "AES-GCM-256",
         "encryptedSessionKey": "",
         "sessionKeyIv": "",
-        "requesterNonce": null,
+        "requesterNonce": "",
         "encryptedRequestHash": "",
+        "unknownEncoding": "unknownEncoding",
         "requesterSignature": "",
         "inData": [
 		   {"index": 2,

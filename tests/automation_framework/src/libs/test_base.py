@@ -122,3 +122,11 @@ class TestBase():
             response = sdk_instance.work_order_get_result(output_obj)
         return response
 
+    def post_json_msg(self, request_file):
+        file = open(request_file, "r")
+        json_str = file.read()
+        file.close()
+        logger.info('**********Received Request*********\n%s\n', json_str)
+        response = self.uri_client._postmsg(json_str)
+        logger.info('**********Received Response*********\n%s\n', response)
+        return response

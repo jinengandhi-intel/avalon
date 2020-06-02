@@ -4,7 +4,7 @@
     "id": 11,
     "params": {
         "responseTimeoutMSecs": 6000,
-        "payloadFormat": "JSON-RPC",
+        "payloadFormat": "NOT_JSON_RPC",
         "resultUri": "resulturi",
         "notifyUri": "notifyuri",
         "workOrderId": "",
@@ -15,7 +15,7 @@
         "dataEncryptionAlgorithm": "AES-GCM-256",
         "encryptedSessionKey": "",
         "sessionKeyIv": "",
-        "requesterNonce": null,
+        "requesterNonce": "",
         "encryptedRequestHash": "",
         "requesterSignature": "",
         "inData": [

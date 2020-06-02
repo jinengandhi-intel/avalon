@@ -11,7 +11,7 @@
         "workerId": "",
         "workloadId": "heart-disease-eval",
         "requesterId": "0x3456",
-        "workerEncryptionKey": "",
+        "workerEncryptionKey": null,
         "dataEncryptionAlgorithm": "AES-GCM-256",
         "encryptedSessionKey": "",
         "sessionKeyIv": "",

@@ -8,14 +8,14 @@
         "resultUri": "resulturi",
         "notifyUri": "notifyuri",
         "workOrderId": "",
-        "workerId": "",
+        "workerId": "6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0eee6a96dcebaeb14f2ae923456234564567",
         "workloadId": "heart-disease-eval",
         "requesterId": "0x3456",
         "workerEncryptionKey": "",
         "dataEncryptionAlgorithm": "AES-GCM-256",
         "encryptedSessionKey": "",
         "sessionKeyIv": "",
-        "requesterNonce": null,
+        "requesterNonce": "",
         "encryptedRequestHash": "",
         "requesterSignature": "",
         "inData": [
@@ -34,3 +34,4 @@
         ]
     }
 }
+
