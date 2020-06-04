@@ -68,6 +68,7 @@ pipeline {
                 git clone https://github.com/jinengandhi-intel/avalon.git
                 cd avalon
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
+                cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/avalon-direct-model-tests.yaml $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/ci/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/automation_framework $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_tests.sh $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_tests $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/bin/
@@ -92,7 +93,10 @@ pipeline {
                 sh '''
                 cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
                 echo `pwd`
-                INSTALL_TYPE="" $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/bin/run_tests -d
+                INSTALL_TYPE="" $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/bin/run_tests -d 2>&1 | tee logs/genericclient_output.txt
+
+                python tests/ci/verifytests.py -o logs/genericclient_output.txt
+
                 '''
             }
         }
