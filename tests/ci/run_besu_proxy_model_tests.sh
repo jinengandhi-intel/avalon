@@ -58,20 +58,9 @@ yell "#-------------------------------------------------------------------------
 yell "#------------------------------------------------------------------------------------------------"
 
 
-yell "QCID_20317_Test Workorder with incorrect workerid for echo-client workload"
-yell "#------------------------------------------------------------------------------------------------"
-$generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "echo-result" --in_data "Hello" -o \
-    --worker_id "161ccfabf1500e10504c145a8c6ee0ecdde74827961600a7c3897cfb10956da3"
-yell "Test Completed"
 
-yell "QCID_20316_Test Workorder with incorrect workerid for heart-disease-eval workload"
-yell "#------------------------------------------------------------------------------------------------"
-$generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "heart-disease-eval" \
-    --in_data "Data: 25 10 1 67  102 125 1 95 5 10 1 11 36 1" -o \
-    --worker_id "161ccfabf1500e10504c145a8c6ee0ecdde74827961600a7c3897cfb10956da3"
-yell "Test Completed"
+
+
 
 yell "QCID_18393_Test Workorder success for echo-client workload"
 yell "#------------------------------------------------------------------------------------------------"
@@ -128,50 +117,11 @@ try $generic_client_path/eth_generic_client.py --blockchain ethereum \
     --workload_id "echo-result" --in_data "#@!$%@#&*()$%#" -o
 yell "Test Completed"
 
-yell "QCID_18411_Test workorder random incorrect indata for heart disease workload"
-yell "#------------------------------------------------------------------------------------------------"
-try $generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "heart-disease-eval" \
-    --in_data "Data: HelloWorld" -o
-yell "Test Completed"
-
-yell "QCID_18422_Test workorder with incorrect workload"
-yell "#------------------------------------------------------------------------------------------------"
-$generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "echo-result1" --in_data "Hello" -o
-yell "Test Completed"
-
-yell "QCID_18439_Test workorder with empty workload............"
-yell "#------------------------------------------------------------------------------------------------"
-$generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "" --in_data "12345678" -o
-yell "Test Completed"
-
 yell "QCID_18430_Test Workorder indata by passing negative value for heart-disease-eval workload"
 yell "#------------------------------------------------------------------------------------------------"
 try $generic_client_path/eth_generic_client.py --blockchain ethereum \
     --workload_id "heart-disease-eval" \
     --in_data "Data: 25 10 1 67  102 125 1 95 5 10 1 11 36 -1" -o
-yell "Test Completed"
-
-yell "QCID_18429_Test Workorder indata by passing Data:null string for heart-disease-eval workload"
-yell "#------------------------------------------------------------------------------------------------"
-try $generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "heart-disease-eval" \
-    --in_data "Data: null" -o
-yell "Test Completed"
-
-yell "QCID_18428_Test Workorder indata by passing only null string for heart-disease-eval workload"
-yell "#------------------------------------------------------------------------------------------------"
-try $generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "heart-disease-eval" \
-    --in_data "null" -o
-yell "Test Completed"
-
-yell "QCID_18437_Test Workorder with empty indata for echo-client workload"
-yell "#------------------------------------------------------------------------------------------------"
-$generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "echo-result" --in_data "" -o
 yell "Test Completed"
 
 yell "QCID_20315_Test Workorder with empty indata for heart-disease-eval workload"
@@ -194,24 +144,6 @@ $generic_client_path/eth_generic_client.py --blockchain ethereum \
     --requester_signature
 yell "Test Completed"
 
-#yell "QCID_18401_Test Workorder different host url"
-#yell "#------------------------------------------------------------------------------------------------"
-#$generic_client_path/eth_generic_client.py --uri "http://avalon-listener1:1947" \
-#    --workload_id "echo-result" --in_data "Hello" -o
-#yell "Test Completed"
-
-yell "QCID_18436_Test Workorder with workload and worker ID's same"
-yell "#------------------------------------------------------------------------------------------------"
-$generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "6563686f2d726573756c74" --in_data "Hello" -o \
-    --worker_id "6563686f2d726573756c74"
-yell "Test Completed"
-
-yell "QCID_20320_Test Workorder with workload valid hex value for echo-client workload"
-yell "#------------------------------------------------------------------------------------------------"
-$generic_client_path/eth_generic_client.py --blockchain ethereum \
-    --workload_id "6563686f2d726573756c74" --in_data "Hello" -o \
-yell "Test Completed"
 
 yell "#------------------------------------------------------------------------------------------------"
 yell "#------------------------------------------------------------------------------------------------"
@@ -222,11 +154,11 @@ yell "Start Automated Tests  ................"
 yell "#------------------------------------------------------------------------------------------------"
 yell "#------------------------------------------------------------------------------------------------"
 
-cd ${TCF_HOME}/tests/automation_framework
-mkdir /project/avalon/logs
-echo `pwd`
-pytest -m "sdk" --junitxml /project/avalon/logs/eth_besu_proxy_results.xml \
-    2>&1 | tee /project/avalon/logs/eth_besu_proxy_logs.txt
+# cd ${TCF_HOME}/tests/automation_framework
+# mkdir /project/avalon/logs
+# echo `pwd`
+#pytest -m "sdk" --junitxml /project/avalon/logs/eth_besu_proxy_results.xml \
+#    2>&1 | tee /project/avalon/logs/eth_besu_proxy_logs.txt
 
 yell "#------------------------------------------------------------------------------------------------"
 yell "#------------------------------------------------------------------------------------------------"

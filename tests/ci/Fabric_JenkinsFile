@@ -75,7 +75,7 @@ pipeline {
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/avalon-fabric-proxy-model-tests.yaml $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/ci/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/automation_framework $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_fabric_proxy_model_tests.sh $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/
-                chmod +x $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/run_fabric_proxy_model_tests.sh
+                chmod +x $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_fabric_proxy_model_tests.sh
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_besu_proxy_model_tests.sh $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_tests $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/bin/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/docker/Dockerfile $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/docker/

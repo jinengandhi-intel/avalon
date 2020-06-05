@@ -72,7 +72,7 @@ pipeline {
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/avalon-besu-proxy-model-tests.yaml $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/ci/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_besu_proxy_model_tests.sh $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/
-                chmod +x $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/run_besu_proxy_model_tests.sh
+                chmod +x $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_besu_proxy_model_tests.sh
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_fabric_proxy_model_tests.sh $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tools/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/ci/run_tests $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/bin/
                 cp -rf $NIGHTLY_WORKSPACE_DIR/val_repo/avalon/tests/automation_framework $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/tests/
@@ -98,7 +98,7 @@ pipeline {
                 cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
                 mkdir logs
                 echo `pwd`
-                docker-compose -f ci/docker-compose-besu-proxy-model-build.yaml build
+                docker-compose -f tests/ci/docker-compose-besu-proxy-model-build.yaml build
                 '''
             }
         }
@@ -115,23 +115,13 @@ pipeline {
             }
         }
 
-        stage('Create git archive') {
-            steps {
-                sh '''
-                cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
-                REPO=$(git remote show -n origin | grep Fetch | awk -F'[/.]' '{print $6}')
-                git archive HEAD --format=zip -9 --output=$WORKSPACE/${JK_RUNID}_${REPO}.zip
-                git archive HEAD --format=tgz -9 --output=$WORKSPACE/${JK_RUNID}_${REPO}.tgz
-                '''
-            }
-        }
-
     }
 
     post {
         always {
             echo 'Cleaning up Ethereum network'
             sh '''
+            export TCF_HOME=$NIGHTLY_WORKSPACE_DIR/dev_repo/avalon
             cd $NIGHTLY_WORKSPACE_DIR/dev_repo/avalon/docs/dev-environments/ethereum/besu
             ./cleanup.sh
             '''
