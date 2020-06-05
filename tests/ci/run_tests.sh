@@ -298,6 +298,11 @@ $generic_client_path/generic_client.py --uri "http://$LISTENER_URL:1947" \
 
 yell "Completed Testing ..................."
 
+yell "Starting Demo tests ................"
+yell "#------------------------------------------------------------------------------------------------"
+cd ${TCF_HOME}/tests/ci/Demo_Tests
+python Demo.py --input_dir ./json_inputs/ --connect_uri "http://avalon-listener:1947" ./output.json
+yell "Demo Tests Completed"
 
 yell "#------------------------------------------------------------------------------------------------"
 yell "#------------------------------------------------------------------------------------------------"
