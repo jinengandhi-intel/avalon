@@ -20,7 +20,6 @@ import globals
 import avalon_crypto_utils.crypto.crypto as crypto
 import avalon_crypto_utils.crypto_utility as crypto_utils
 from src.utilities.tamper_utility import tamper_request
-import avalon_crypto_utils.crypto_utility as enclave_helper
 import secrets
 from avalon_sdk.work_order.work_order_params import WorkOrderParams
 import src.utilities.worker_utilities as wconfig
@@ -34,8 +33,8 @@ class WorkOrderSubmit():
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderSubmit",
                        "id": 3}
         self.params_obj = {}
-        self.session_key = self.generate_key()
-        self.session_iv = self.generate_iv()
+        self.session_key = crypto_utils.generate_key()
+        self.session_iv = crypto_utils.generate_iv()
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_submit"
@@ -55,9 +54,8 @@ class WorkOrderSubmit():
             if input_json["encryptedSessionKey"] != "":
                 self.encrypted_session_key = input_json["encryptedSessionKey"]
             else:
-                self.encrypted_session_key = (
-                    self.generate_encrypted_key(self.session_key,
-                        pre_test_response['result']['details']['workerTypeData']['encryptionKey']))
+               self.encrypted_session_key = crypto_utils.generate_encrypted_key(self.session_key,
+                    pre_test_response['result']['details']['workerTypeData']['encryptionKey'])
 
         config_yaml = self.get_default_params(pre_test_response, input_json)
         for c_key, c_value in config_yaml.items():
@@ -126,12 +124,12 @@ class WorkOrderSubmit():
         self.final_hash = crypto.compute_message_hash(
             bytes(final_string, 'UTF-8'))
 
-        self.encrypted_request_hash = self.byte_array_to_hex_str(
+        encrypted_request_hash = crypto.byte_array_to_hex(
             self.encrypt_data(
                 self.final_hash, self.session_key,
                 self.session_iv))
 
-        return self.encrypted_request_hash
+        return encrypted_request_hash
 
     def _compute_hash_string(self, data):
         final_hash_str = ""
@@ -165,38 +163,6 @@ class WorkOrderSubmit():
             if self.params_obj["requesterSignature"] == "":
                 self.params_obj["requesterSignature"] = self.requester_signature
             self.params_obj["verifyingKey"] = self.public_key
-
-    def byte_array_to_hex_str(self, in_byte_array):
-        '''
-        Converts tuple of bytes to hex string
-        '''
-        logger.debug("Input Byte Array: %s", in_byte_array)
-        hex_str = ''.join(format(i, '02x') for i in in_byte_array)
-        logger.debug("Output Byte Array to str: %s", hex_str)
-        return hex_str
-
-    def generate_key(self):
-        """
-        Function to generate symmetric key
-        """
-        return crypto.SKENC_GenerateKey()
-
-    def generate_iv(self):
-        """
-        Function to generate random initialization vector
-        """
-        return crypto.SKENC_GenerateIV()
-
-    def generate_encrypted_key(self, key, encryption_key):
-        """
-        Function to generate session key for the client
-        Parameters:
-        - encryption_key is a one-time encryption
-          used to encrypt the passed key
-        - key that needs to be encrypted
-        """
-        pub_enc_key = crypto.PKENC_PublicKey(encryption_key)
-        return pub_enc_key.EncryptMessage(key)
 
     def add_in_data(self, input_json_inData):
         if "inData" not in self.params_obj:
@@ -247,10 +213,10 @@ class WorkOrderSubmit():
                 base64_enc_data = (crypto.byte_array_to_base64(enc_data))
                 if 'dataHash' in data_item:
                     if not data_item['dataHash']:
-                        dataHash_enc_data = (self.byte_array_to_hex_str(
+                        dataHash_enc_data = (crypto.byte_array_to_hex(
                             crypto.compute_message_hash(data)))
                     else:
-                        dataHash_enc_data = (self.byte_array_to_hex_str(
+                        dataHash_enc_data = (crypto.byte_array_to_hex(
                             crypto.compute_message_hash(data_item['dataHash'])))
                 logger.debug("encrypted indata - %s",
                              crypto.byte_array_to_base64(enc_data))
@@ -260,10 +226,10 @@ class WorkOrderSubmit():
                 base64_enc_data = (crypto.byte_array_to_base64(data))
                 if 'dataHash' in data_item:
                     if not data_item['dataHash']:
-                        dataHash_enc_data = (self.byte_array_to_hex_str(
+                        dataHash_enc_data = (crypto.byte_array_to_hex(
                             crypto.compute_message_hash(data)))
                     else:
-                        dataHash_enc_data = (self.byte_array_to_hex_str(
+                        dataHash_enc_data = (crypto.byte_array_to_hex(
                             crypto.compute_message_hash(data_item['dataHash'])))
             else:
                 data_key = None
@@ -272,10 +238,10 @@ class WorkOrderSubmit():
                 base64_enc_data = (crypto.byte_array_to_base64(enc_data))
                 if 'dataHash' in data_item:
                     if not data_item['dataHash']:
-                        dataHash_enc_data = (self.byte_array_to_hex_str(
+                        dataHash_enc_data = (crypto.byte_array_to_hex(
                             crypto.compute_message_hash(data)))
                     else:
-                        dataHash_enc_data = (self.byte_array_to_hex_str(
+                        dataHash_enc_data = (crypto.byte_array_to_hex(
                             crypto.compute_message_hash(data_item['dataHash'])))
                 logger.debug("encrypted indata - %s",
                              crypto.byte_array_to_base64(enc_data))
@@ -309,15 +275,11 @@ class WorkOrderSubmit():
         logger.debug("encrypted_session_key: %s", encryption_key)
         val = iv if iv else 0
         encrypted_data = crypto.SKENC_EncryptMessage(encryption_key, val, data)
-
         return encrypted_data
 
     def compute_signature(self, tamper):
 
         self._compute_requester_signature()
-
-        json_rpc_request = self.id_obj
-        json_rpc_request["params"] = wconfig.get_params(self)
 
         input_after_sign = wconfig.to_string(self, True)
         tamper_instance = 'after_sign'
@@ -328,7 +290,7 @@ class WorkOrderSubmit():
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
         # private_key of client
-        private_key = enclave_helper.generate_signing_keys()
+        private_key = crypto_utils.generate_signing_keys()
         if input_json is None:
             with open(os.path.join(
                     globals.work_order_input_file,
@@ -406,10 +368,10 @@ class WorkOrderSubmit():
                 d_params["workloadId"] = input_dict["workloadId"]
 
             if globals.direct_test_mode == "listener":
-                d_params["workerEncryptionKey"]  = crypto_utils.strip_begin_end_public_key(d_params["workerEncryptionKey"])
-                d_params["sessionKeyIv"]         = self.byte_array_to_hex_str(self.session_iv)
+                d_params["workerEncryptionKey"] = crypto_utils.strip_begin_end_public_key(d_params["workerEncryptionKey"])
+                d_params["sessionKeyIv"] = crypto.byte_array_to_hex(self.session_iv)
                 if self.encrypted_session_key:
-                    d_params["encryptedSessionKey"]  = self.byte_array_to_hex_str(self.encrypted_session_key)
+                    d_params["encryptedSessionKey"] = crypto.byte_array_to_hex(self.encrypted_session_key)
 
         except Exception as e:
             logger.error("Exception Occurred inside get_default_params ", e)

@@ -22,6 +22,7 @@ from enum import IntEnum, unique
 
 @unique
 class TestStep(IntEnum):
+    __test__ = False
     SUCCESS = 0
     FAILURE = 1
 

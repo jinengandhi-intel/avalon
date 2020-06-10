@@ -4,9 +4,10 @@ import yaml
 import globals
 import inspect
 import secrets
+import random
 logger = logging.getLogger(__name__)
 
-globals_params = ["workerId", "organizationId", "applicationTypeId"]
+globals_params = ["workerId", "organizationId", "applicationTypeId", "requesterGeneratedNonce"]
 
 
 def set_parameter(input_dict, param, value):
@@ -52,6 +53,7 @@ def update_global_params(default_params):
     workerId = secrets.token_hex(32)
     organizationId = secrets.token_hex(32)
     applicationTypeId = secrets.token_hex(32)
+    requesterGeneratedNonce = str(random.randint(1, 10 ** 10))
     default_keys = default_params.keys()
     for param in globals_params:
         if param in default_keys:
@@ -71,17 +73,16 @@ def read_config(calling_path, response=None, input_data={}):
             default_params["workerId"] = response['workerId']
         if "details" in input_data.keys():
             details = response.get("result", {}).get("details", {})
-            if globals.direct_test_mode == "listener":
-                if input_data:
-                    input_keys = input_data.keys()
-                    for key in ['hashingAlgorithm']:
-                        if key in input_keys:
-                            default_params[key] = details[key]
-                    for key in ['organizationId', 'applicationTypeId']:
-                        if key in input_keys:
-                            default_params[key] = response["result"][key]
-                    if "workerEncryptionKey" in input_keys:
-                        default_params[key] = details["workerTypeData"]['encryptionKey']
+            if (globals.direct_test_mode == "listener") and input_data:
+                input_keys = input_data.keys()
+                for key in ['hashingAlgorithm']:
+                    if key in input_keys:
+                        default_params[key] = details[key]
+                for key in ['organizationId', 'applicationTypeId']:
+                    if key in input_keys:
+                        default_params[key] = response["result"][key]
+                if "workerEncryptionKey" in input_keys:
+                    default_params[key] = details["workerTypeData"]['encryptionKey']
 
     return default_params
 

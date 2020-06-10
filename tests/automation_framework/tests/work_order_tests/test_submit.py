@@ -1665,10 +1665,10 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_work_order_submit_requesterNonce_param_empty
+    @pytest.mark.test_workordersubmit_requesterNonce_param_empty
     @pytest.mark.listener
     @pytest.mark.sdk
-    def test_work_order_submit_requesterNonce_param_empty(self):
+    def test_workordersubmit_requesterNonce_param_empty(self):
         test_id = '18735'
         request_file = os.path.join(
             globals.work_order_input_file,

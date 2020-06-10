@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class WorkOrderReceiptCreate():
     def __init__(self):
         self.id_obj = {"jsonrpc": "2.0",
-                       "method": "WorkOrderReceiptCreate", "id": 3}
+                       "method": "WorkOrderReceiptCreate", "id": 6}
         self.params_obj = {}
         self.sig_obj = signature.ClientSignature()
         self.SIGNING_ALGORITHM = "SECP256K1"
@@ -26,30 +26,36 @@ class WorkOrderReceiptCreate():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "work_order_create_receipt"
-        # self.session_key = self.generate_key()
-        # self.session_iv = self.generate_iv()
 
     def add_json_values(self, input_json_temp,
                         worker_obj, private_key, tamper, wo_submit):
 
         self.private_key = private_key
         self.worker_obj = worker_obj
-        input_request_wo_submit = json.loads(wo_submit)
         # logger.info("------ Loaded string data: ABCDEFGHIJKLMNOP
         # %s ------2. %s\n", input_json_temp,  type(wo_submit))
         final_hash_str = \
-            self.sig_obj.calculate_request_hash(input_request_wo_submit)
+            self.sig_obj.calculate_request_hash(wo_submit)
 
         # public_key =  signing_key.GetPublicKey().Serialize()
         input_json_temp = input_json_temp["params"]
 
-        wo_receipt_str = (input_json_temp["workOrderId"] +
-                          input_json_temp["workerServiceId"] +
-                          input_json_temp["workerId"] +
-                          input_json_temp["requesterId"] +
-                          str(input_json_temp["receiptCreateStatus"]) +
+        input_params_list = input_json_temp.keys()
+        config_yaml = wconfig.read_config(__file__, worker_obj, input_json_temp)
+        config_yaml["workOrderId"] = wo_submit["params"]["workOrderId"]
+        config_yaml["workerServiceId"] = wo_submit["params"]["workerId"]
+        for c_key, c_val in config_yaml.items():
+            if c_key in input_params_list:
+                value = input_json_temp[c_key] if input_json_temp[c_key] != "" else c_val
+                wconfig.set_parameter(self.params_obj, c_key, value)
+
+        wo_receipt_str = (self.params_obj["workOrderId"] +
+                          self.params_obj["workerServiceId"] +
+                          self.params_obj["workerId"] +
+                          self.params_obj["requesterId"] +
+                          str(self.params_obj["receiptCreateStatus"]) +
                           input_json_temp["workOrderRequestHash"] +
-                          input_json_temp["requesterGeneratedNonce"])
+                          self.params_obj["requesterGeneratedNonce"])
 
         wo_receipt_bytes = bytes(wo_receipt_str, "UTF-8")
         wo_receipt_hash = crypto.compute_message_hash(wo_receipt_bytes)
@@ -57,17 +63,6 @@ class WorkOrderReceiptCreate():
             wo_receipt_hash,
             private_key
         )
-
-        input_params_list = input_json_temp.keys()
-        config_yaml = self.get_default_params()
-        for c_key, c_val in config_yaml.items():
-            if c_key in input_params_list:
-                value = input_json_temp[c_key] if input_json_temp[c_key] != "" else c_val
-                wconfig.set_parameter(self.params_obj, c_key, value)
-
-        if "workOrderId" in input_params_list:
-            wconfig.set_parameter(self.params_obj, "workOrderId", input_request_wo_submit["params"]["workOrderId"])
-
         if "workOrderRequestHash" in input_params_list:
             wconfig.set_parameter(self.params_obj, "workOrderRequestHash", final_hash_str)
 
@@ -77,9 +72,6 @@ class WorkOrderReceiptCreate():
     def compute_signature(self, tamper):
 
         self._compute_requester_signature()
-
-        json_rpc_request = self.id_obj
-        json_rpc_request["params"] = wconfig.get_params(self)
 
         input_after_sign = wconfig.to_string(self)
         tamper_instance = 'after_sign'
@@ -129,10 +121,3 @@ class WorkOrderReceiptCreate():
         ))
 
         return wo_create_receipt
-
-    def get_default_params(self, worker_obj):
-        default_params = wconfig.read_config_file(__file__, worker_obj)
-        if globals.direct_test_mode == "listener":
-            default_params["workerServiceId"] = worker_obj.worker_id
-            default_params["requesterGeneratedNonce"] = str(random.randint(1, 10 ** 10))
-        return default_params

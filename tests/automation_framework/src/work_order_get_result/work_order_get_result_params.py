@@ -36,7 +36,6 @@ class WorkOrderGetResult():
                 wconfig.set_parameter(self.params_obj, keys, input_json_temp["params"][keys])
 
     def configure_data(self, input_json, worker_obj, pre_test_response):
-        pre_test_response = pre_test_response if input_json is None else json.loads(pre_test_response)
         wconfig.set_parameter(self.id_obj, "id", (pre_test_response["id"]+1))
 
         logger.info("listen Pre test*****\n%s\n", pre_test_response)

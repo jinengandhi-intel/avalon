@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestBase():
-
+    __test__ = False
     def __init__(self):
         self.uri_client = globals.uri_client
         self.build_request_output = {}

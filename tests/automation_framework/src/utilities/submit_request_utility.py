@@ -81,7 +81,6 @@ def submit_request_listener(
 
     logger.info("in submit listener %s", input_json_str)
     if request_method == "WorkOrderGetResult":
-        logger.info("print requestmethod %s", request_method) 
         logger.info("- Validating WorkOrderGetResult Response-")
         response = {}
 

@@ -111,19 +111,22 @@ def decrypt_work_order_response(response, session_key, session_iv):
                                                            session_iv)
         err_cd = 0
         logger.info('Success: Work Order Response Decrypted.\n\n')
-    except Exception:
+    except Exception as e:
         err_cd = 1
-        logger.info('ERROR: Decryption failed %s \
-                           where expected. \n', decrypted_data)
-        logger.info('ERROR: Work Order Response Decryption Failed')
+        logger.exception('Exception: Decryption failed %s \
+                           where expected. \n', e)
+        logger.error('ERROR: Work Order Response Decryption Failed')
 
     return err_cd, decrypted_data
 
 
 def verify_test(response, expected_res, worker_obj, work_order_obj):
-
-    session_key = work_order_obj.session_key
-    session_iv = work_order_obj.session_iv
+    if type(work_order_obj) != dict:
+        session_key = work_order_obj.session_key
+        session_iv = work_order_obj.session_iv
+    else:
+        session_key = work_order_obj["sessionKey"]
+        session_iv = work_order_obj["sessionKeyIv"]
 
     verify_wo_signature_err = verify_work_order_signature(response['result'],
                                                           worker_obj)
@@ -143,7 +146,6 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
     assert (validate_response_code_err is TestStep.SUCCESS.value)
 
     return TestStep.SUCCESS.value
-
 
 def check_worker_lookup_response(response, operator, value):
 

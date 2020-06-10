@@ -19,6 +19,7 @@ class TestClass():
 
     @pytest.mark.workordergetresult
     @pytest.mark.test_workordergetresult
+    @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordergetresult(self):
         test_id = '18702'
@@ -49,6 +50,7 @@ class TestClass():
     @pytest.mark.workordergetresult
     @pytest.mark.test_workordergetresult_workorderid_different
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_workordergetresult_workorderid_different(self):
         test_id = '18873'
         request_file = os.path.join(
@@ -78,6 +80,7 @@ class TestClass():
     @pytest.mark.workordergetresult
     @pytest.mark.test_workordergetresult_workorderid_specialchar
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_workordergetresult_workorderid_specialchar(self):
         test_id = '18874'
         request_file = os.path.join(
@@ -106,6 +109,7 @@ class TestClass():
     @pytest.mark.workordergetresult
     @pytest.mark.test_workordergetresult_workorderid_null
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_workordergetresult_workorderid_null(self):
         test_id = '18875'
         request_file = os.path.join(
@@ -134,6 +138,7 @@ class TestClass():
     @pytest.mark.workordergetresult
     @pytest.mark.test_workordergetresult_workorderid_nonhexstring
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_workordergetresult_workorderid_nonhexstring(self):
         test_id = '18876'
         request_file = os.path.join(
@@ -162,6 +167,7 @@ class TestClass():
     @pytest.mark.workordergetresult
     @pytest.mark.test_workordergetresult_workorderid_alphabetsonly
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_workordergetresult_workorderid_alphabetsonly(self):
         test_id = '18877'
         request_file = os.path.join(
@@ -189,6 +195,7 @@ class TestClass():
     @pytest.mark.workordergetresult
     @pytest.mark.test_workordergetresult_workorderid_withoutquotes
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_workordergetresult_workorderid_withoutquotes(self):
         test_id = '18878'
         request_file = os.path.join(

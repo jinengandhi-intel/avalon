@@ -72,8 +72,11 @@ class ListenerImpl():
             globals.wo_submit_output_json_file_name)
         input_work_order_submit = submit_obj.compute_signature(
             globals.wo_submit_tamper)
+        json_obj = json.loads(input_work_order_submit)
+        json_obj["sessionKey"] = submit_obj.session_key
+        json_obj["sessionKeyIv"] = submit_obj.session_iv
         logger.info("******Work Order submitted*****\n%s\n", submit_response)
-        return input_work_order_submit
+        return json_obj
 
     def work_order_get_result(self, wo_submit):
         wo_getresult_obj = WorkOrderGetResult()
@@ -81,7 +84,6 @@ class ListenerImpl():
             globals.work_order_input_file,
             "work_order_getresult.json")
         wo_getresult_request_json = self.read_json(wo_getresult_request_file)
-        wo_submit=json.dumps(wo_submit)
         wo_getresult_json = wo_getresult_obj.configure_data(
             input_json=wo_getresult_request_json, worker_obj=None,
             pre_test_response=wo_submit)
