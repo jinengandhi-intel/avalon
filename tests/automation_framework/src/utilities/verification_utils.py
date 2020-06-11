@@ -83,12 +83,12 @@ def is_valid_params(request_elements, keys_count=None):
     return request_keys
 
 
-def verify_work_order_signature(response, worker_obj):
+def verify_work_order_signature(response, worker_obj, requester_nonce):
     verify_key = worker_obj['result']['details']['workerTypeData']['verificationKey']
 
     try:
         verify_obj = signature.ClientSignature()
-        sig_bool = verify_obj.verify_signature(response, verify_key)
+        sig_bool = verify_obj.verify_signature(response, verify_key, requester_nonce)
 
         if sig_bool is SignatureStatus.PASSED:
             err_cd = 0
@@ -124,12 +124,14 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
     if type(work_order_obj) != dict:
         session_key = work_order_obj.session_key
         session_iv = work_order_obj.session_iv
+        requester_nonce = work_order_obj.get_requester_nonce()
     else:
         session_key = work_order_obj["sessionKey"]
         session_iv = work_order_obj["sessionKeyIv"]
+        requester_nonce = work_order_obj["requesterNonce"]
 
     verify_wo_signature_err = verify_work_order_signature(response['result'],
-                                                          worker_obj)
+                                                          worker_obj, requester_nonce)
 
     assert (verify_wo_signature_err is TestStep.SUCCESS.value)
 
