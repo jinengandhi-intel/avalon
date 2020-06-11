@@ -29,7 +29,6 @@ class TestClass():
     test_obj = TestBase()
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_success
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
@@ -61,7 +60,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_inDataDataEncryptionKey_hyphenecho
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_inDataDataEncryptionKey_hyphenecho(self):
@@ -92,7 +90,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_datahash_null
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_datahash_null(self):
@@ -119,7 +116,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesterId_null
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_requesterId_null(self):
@@ -150,7 +146,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_sessionkeyivInDataIv_hexstring
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_sessionkeyivInDataIv_hexstring(
@@ -182,7 +177,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_verifysignature
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_verifysignature(self):
@@ -213,7 +207,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesternonce_specialcharacters
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_requesternonce_specialcharacters(
@@ -241,7 +234,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_signingalgorithm_alternate
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_signingalgorithm_alternate(self):
@@ -272,7 +264,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_hashingalgorithm_alternate
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_hashingalgorithm_alternate(self):
@@ -303,7 +294,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesterprivatekey_no
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_requesterprivatekey_no(self):
@@ -334,7 +324,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_params_twiceheartdisease
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_params_twiceheartdisease(self):
@@ -365,7 +354,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workloadid_invalid
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workloadid_invalid(self):
@@ -392,7 +380,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_methodname_list
     @pytest.mark.listener
     def test_workordersubmit_methodname_list(self):
         test_id = '18797'
@@ -421,7 +408,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workerencryptionkey_specialcharacter
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workerencryptionkey_specialcharacter(self):
@@ -449,7 +435,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workerencryptionkey_empty
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workerencryptionkey_empty(self):
@@ -477,7 +462,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_dataencryptionalgorithm_alternate
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_dataencryptionalgorithm_alternate(self):
@@ -508,7 +492,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indexindata_50
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indexindata_50(self):
@@ -540,7 +523,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_index_orderchange
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_index_orderchange(self):
@@ -571,7 +553,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_empty
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indata_empty(self):
@@ -602,7 +583,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_remove
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indata_remove(self):
@@ -633,7 +613,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indataoutdata_empty
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indataoutdata_empty(self):
@@ -665,7 +644,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_unknownparametervalue
     @pytest.mark.listener
     # @pytest.mark.sdk (AttributeError: 'dict' object has no attribute 'to_jrpc_string)
     def test_workordersubmit_indata_unknownparametervalue(self):
@@ -693,7 +671,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_index_negative
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_index_negative(self):
@@ -725,7 +702,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indatahash_empty
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indatahash_empty(self):
@@ -756,7 +732,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_datahash_randomstr
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_datahash_randomstr(self):
@@ -784,7 +759,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_data_multipleechoresult
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_data_multipleechoresult(self):
@@ -816,7 +790,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_echoclient
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_echoclient(self):
@@ -847,7 +820,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_alternatetextechoclient
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indata_alternatetextechoclient(self):
@@ -879,7 +851,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_specialcharacter
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indata_specialcharacter(self):
@@ -911,7 +882,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_iv_specialcharacterechoclient
     @pytest.mark.listener
     # @pytest.mark.sdk
     def test_workordersubmit_iv_specialcharacterechoclient(self):
@@ -942,7 +912,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesterId_paramremove
     @pytest.mark.listener
     def test_workordersubmit_requesterId_paramremove(self):
         test_id = '18733'
@@ -972,7 +941,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_responsetimeout_string
     @pytest.mark.listener
     def test_workordersubmit_responsetimeout_string(self):
         test_id = '18798'
@@ -1001,7 +969,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_dataencryptionalgorithm_list
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
@@ -1033,7 +1000,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workloadId_twoworkload
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
@@ -1065,7 +1031,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workorderId_null
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
@@ -1094,7 +1059,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workerId_nullstring
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
@@ -1122,7 +1086,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workloadId_specialcharacters
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
@@ -1149,7 +1112,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_encrypteddataencryptionkey_nullechoclient
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
@@ -1181,7 +1143,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_dataencryptionalgorithm_listsamealgotwice
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
@@ -1213,7 +1174,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_encrypteddataencryptionkey_hyphenechoclient
     @pytest.mark.listener
     @pytest.mark.set1
     def test_workordersubmit_encrypteddataencryptionkey_hyphenechoclient(self):
@@ -1243,7 +1203,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_encrypteddataencryptionkey_remove
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
@@ -1271,7 +1230,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_encrypteddataencryptionkey_emptyechoclient
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
@@ -1302,7 +1260,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_outdata_success
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_outdata_success(self):
@@ -1333,7 +1290,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_bothindexremoveDataDatahash
     @pytest.mark.listener
     def test_workordersubmit_indata_bothindexremoveDataDatahash(self):
         test_id = '18714'
@@ -1360,7 +1316,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_oneValidOtherEmptDataDatahash
     @pytest.mark.listener
     def test_workordersubmit_indata_oneValidOtherEmptDataDatahash(self):
         test_id = '18715'
@@ -1387,7 +1342,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_singleindexremoveDataDatahash
     @pytest.mark.listener
     def test_workordersubmit_indata_singleindexremoveDataDatahash(self):
         test_id = '18716'
@@ -1413,7 +1367,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_index2randomstr
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indata_index2randomstr(self):
@@ -1443,7 +1396,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_index1randomstr
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indata_index1randomstr(self):
@@ -1473,7 +1425,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workloadid_emptystring
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workloadid_emptystring(self):
@@ -1499,7 +1450,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workloadid_hexstring
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workloadid_hexstring(self):
@@ -1525,7 +1475,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workload_nullstring
     @pytest.mark.listener
     def test_workordersubmit_workload_nullstring(self):
         test_id = '18726'
@@ -1550,7 +1499,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workorderid_increasedhexlength
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workorderid_increasedhexlength(self):
@@ -1578,7 +1526,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workorderidworkloadid_same
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workorderidworkloadid_same(self):
@@ -1606,7 +1553,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_data_differentdataheartdisease
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_data_differentdataheartdisease(self):
@@ -1638,7 +1584,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesterId_specialcharacter
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_requesterId_specialcharacter(self):
@@ -1665,7 +1610,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesterNonce_param_empty
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_requesterNonce_param_empty(self):
@@ -1693,7 +1637,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requestersignature_differentlength
     @pytest.mark.listener
     def test_workordersubmit_requestersignature_differentlength(self):
         test_id = '18492'
@@ -1721,7 +1664,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_verifyingkey_nullstr
     @pytest.mark.listener
     def test_workordersubmit_verifyingkey_nullstr(self):
         test_id = '18501'
@@ -1748,7 +1690,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indataoutdata_success
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indataoutdata_success(self):
@@ -1778,7 +1719,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workorderId_remove
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_workordersubmit_workorderId_remove(self):
@@ -1805,7 +1745,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_sessionkeyiv_allspecial_characters
     @pytest.mark.listener
     def test_workordersubmit_sessionkeyiv_allspecial_characters(self):
         test_id = '18737'
@@ -1831,7 +1770,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesterId_differenthexlength
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_requesterId_differenthexlength(self):
@@ -1859,7 +1797,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workerEncryptionKey_notdefaulthex
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_workordersubmit_workerEncryptionKey_notdefaulthex(self):
@@ -1886,7 +1823,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesterNonce_notdefaultlength
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_requesterNonce_notdefaultlength(self):
@@ -1913,7 +1849,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_requesterSignature_no
     @pytest.mark.listener
     def test_workordersubmit_requesterSignature_no(self):
         test_id = '18613'
@@ -1943,7 +1878,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_encryptedRequestHash_no
     @pytest.mark.listener
     def test_workordersubmit_encryptedRequestHash_no(self):
         test_id = '18777'
@@ -1970,7 +1904,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_mandatoryfields_remove
     def test_workordersubmit_mandatoryfields_remove(self):
         test_id = '18781'
         request_file = os.path.join(
@@ -1994,7 +1927,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_id_remove
     @pytest.mark.listener
     def test_workordersubmit_id_remove(self):
         test_id = '18787'
@@ -2019,7 +1951,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workeridworkloadid_same
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workeridworkloadid_same(self):
@@ -2045,7 +1976,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_indata_firstinparams
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_indata_firstinparams(self):
@@ -2075,7 +2005,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_params_unknownparameter
     @pytest.mark.listener
     def test_workordersubmit_params_unknownparameter(self):
         test_id = '18700'
@@ -2094,7 +2023,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workerId_notdefaultlength_postmsg
     @pytest.mark.listener
     def test_workordersubmit_workerId_notdefaultlength_postmsg(self):
         test_id = '20365'
@@ -2112,7 +2040,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_workerId_notdefaultlength
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_workerId_notdefaultlength(self):
@@ -2143,7 +2070,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_payloadFormat_notJSONRPC
     @pytest.mark.listener
     def test_workordersubmit_payloadFormat_notJSONRPC(self):
         test_id = '18750'
@@ -2161,7 +2087,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_params_empty
     @pytest.mark.listener
     def test_workordersubmit_params_empty(self):
         test_id = '18762'
@@ -2179,7 +2104,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_OutDataDataEncryptionKey_hyphen
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordersubmit_OutDataDataEncryptionKey_hyphen(self):
@@ -2210,7 +2134,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
-    @pytest.mark.test_workordersubmit_params_twiceechoclient
     @pytest.mark.listener
     def test_workordersubmit_params_twiceechoclient(self):
         test_id = '18791'

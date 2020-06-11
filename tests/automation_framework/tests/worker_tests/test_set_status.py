@@ -32,7 +32,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.test_worker_set_status
     def test_worker_set_status(self):
         test_id = '18268'
         request_file = os.path.join(
@@ -56,7 +55,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.worker
-    @pytest.mark.test_worker_set_status_unknown_parameter
     @pytest.mark.listener
     def test_worker_set_status_unknown_parameter(self):
         test_id = '18269'
@@ -81,7 +79,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.worker
-    @pytest.mark.test_worker_set_status_invalid_parameter
     @pytest.mark.listener
     def test_worker_set_status_invalid_parameter(self):
         test_id = '18270'
@@ -106,7 +103,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.worker
-    @pytest.mark.test_worker_set_status_params_status_0
     @pytest.mark.listener
     @pytest.mark.set1
     def test_worker_set_status_params_status_0(self):
@@ -133,7 +129,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.test_worker_set_status_params_status_2
     @pytest.mark.set1
     def test_worker_set_status_params_status_2(self):
         test_id = '18289'
@@ -159,7 +154,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.test_worker_set_status_params_status_3
     @pytest.mark.set1
     def test_worker_set_status_params_status_3(self):
         test_id = '18290'
@@ -185,7 +179,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.test_worker_set_status_params_status_4
     @pytest.mark.set1
     def test_worker_set_status_params_status_4(self):
         test_id = '18291'
@@ -211,7 +204,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.test_worker_set_status_params_status_5
     @pytest.mark.set1
     def test_worker_set_status_params_status_5(self):
         test_id = '18292'

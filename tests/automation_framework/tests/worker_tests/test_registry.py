@@ -32,7 +32,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_register
-    @pytest.mark.test_worker_register
     @pytest.mark.listener
     def test_worker_register(self):
         test_id = '18262'
@@ -58,7 +57,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_register
-    @pytest.mark.test_worker_register_unknown_parameter
     @pytest.mark.listener
     def test_worker_register_unknown_parameter(self):
         test_id = '18263'
@@ -84,7 +82,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_hashingAlgorithm_KECCAK256
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_hashingAlgorithm_KECCAK256(self):
@@ -111,7 +108,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_signingAlgorithm_RSAOAEP3072
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_signingAlgorithm_RSAOAEP3072(self):
@@ -138,7 +134,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_dataEncryptionAlgorithm_list
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_dataEncryptionAlgorithm_list(self):
@@ -166,7 +161,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_orgnizationid_32bytes
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_orgnizationid_32bytes(self):
@@ -194,7 +188,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_applicationTypeId_32bytes
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_applicationTypeId_32bytes(self):
@@ -222,7 +215,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_workOrderPayloadFormats_JSONRPCJWT
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_workOrderPayloadFormats_JSONRPCJWT(self):
@@ -250,7 +242,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_workerId_null
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_workerId_null(self):
@@ -278,7 +269,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_hashingAlgorithm_alternate
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_hashingAlgorithm_alternate(self):
@@ -306,7 +296,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_signingAlgorithm_alternate
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_signingAlgorithm_alternate(self):
@@ -334,7 +323,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_keyEncryptionAlgorithm_alternate
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_keyEncryptionAlgorithm_alternate(self):
@@ -362,7 +350,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_dataEncryptionAlgorithm_alternate
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_dataEncryptionAlgorithm_alternate(self):
@@ -390,7 +377,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_workerType_invalid
     @pytest.mark.listener
     def test_workerregister_workerType_invalid(self):
         test_id = '18888'
@@ -417,7 +403,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_organizationId_empty
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_organizationId_empty(self):
@@ -445,7 +430,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_applicationTypeId_empty
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_applicationTypeId_empty(self):
@@ -472,7 +456,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_proofDataType_empty
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_proofDataType_empty(self):
@@ -499,7 +482,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_proofDataType_invalid
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_proofDataType_invalid(self):
@@ -526,7 +508,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.workerregister
-    @pytest.mark.test_workerregister_proofDataType_null
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workerregister_proofDataType_null(self):

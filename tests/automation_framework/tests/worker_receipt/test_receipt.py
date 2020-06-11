@@ -31,7 +31,6 @@ class TestClass():
     test_obj = TestBase()
 
     @pytest.mark.work_order_create_receipt
-    @pytest.mark.test_work_order_create_receipt
     @pytest.mark.sdk
     @pytest.mark.p1
     def test_work_order_create_receipt(self):
@@ -53,7 +52,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_retrieve_receipt
-    @pytest.mark.test_work_order_retrieve_receipt
     @pytest.mark.sdk
     @pytest.mark.p1
     def test_work_order_retrieve_receipt(self):
@@ -75,7 +73,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_create_receipt
-    @pytest.mark.test_create_work_order_receipt_invalid_requester_id
     @pytest.mark.sdk
     def test_create_work_order_receipt_invalid_requester_id(self):
         request_file = os.path.join(
@@ -96,7 +93,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_create_receipt
-    @pytest.mark.test_create_work_order_receipt_hexstr_workorderRequesthash
     @pytest.mark.sdk
     def test_create_work_order_receipt_hexstr_workorderRequesthash(
             self):
@@ -118,7 +114,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_create_receipt
-    @pytest.mark.test_create_work_order_receipt_wrong_rverificationkey
     @pytest.mark.sdk
     def test_create_work_order_receipt_wrong_rverificationkey(self):
         request_file = os.path.join(

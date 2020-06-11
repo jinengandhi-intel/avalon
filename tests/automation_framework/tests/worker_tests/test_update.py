@@ -32,7 +32,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_update
-    @pytest.mark.test_worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_worker_update(self):
@@ -59,7 +58,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_update
-    @pytest.mark.test_worker_update_unknown_parameter
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_worker_update_unknown_parameter(self):
@@ -86,7 +84,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_update
-    @pytest.mark.test_worker_update_invalid_parameter
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_worker_update_invalid_parameter(self):
@@ -113,7 +110,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_update
-    @pytest.mark.test_worker_update_empty_details
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_worker_update_empty_details(self):

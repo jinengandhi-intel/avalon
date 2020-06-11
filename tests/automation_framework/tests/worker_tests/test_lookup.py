@@ -34,7 +34,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup
-    @pytest.mark.test_worker_lookup
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
@@ -64,7 +63,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup
-    @pytest.mark.test_worker_lookup_workerType_not_unsigned_int
     @pytest.mark.listener
     def test_worker_lookup_workerType_not_unsigned_int(self):
         test_id = '18275'
@@ -90,7 +88,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup
-    @pytest.mark.test_worker_lookup_empty_params
     @pytest.mark.listener
     def test_worker_lookup_empty_params(self):
         test_id = '18277'
@@ -116,7 +113,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup
-    @pytest.mark.test_worker_lookup_jsonrpc_different_version
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_worker_lookup_jsonrpc_different_version(self):
@@ -144,7 +140,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup
-    @pytest.mark.test_worker_lookup_diff_unit_length
     @pytest.mark.listener
     def test_worker_lookup_diff_unit_length(self):
         test_id = '20364'
@@ -170,7 +165,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup
-    @pytest.mark.test_worker_lookup_method_field_change
     @pytest.mark.listener
     def test_worker_lookup_method_field_change(self):
         test_id = '18278'
@@ -192,7 +186,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup
-    @pytest.mark.test_worker_lookup_twice_params
     @pytest.mark.listener
     def test_worker_lookup_twice_params(self):
         test_id = '18279'

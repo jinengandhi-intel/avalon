@@ -34,7 +34,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_retrieve
-    @pytest.mark.test_worker_retrieve
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
@@ -60,7 +59,6 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.worker_retrieve
-    @pytest.mark.test_worker_retrieve_empty_params
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
