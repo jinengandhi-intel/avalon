@@ -1,5 +1,5 @@
 import argparse
-
+import json
 def get_test_data(test_array, count):
     result_array = []
     for line in test_array[count:]:
@@ -75,11 +75,11 @@ for test_name, test_value in test_dict.items():
         result1 = [ele for ele in test_results if (test_value in ele)]
         if (result1):
             print("Test Passed", test_name)
-            temp_dict={test_name: 'Pass'}
+            temp_dict={test_name: 'Passed'}
             final_res.update(temp_dict)
         else:
             print("Test Failed", test_value)
-            temp_dict={test_name: 'Fail'}
+            temp_dict={test_name: 'Failed'}
             final_res.update(temp_dict)
         #print(test_value in result)
         #print(test_name, result)
@@ -90,17 +90,26 @@ print("**********FINAL RESULT********", final_res)
 Passcount=0
 Failcount=0
 NAcount=0
-
-for res in final_res.values():
+catsres_array = []
+for testid, res in final_res.items():
     #print(res)
-    if res=='Pass':
+    if res=='Passed':
         Passcount = Passcount+1
-    elif res=='Fail':
+    elif res=='Failed':
         Failcount = Failcount+1
     else:
         NAcount = NAcount+1
+    tests = {"nodeid": testid, "outcome": res.lower()}
+    catsres_array.append(tests)
+
 print("********Total Tests Passed********", Passcount)
 print("********Total Tests Failed********", Failcount)
 print("********Total NA Tests********", NAcount)
 
-
+dictlen=str(len(final_res))
+summary = {"total": dictlen, "passed": str(Passcount), "failed": str(Failcount)}
+with open("./genricclient_results.json", "w") as f:
+    report = {"summary" : summary, "tests" : catsres_array}
+    f.write(json.dumps(report, indent=4))
+f.close()
+file_contents.close()
