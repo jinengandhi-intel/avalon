@@ -276,12 +276,12 @@ def flatten_dict(input, result):
 # -----------------------------------------------------------------------------
 def verify_results(input_json, file_name, response):
     result = []
-    status = "PASS"
+    status = "PASSED"
     f_name = file_name.decode("utf-8").replace(".json", "")
+    test_name = f_name + "_" + input_json["method"]
     f = open("./input_results.json", "r")
     test_data = json.loads(f.read())
     expected = test_data[f_name]
-    m_name = input_json["method"]
     result_data = {}
     flatten_dict(response, result_data)
     for key, value in expected.items():
@@ -290,37 +290,45 @@ def verify_results(input_json, file_name, response):
     if not result:
         status = "NOT VERIFIED"
     elif not all(result):
-        status = "FAIL"
-        LOGGER.error("File: %s verification failed: Response is %s.\n\n", f_name, result_data)
-    result_set[f_name] = {"Result": status, "Expected": expected, "Actual": result_data}
+        status = "FAILED"
+        LOGGER.error("File: %s verification failed: Response is %s.\n\n", test_name, result_data)
+    result_set[test_name] = {"Result": status, "Expected": expected, "Actual": result_data}
 
 
 def log_results():
-    space = 14
+    space = 22
     fail_count = 0
     pass_count = 0
     nv_count = 0
+    result_array = []
     LOGGER.info("Result dataset is %s.\n\n", result_set)
-    LOGGER.info("|--------- Result Summary --------|")
-    LOGGER.info("|   Input JSON   |     Result     |")
-    for test, details in result_set.items():
+    LOGGER.info("|----------------- Result Summary ----------------|")
+    LOGGER.info("|       Input JSON       |         Result         |")
+    LOGGER.info("|------------------------|------------------------|")
+    for testcase, details in result_set.items():
         result = details["Result"]
         res = result + " " * (space - len(result))
-        test = test + " " * (space - len(test))
+        test = testcase + " " * (space - len(testcase))
         LOGGER.info("| %s | %s |", test, res)
-        if result == "PASS":
+        if result == "PASSED":
             pass_count +=1
-        elif result == "FAIL":
+        elif result == "FAILED":
             fail_count +=1
         elif result == "NOT VERIFIED":
             nv_count +=1
+        tests = {"nodeid" : testcase, "outcome": result.lower()}
+        result_array.append(tests)
 
-    LOGGER.info("|------------ THE END ------------|")
+    LOGGER.info("|-------------------- THE END --------------------|")
     LOGGER.info("SUMMARY :")
     LOGGER.info("Total Tests: %s", len(result_set))
     LOGGER.info("PASS Test Count: %s", pass_count)
     LOGGER.info("FAIL Test Count: %s", fail_count)
     LOGGER.info("Tests Not Verified: %s", nv_count)
+    summary = {"total": str(len(result_set)), "passed": str(pass_count), "failed": str(fail_count)}
+    with open("./demo_report.json", "w") as f:
+        report = {"summary" : summary, "tests" : result_array}
+        f.write(json.dumps(report, indent=4))
 
 
 # -----------------------------------------------------------------------------

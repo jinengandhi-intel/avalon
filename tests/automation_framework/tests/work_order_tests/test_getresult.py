@@ -18,7 +18,6 @@ class TestClass():
     test_obj = TestBase()
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult
     @pytest.mark.listener
     @pytest.mark.sdk
     def test_workordergetresult(self):
@@ -48,7 +47,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult_workorderid_different
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_workordergetresult_workorderid_different(self):
@@ -78,7 +76,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult_workorderid_specialchar
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_workordergetresult_workorderid_specialchar(self):
@@ -107,7 +104,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult_workorderid_null
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_workordergetresult_workorderid_null(self):
@@ -136,7 +132,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult_workorderid_nonhexstring
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_workordergetresult_workorderid_nonhexstring(self):
@@ -165,7 +160,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult_workorderid_alphabetsonly
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_workordergetresult_workorderid_alphabetsonly(self):
@@ -193,7 +187,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult_workorderid_withoutquotes
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_workordergetresult_workorderid_withoutquotes(self):
@@ -222,7 +215,6 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult_emptyparameter
     def test_workordergetresult_emptyparameter(self):
         test_id = '20322'
         request_file = os.path.join(
@@ -247,7 +239,6 @@ class TestClass():
 
 
     @pytest.mark.workordergetresult
-    @pytest.mark.test_workordergetresult_unknownparameter
     def test_workordergetresult_unknownparameter(self):
         test_id = '18879'
         request_file = os.path.join(
@@ -274,7 +265,6 @@ class TestClass():
 
     @pytest.mark.workordergetresult
     @pytest.mark.listener
-    @pytest.mark.test_workordergetresult_workorderId_empty
     def test_workordergetresult_workorderId_empty(self):
         test_id = '18729'
         request_file = os.path.join(
