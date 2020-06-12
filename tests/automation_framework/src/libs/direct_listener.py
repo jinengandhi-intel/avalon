@@ -75,7 +75,7 @@ class ListenerImpl():
         json_obj = json.loads(input_work_order_submit)
         json_obj["sessionKey"] = submit_obj.session_key
         json_obj["sessionKeyIv"] = submit_obj.session_iv
-        json_obj["requesterNonce"] = submit_obj.requesterNonce
+        json_obj["requesterNonce"] = submit_obj.params_obj["requesterNonce"]
         logger.info("******Work Order submitted*****\n%s\n", submit_response)
         return json_obj
 

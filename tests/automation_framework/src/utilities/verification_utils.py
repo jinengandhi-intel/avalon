@@ -124,7 +124,7 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
     if type(work_order_obj) != dict:
         session_key = work_order_obj.session_key
         session_iv = work_order_obj.session_iv
-        requester_nonce = work_order_obj.get_requester_nonce()
+        requester_nonce = work_order_obj.params_obj["requesterNonce"]
     else:
         session_key = work_order_obj["sessionKey"]
         session_iv = work_order_obj["sessionKeyIv"]
