@@ -322,16 +322,16 @@ class WorkOrderSubmit():
         # Convert workloadId to hex
         workload_id = output["workloadId"].encode("UTF-8").hex()
         work_order_id = output.get("workOrderId")
-        self.requesterNonce = output.get("requesterNonce")
+        self.params_obj["requesterNonce"] = output.get("requesterNonce")
         workerEncryptionKey = output.get("workerEncryptionKey")
         logger.info("workload_id %s \n", workload_id)
         logger.info("requester id ---- %s", output["requesterId"])
-        logger.info("requester_nonce ---- %s", self.requesterNonce)
+        logger.info("requester_nonce ---- %s", self.params_obj["requesterNonce"])
 
         # Create work order params
         wo_params = WorkOrderParams(
             work_order_id, output["workerId"], workload_id, output["requesterId"],
-            self.session_key, self.session_iv, self.requesterNonce,
+            self.session_key, self.session_iv, self.params_obj["requesterNonce"],
             result_uri=" ", notify_uri=" ",
             worker_encryption_key=workerEncryptionKey,
             data_encryption_algorithm=output["dataEncryptionAlgorithm"]

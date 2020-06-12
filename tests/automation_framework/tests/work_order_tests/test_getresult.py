@@ -20,7 +20,7 @@ class TestClass():
     @pytest.mark.workordergetresult
     @pytest.mark.listener
     @pytest.mark.sdk
-    def test_workordergetresult(self):
+    def test_workordergetresult_success(self):
         test_id = '18702'
         request_file = os.path.join(
             globals.work_order_input_file,
