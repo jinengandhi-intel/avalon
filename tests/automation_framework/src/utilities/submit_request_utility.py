@@ -138,7 +138,9 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
         wo_params.to_string(),
         id=req_id
     )
-    response["workOrderId"] = response.get("result", {}).get("workOrderId", {})
+    if globals.proxy_mode and (type(response) == int):
+        response = {}
+    response["workOrderId"] = wo_params.get_work_order_id()
     logger.info('**********Received Response*********\n%s\n', response)
     return response
 
@@ -264,13 +266,11 @@ def worker_update_sdk(update_params, input_json=None):
         jrpc_req_id = input_json["id"]
     config = config_file_read()
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    if not globals.proxy_mode:
-        worker_update_result = worker_registry.worker_update(
-            eval(str(update_params))["worker_id"],
-            eval(str(update_params))["details"], jrpc_req_id)
-        logger.info("\n Worker update response: {}\n".format(
-            json.dumps(worker_update_result, indent=4)))
-
+    worker_update_result = worker_registry.worker_update(
+        update_params["worker_id"],
+        update_params["details"], jrpc_req_id)
+    logger.info("\n Worker update response: {}\n".format(
+        json.dumps(worker_update_result, indent=4)))
     return worker_update_result
 
 

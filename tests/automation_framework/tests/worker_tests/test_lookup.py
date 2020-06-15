@@ -37,7 +37,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
-    def test_worker_lookup(self):
+    def test_worker_lookup_success(self):
         test_id = '18271'
         request_file = os.path.join(
             globals.worker_input_file,

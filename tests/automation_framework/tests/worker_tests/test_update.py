@@ -34,7 +34,7 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
-    def test_worker_update(self):
+    def test_worker_update_success(self):
         test_id = '18265'
         request_file = os.path.join(
             globals.worker_input_file,

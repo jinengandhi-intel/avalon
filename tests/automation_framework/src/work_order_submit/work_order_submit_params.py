@@ -35,7 +35,6 @@ class WorkOrderSubmit():
         self.params_obj = {}
         self.session_key = crypto_utils.generate_key()
         self.session_iv = crypto_utils.generate_iv()
-        self.requesterNonce = ''
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_submit"
@@ -101,10 +100,7 @@ class WorkOrderSubmit():
         workload_id = wconfig.get_parameter(self.params_obj, "workloadId") or ""
         requester_id = wconfig.get_parameter(self.params_obj, "requesterId") or ""
 
-        first_string = first_string + worker_order_id
-        first_string = first_string + worker_id
-        first_string = first_string + workload_id
-        first_string = first_string + requester_id
+        first_string += worker_order_id + worker_id + workload_id + requester_id
 
         concat_hash = bytes(first_string, "UTF-8")
         self.hash_1 = crypto.byte_array_to_base64(
@@ -199,18 +195,15 @@ class WorkOrderSubmit():
                 self.params_obj["outData"] = out_data_copy
 
     def _add_data_item(self, data_copy, data_item):
-
         try:
             index = data_item['index']
             data = data_item['data'].encode('UTF-8')
             if 'encryptedDataEncryptionKey' in data_item:
-                e_key = data_item['encryptedDataEncryptionKey'].encode(
-                    'UTF-8')
+                e_key = data_item['encryptedDataEncryptionKey'].encode('UTF-8')
             else:
                 e_key = "null".encode('UTF-8')
             if (not e_key) or (e_key == "null".encode('UTF-8')):
-                enc_data = self.encrypt_data(data, self.session_key,
-                                             self.session_iv)
+                enc_data = self.encrypt_data(data, self.session_key, self.session_iv)
                 base64_enc_data = (crypto.byte_array_to_base64(enc_data))
                 if 'dataHash' in data_item:
                     if not data_item['dataHash']:
@@ -338,19 +331,23 @@ class WorkOrderSubmit():
         )
 
         # Add worker input data
-        in_data = input_json["params"]["inData"]
-        for rows in in_data:
-            for k, v in rows.items():
-                if k == "data":
-                    dataHash = None
-                    encryptedDataEncryptionKey = None
-                    if "dataHash" in rows.keys():
-                        if rows["dataHash"] != "":
-                            dataHash = rows["dataHash"]
-                    if "encryptedDataEncryptionKey" in rows.keys():
-                        if rows["encryptedDataEncryptionKey"] != "":
-                            encryptedDataEncryptionKey = rows["encryptedDataEncryptionKey"]
-                    wo_params.add_in_data(rows["data"], dataHash, encryptedDataEncryptionKey)
+        for key in ["inData", "outData"]:
+            data = input_json["params"].get(key, [])
+            for rows in data:
+                for k, v in rows.items():
+                    if k == "data":
+                        dataHash = None
+                        encryptedDataEncryptionKey = None
+                        if "dataHash" in rows.keys():
+                            if rows["dataHash"] != "":
+                                dataHash = rows["dataHash"]
+                        if "encryptedDataEncryptionKey" in rows.keys():
+                            if rows["encryptedDataEncryptionKey"] != "":
+                                encryptedDataEncryptionKey = rows["encryptedDataEncryptionKey"]
+                        if key == "inData":
+                            wo_params.add_in_data(rows["data"], dataHash, encryptedDataEncryptionKey)
+                        else:
+                            wo_params.add_out_data(rows["data"], dataHash, encryptedDataEncryptionKey)
 
         # Encrypt work order request hash
         wo_params.add_encrypted_request_hash()

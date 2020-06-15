@@ -44,16 +44,8 @@ class WorkerRetrieve():
                            \n%s\n', input_worker_retrieve)
         return input_worker_retrieve
 
-    def configure_data_sdk(
-            self, input_json, worker_obj, pre_test_response):
-        if input_json is not None:
-            if "workerId" not in input_json["params"].keys():
-                worker_id = None
-            else:
-                if input_json["params"]["workerId"] != "":
-                    worker_id = input_json["params"]["workerId"]
-            return worker_id
-
+    def rertieve_worker_id(self, pre_test_response):
+        worker_id = None
         if globals.proxy_mode and \
             globals.blockchain_type == "ethereum":
             if "result" in pre_test_response and \
@@ -66,20 +58,29 @@ class WorkerRetrieve():
                     logger.error("No workers found")
             else:
                 logger.error("Failed to lookup worker")
-        elif globals.proxy_mode and \
-            globals.blockchain_type == "fabric":
+        elif globals.proxy_mode and globals.blockchain_type == "fabric":
             worker_id = pre_test_response[2][0]
         else:
             if "result" in pre_test_response and \
-                "ids" in pre_test_response["result"].keys():
+            "ids" in pre_test_response["result"].keys():
                 if pre_test_response["result"]["totalCount"] != 0:
                     worker_id = pre_test_response["result"]["ids"][0]
                 else:
                     logger.error("ERROR: No workers found")
-                    worker_id = None
             else:
                 logger.error("ERROR: Failed to lookup worker")
-                worker_id = None
+        return worker_id
 
+    def configure_data_sdk(
+            self, input_json, worker_obj, pre_test_response):
+        worker_id = None
+        if input_json is not None:
+            if "workerId" in input_json["params"].keys():
+                if input_json["params"]["workerId"] != "":
+                    worker_id = input_json["params"]["workerId"]
+                else:
+                    worker_id = self.rertieve_worker_id(pre_test_response)
+        else:
+            worker_id = self.rertieve_worker_id(pre_test_response)
         return worker_id
 

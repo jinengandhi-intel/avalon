@@ -615,11 +615,11 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    def test_workordersubmit_indataoutdata_empty(self):
+    def test_workordersubmit_outdata_empty(self):
         test_id = '18711'
         request_file = os.path.join(
             globals.work_order_input_file,
-            "work_order_with_empty_indata_outdata.json")
+            "work_order_with_empty_outdata.json")
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_submit(
@@ -635,9 +635,10 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'])
 
         assert (
-                check_negative_test_responses(
-                    result_response,
-                    "Indata is empty")
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 

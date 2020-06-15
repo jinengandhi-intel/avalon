@@ -33,7 +33,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.worker_register
     @pytest.mark.listener
-    def test_worker_register(self):
+    def test_worker_register_success(self):
         test_id = '18262'
         request_file = os.path.join(
             globals.worker_input_file,
