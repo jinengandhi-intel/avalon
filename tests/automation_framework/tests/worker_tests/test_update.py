@@ -34,6 +34,7 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_worker_update_success(self):
         test_id = '18265'
         request_file = os.path.join(
@@ -60,6 +61,7 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_worker_update_unknown_parameter(self):
         test_id = '18266'
         request_file = os.path.join(
@@ -86,6 +88,7 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_worker_update_invalid_parameter(self):
         test_id = '18267'
         request_file = os.path.join(
@@ -112,6 +115,7 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_worker_update_empty_details(self):
         test_id = '18293'
         request_file = os.path.join(

@@ -37,6 +37,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
+    @pytest.mark.positive
     def test_worker_lookup_success(self):
         test_id = '18271'
         request_file = os.path.join(
@@ -64,6 +65,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.worker_lookup
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_worker_lookup_workerType_not_unsigned_int(self):
         test_id = '18275'
         request_file = os.path.join(
@@ -141,6 +143,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.worker_lookup
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_worker_lookup_diff_unit_length(self):
         test_id = '20364'
         request_file = os.path.join(
@@ -166,6 +169,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.worker_lookup
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_worker_lookup_method_field_change(self):
         test_id = '18278'
         request_file = os.path.join(
@@ -187,6 +191,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.worker_lookup
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_worker_lookup_twice_params(self):
         test_id = '18279'
         request_file = os.path.join(

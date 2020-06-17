@@ -37,6 +37,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
+    @pytest.mark.positive
     def test_worker_retrieve_success(self):
         test_id = '18273'
         request_file = os.path.join(
@@ -63,6 +64,7 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.p1
     @pytest.mark.set1
+    @pytest.mark.negative
     def test_worker_retrieve_empty_params(self):
         test_id = '18274'
         request_file = os.path.join(

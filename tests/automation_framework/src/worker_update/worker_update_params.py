@@ -51,7 +51,7 @@ class WorkerUpdate():
             if "result" in pre_test_response and \
                 "ids" in pre_test_response["result"].keys():
                 if pre_test_response["result"]["totalCount"] != 0:
-                    worker_id = pre_test_response["result"]["ids"]
+                    worker_id = pre_test_response["result"]["ids"][0]
                     # Filter workers by status(active) field
                     # Return first worker whose status is active
                 else:

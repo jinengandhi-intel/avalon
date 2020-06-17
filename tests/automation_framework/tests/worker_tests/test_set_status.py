@@ -32,6 +32,7 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.listener
+    @pytest.mark.positive
     def test_worker_set_status_success(self):
         test_id = '18268'
         request_file = os.path.join(
@@ -56,6 +57,7 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_worker_set_status_unknown_parameter(self):
         test_id = '18269'
         request_file = os.path.join(
@@ -80,6 +82,7 @@ class TestClass():
 
     @pytest.mark.worker
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_worker_set_status_invalid_parameter(self):
         test_id = '18270'
         request_file = os.path.join(
@@ -105,6 +108,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.listener
     @pytest.mark.set1
+    @pytest.mark.negative
     def test_worker_set_status_params_status_0(self):
         test_id = '18287'
         request_file = os.path.join(
@@ -130,6 +134,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.listener
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_worker_set_status_params_status_2(self):
         test_id = '18289'
         request_file = os.path.join(
@@ -155,6 +160,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.listener
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_worker_set_status_params_status_3(self):
         test_id = '18290'
         request_file = os.path.join(
@@ -180,6 +186,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.listener
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_worker_set_status_params_status_4(self):
         test_id = '18291'
         request_file = os.path.join(
@@ -205,6 +212,7 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.listener
     @pytest.mark.set1
+    @pytest.mark.negative
     def test_worker_set_status_params_status_5(self):
         test_id = '18292'
         request_file = os.path.join(

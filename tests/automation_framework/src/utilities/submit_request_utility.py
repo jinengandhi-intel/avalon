@@ -184,12 +184,20 @@ def worker_register_sdk(register_params, input_json):
                    'MPC': WorkerType.MPC, 'ZK': WorkerType.ZK}
     config = config_file_read()
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    worker_register_result = worker_registry.worker_register(
-        eval(str(register_params))["worker_id"],
-        worker_dict[eval(str(register_params))["workerType"]],
-        eval(str(register_params))["organization_id"],
-        eval(str(register_params))["application_type_id"],
-        eval(str(register_params["details"])), jrpc_req_id)
+    if globals.proxy_mode and (globals.blockchain_type == "ethereum"):
+        worker_register_result = worker_registry.worker_register(
+            register_params["worker_id"],
+            worker_dict[register_params["workerType"]],
+            register_params["organization_id"],
+            register_params["application_type_id"],
+            register_params["details"])
+    else:
+        worker_register_result = worker_registry.worker_register(
+            register_params["worker_id"],
+            worker_dict[register_params["workerType"]],
+            register_params["organization_id"],
+            register_params["application_type_id"],
+            register_params["details"], jrpc_req_id)
     logger.info("\n Worker register response: {}\n".format(
         json.dumps(worker_register_result, indent=4)))
     return worker_register_result
@@ -207,9 +215,14 @@ def worker_setstatus_sdk(set_status_params, input_json):
                    4: WorkerStatus.COMPROMISED}
     config = config_file_read()
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    worker_setstatus_result = worker_registry.worker_set_status(
-        eval(str(set_status_params))["worker_id"],
-        status_dict[eval(str(set_status_params))["status"]])
+    if globals.proxy_mode and (globals.blockchain_type == "ethereum"):
+        worker_setstatus_result = worker_registry.worker_set_status(
+            set_status_params["worker_id"],
+            status_dict[set_status_params["status"]])
+    else:
+        worker_setstatus_result = worker_registry.worker_set_status(
+            set_status_params["worker_id"],
+            status_dict[set_status_params["status"]], jrpc_req_id)
     logger.info("\n Worker setstatus response: {}\n".format(
         json.dumps(worker_setstatus_result, indent=4)))
     return worker_setstatus_result
@@ -266,9 +279,14 @@ def worker_update_sdk(update_params, input_json=None):
         jrpc_req_id = input_json["id"]
     config = config_file_read()
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    worker_update_result = worker_registry.worker_update(
-        update_params["worker_id"],
-        update_params["details"], jrpc_req_id)
+    if globals.proxy_mode and (globals.blockchain_type == "ethereum"):
+        worker_update_result = worker_registry.worker_update(
+            update_params["worker_id"],
+            update_params["details"])
+    else:
+        worker_update_result = worker_registry.worker_update(
+            update_params["worker_id"],
+            update_params["details"], jrpc_req_id)
     logger.info("\n Worker update response: {}\n".format(
         json.dumps(worker_update_result, indent=4)))
     return worker_update_result

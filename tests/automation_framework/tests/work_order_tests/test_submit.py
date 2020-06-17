@@ -32,6 +32,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.p1
+    @pytest.mark.positive
     def test_workordersubmit_success(self):
         test_id = '18697'
         request_file = os.path.join(
@@ -62,6 +63,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_inDataDataEncryptionKey_hyphenecho(self):
         test_id = '18783'
         request_file = os.path.join(
@@ -92,6 +94,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_datahash_null(self):
         test_id = '18713'
         request_file = os.path.join(
@@ -118,6 +121,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_requesterId_null(self):
         test_id = '18739'
         request_file = os.path.join(
@@ -148,6 +152,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_sessionkeyivInDataIv_hexstring(
             self):
         test_id = '18738'
@@ -179,6 +184,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_verifysignature(self):
         test_id = '18450'
         request_file = os.path.join(
@@ -209,6 +215,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_requesternonce_specialcharacters(
             self):
         test_id = '18736'
@@ -236,6 +243,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_signingalgorithm_alternate(self):
         test_id = '18614'
         request_file = os.path.join(
@@ -266,6 +274,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_hashingalgorithm_alternate(self):
         test_id = '18704'
         request_file = os.path.join(
@@ -296,6 +305,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_requesterprivatekey_no(self):
         test_id = '18612'
         request_file = os.path.join(
@@ -326,6 +336,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_params_twiceheartdisease(self):
         test_id = '18811'
         request_file = os.path.join(
@@ -356,6 +367,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workloadid_invalid(self):
         test_id = '18807'
         request_file = os.path.join(
@@ -381,6 +393,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_methodname_list(self):
         test_id = '18797'
         request_file = os.path.join(
@@ -410,6 +423,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workerencryptionkey_specialcharacter(self):
         test_id = '18732'
         request_file = os.path.join(
@@ -437,6 +451,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workerencryptionkey_empty(self):
         test_id = '18705'
         request_file = os.path.join(
@@ -464,6 +479,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_dataencryptionalgorithm_alternate(self):
         test_id = '18706'
         request_file = os.path.join(
@@ -494,6 +510,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_indexindata_50(self):
         test_id = '18707'
         request_file = os.path.join(
@@ -525,6 +542,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_index_orderchange(self):
         test_id = '18708'
         request_file = os.path.join(
@@ -555,6 +573,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_indata_empty(self):
         test_id = '18765'
         request_file = os.path.join(
@@ -585,6 +604,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_indata_remove(self):
         test_id = '18766'
         request_file = os.path.join(
@@ -615,6 +635,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_outdata_empty(self):
         test_id = '18711'
         request_file = os.path.join(
@@ -642,10 +663,9 @@ class TestClass():
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-
-
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     # @pytest.mark.sdk (AttributeError: 'dict' object has no attribute 'to_jrpc_string)
     def test_workordersubmit_indata_unknownparametervalue(self):
         test_id = '18768'
@@ -674,6 +694,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_index_negative(self):
         test_id = '18769'
         request_file = os.path.join(
@@ -705,6 +726,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_indatahash_empty(self):
         test_id = '18712'
         request_file = os.path.join(
@@ -735,6 +757,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_datahash_randomstr(self):
         test_id = '18772'
         request_file = os.path.join(
@@ -762,6 +785,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_data_multipleechoresult(self):
         test_id = '18774'
         request_file = os.path.join(
@@ -793,6 +817,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_echoclient(self):
         test_id = '18808'
         request_file = os.path.join(
@@ -823,6 +848,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_indata_alternatetextechoclient(self):
         test_id = '18809'
         request_file = os.path.join(
@@ -854,6 +880,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_indata_specialcharacter(self):
         test_id = '18810'
         request_file = os.path.join(
@@ -884,6 +911,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     # @pytest.mark.sdk
     def test_workordersubmit_iv_specialcharacterechoclient(self):
         test_id = '18786'
@@ -914,6 +942,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_requesterId_paramremove(self):
         test_id = '18733'
         request_file = os.path.join(
@@ -943,6 +972,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_responsetimeout_string(self):
         test_id = '18798'
         request_file = os.path.join(
@@ -973,6 +1003,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_workordersubmit_dataencryptionalgorithm_list(self):
         test_id = '18793'
         request_file = os.path.join(
@@ -1004,6 +1035,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_workordersubmit_workloadId_twoworkload(self):
         test_id = '18805'
         request_file = os.path.join(
@@ -1036,6 +1068,7 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.p1
     @pytest.mark.set1
+    @pytest.mark.negative
     def test_workordersubmit_workorderId_null(self):
         test_id = '18717'
         request_file = os.path.join(
@@ -1063,6 +1096,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
+    @pytest.mark.negative
     def test_workordersubmit_workerId_nullstring(self):
         test_id = '18718'
         request_file = os.path.join(
@@ -1090,6 +1124,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
+    @pytest.mark.negative
     def test_workordersubmit_workloadId_specialcharacters(self):
         test_id = '18730'
         request_file = os.path.join(
@@ -1116,6 +1151,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_workordersubmit_encrypteddataencryptionkey_nullechoclient(self):
         test_id = '18785'
         request_file = os.path.join(
@@ -1147,6 +1183,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_workordersubmit_dataencryptionalgorithm_listsamealgotwice(self):
         test_id = '18788'
         request_file = os.path.join(
@@ -1177,6 +1214,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_workordersubmit_encrypteddataencryptionkey_hyphenechoclient(self):
         test_id = '20366'
         request_file = os.path.join(
@@ -1207,6 +1245,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
+    @pytest.mark.negative
     def test_workordersubmit_encrypteddataencryptionkey_remove(self):
         test_id = '18754'
         request_file = os.path.join(
@@ -1234,6 +1273,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.set1
+    @pytest.mark.positive
     def test_workordersubmit_encrypteddataencryptionkey_emptyechoclient(self):
         test_id = '18806'
         request_file = os.path.join(
@@ -1263,6 +1303,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_outdata_success(self):
         test_id = '18710'
         request_file = os.path.join(
@@ -1292,6 +1333,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_indata_bothindexremoveDataDatahash(self):
         test_id = '18714'
         request_file = os.path.join(
@@ -1318,6 +1360,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_indata_oneValidOtherEmptDataDatahash(self):
         test_id = '18715'
         request_file = os.path.join(
@@ -1344,6 +1387,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_indata_singleindexremoveDataDatahash(self):
         test_id = '18716'
         request_file = os.path.join(
@@ -1370,6 +1414,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_indata_index2randomstr(self):
         test_id = '18719'
         request_file = os.path.join(
@@ -1399,6 +1444,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_indata_index1randomstr(self):
         test_id = '18720'
         request_file = os.path.join(
@@ -1428,6 +1474,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workloadid_emptystring(self):
         test_id = '18722'
         request_file = os.path.join(
@@ -1453,6 +1500,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workloadid_hexstring(self):
         test_id = '18723'
         request_file = os.path.join(
@@ -1477,6 +1525,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_workload_nullstring(self):
         test_id = '18726'
         request_file = os.path.join(
@@ -1502,6 +1551,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workorderid_increasedhexlength(self):
         test_id = '18727'
         request_file = os.path.join(
@@ -1529,6 +1579,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workorderidworkloadid_same(self):
         test_id = '18728'
         request_file = os.path.join(
@@ -1556,6 +1607,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_data_differentdataheartdisease(self):
         test_id = '18731'
         request_file = os.path.join(
@@ -1587,6 +1639,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_requesterId_specialcharacter(self):
         test_id = '18734'
         request_file = os.path.join(
@@ -1613,6 +1666,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_requesterNonce_param_empty(self):
         test_id = '18735'
         request_file = os.path.join(
@@ -1639,6 +1693,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_requestersignature_differentlength(self):
         test_id = '18492'
         request_file = os.path.join(
@@ -1666,6 +1721,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_verifyingkey_nullstr(self):
         test_id = '18501'
         request_file = os.path.join(
@@ -1693,6 +1749,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_indataoutdata_success(self):
         test_id = '18703'
         request_file = os.path.join(
@@ -1722,6 +1779,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.sdk
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_workorderId_remove(self):
         test_id = '18725'
         request_file = os.path.join(
@@ -1747,6 +1805,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_sessionkeyiv_allspecial_characters(self):
         test_id = '18737'
         request_file = os.path.join(
@@ -1773,6 +1832,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_requesterId_differenthexlength(self):
         test_id = '18742'
         request_file = os.path.join(
@@ -1800,6 +1860,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.sdk
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_workerEncryptionKey_notdefaulthex(self):
         test_id = '18743'
         request_file = os.path.join(
@@ -1826,6 +1887,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_requesterNonce_notdefaultlength(self):
         test_id = '18745'
         request_file = os.path.join(
@@ -1851,6 +1913,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.positive
     def test_workordersubmit_requesterSignature_no(self):
         test_id = '18613'
         request_file = os.path.join(
@@ -1880,6 +1943,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_encryptedRequestHash_no(self):
         test_id = '18777'
         request_file = os.path.join(
@@ -1905,6 +1969,7 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
+    @pytest.mark.negative
     def test_workordersubmit_mandatoryfields_remove(self):
         test_id = '18781'
         request_file = os.path.join(
@@ -1929,6 +1994,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_id_remove(self):
         test_id = '18787'
         request_file = os.path.join(
@@ -1954,6 +2020,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workeridworkloadid_same(self):
         test_id = '18794'
         request_file = os.path.join(
@@ -1979,6 +2046,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_indata_firstinparams(self):
         test_id = '18796'
         request_file = os.path.join(
@@ -2007,6 +2075,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_params_unknownparameter(self):
         test_id = '18700'
         request_file = os.path.join(
@@ -2025,6 +2094,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_workerId_notdefaultlength_postmsg(self):
         test_id = '20365'
         request_file = os.path.join(
@@ -2043,6 +2113,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.negative
     def test_workordersubmit_workerId_notdefaultlength(self):
         test_id = '18741'
         request_file = os.path.join(
@@ -2072,6 +2143,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_payloadFormat_notJSONRPC(self):
         test_id = '18750'
         request_file = os.path.join(
@@ -2089,6 +2161,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_params_empty(self):
         test_id = '18762'
         request_file = os.path.join(
@@ -2107,6 +2180,7 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.positive
     def test_workordersubmit_OutDataDataEncryptionKey_hyphen(self):
         test_id = '18784'
         request_file = os.path.join(
@@ -2136,6 +2210,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.negative
     def test_workordersubmit_params_twiceechoclient(self):
         test_id = '18791'
         request_file = os.path.join(
