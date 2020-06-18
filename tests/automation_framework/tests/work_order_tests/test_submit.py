@@ -510,7 +510,6 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.positive
     def test_workordersubmit_indexindata_50(self):
         test_id = '18707'
         request_file = os.path.join(
