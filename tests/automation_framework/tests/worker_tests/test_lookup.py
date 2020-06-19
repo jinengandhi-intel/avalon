@@ -66,6 +66,7 @@ class TestClass():
     @pytest.mark.worker_lookup
     @pytest.mark.listener
     @pytest.mark.negative
+    @pytest.mark.sdk
     def test_worker_lookup_workerType_not_unsigned_int(self):
         test_id = '18275'
         request_file = os.path.join(

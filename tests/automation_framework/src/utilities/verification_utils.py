@@ -157,10 +157,16 @@ def check_worker_lookup_response(response, operator, value):
         else:
             err_cd = 1
     else:'''
-    if operator(response["result"]["totalCount"], value):
-        err_cd = 0
+    if globals.blockchain_type == "fabric":
+        if operator(response[0], value):
+            err_cd = 0
+        else:
+            err_cd = 1
     else:
-        err_cd = 1
+        if operator(response["result"]["totalCount"], value):
+            err_cd = 0
+        else:
+            err_cd = 1
     return err_cd
 
 

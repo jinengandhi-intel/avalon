@@ -23,6 +23,7 @@ from src.utilities.tamper_utility import tamper_request
 import secrets
 from avalon_sdk.work_order.work_order_params import WorkOrderParams
 import src.utilities.worker_utilities as wconfig
+from ecdsa.util import sigencode_der, sigdecode_der
 
 logger = logging.getLogger(__name__)
 NO_OF_BYTES = 16
@@ -153,8 +154,11 @@ class WorkOrderSubmit():
 
     def _compute_requester_signature(self):
         if wconfig.get_parameter(self.params_obj, "requesterSignature") is not None:
-            self.public_key = self.private_key.GetPublicKey().Serialize()
-            signature_result = self.private_key.SignMessage(self.final_hash)
+            self.public_key = crypto_utils.get_verifying_key(self.private_key)
+            signature_result = \
+                self.private_key.sign_digest_deterministic(
+                    bytes(self.final_hash),
+                    sigencode=sigencode_der)
             self.requester_signature = crypto.byte_array_to_base64(
                 signature_result)
             if self.params_obj["requesterSignature"] == "":

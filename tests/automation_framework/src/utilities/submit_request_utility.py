@@ -116,7 +116,7 @@ def submit_request_listener(
 
 
 def workorder_submit_sdk(wo_params, input_json_obj=None):
-    logger.info("SDK code path\n")
+    logger.info("WorkOrderSubmit SDK code path\n")
     if input_json_obj is None:
         req_id = 3
     else:
@@ -138,7 +138,7 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
         wo_params.to_string(),
         id=req_id
     )
-    if globals.proxy_mode and (type(response) == int):
+    if globals.proxy_mode and (type(response) != dict):
         response = {}
     response["workOrderId"] = wo_params.get_work_order_id()
     logger.info('**********Received Response*********\n%s\n', response)
@@ -146,7 +146,7 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
 
 
 def worker_lookup_sdk(worker_type, input_json=None):
-    logger.info("SDK code path\n")
+    logger.info("WorkerLookUp SDK code path\n")
     if input_json is None:
         jrpc_req_id = 3
     else:
@@ -156,15 +156,19 @@ def worker_lookup_sdk(worker_type, input_json=None):
                    'MPC': WorkerType.MPC, 'ZK': WorkerType.ZK}
     worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
     if globals.blockchain_type == "ethereum":
+        if worker_type in worker_dict.keys():
+            worker = WorkerType.TEE_SGX
+        else:
+            worker = worker_type
         worker_lookup_response = worker_registry.worker_lookup(
-            WorkerType.TEE_SGX,
+            worker,
             config["WorkerConfig"]["OrganizationId"],
             config["WorkerConfig"]["ApplicationTypeId"],
             jrpc_req_id
         )
     else:
         worker_lookup_response = worker_registry.worker_lookup(
-        worker_type=worker_dict[worker_type], id=jrpc_req_id)
+        worker_type=worker_dict.get(worker_type, worker_type), id=jrpc_req_id)
     logger.info("\n Worker lookup response: {}\n".format(
         json.dumps(worker_lookup_response, indent=4)
     ))
@@ -173,7 +177,7 @@ def worker_lookup_sdk(worker_type, input_json=None):
 
 
 def worker_register_sdk(register_params, input_json):
-    logger.info("SDK code path\n")
+    logger.info("WorkerRegister SDK code path\n")
     jrpc_req_id = input_json["id"]
     if input_json is None:
         jrpc_req_id = 3
@@ -204,7 +208,7 @@ def worker_register_sdk(register_params, input_json):
 
 
 def worker_setstatus_sdk(set_status_params, input_json):
-    logger.info("SDK code path\n")
+    logger.info("WorkerSetStatus SDK code path\n")
     logger.info("Worker status params %s \n", set_status_params)
     if input_json is None:
         jrpc_req_id = 3
@@ -223,13 +227,17 @@ def worker_setstatus_sdk(set_status_params, input_json):
         worker_setstatus_result = worker_registry.worker_set_status(
             set_status_params["worker_id"],
             status_dict[set_status_params["status"]], jrpc_req_id)
+    if globals.blockchain_type == "fabric":
+        result = worker_setstatus_result
+        worker_setstatus_result = {}
+        worker_setstatus_result["error"] = {"code" : result.value, "message" : ""}
     logger.info("\n Worker setstatus response: {}\n".format(
         json.dumps(worker_setstatus_result, indent=4)))
     return worker_setstatus_result
 
 
 def worker_retrieve_sdk(worker_id, input_json=None):
-    logger.info("SDK code path\n")
+    logger.info("WorkerRetrieve SDK code path\n")
     worker_obj = worker_details.SGXWorkerDetails()
     if input_json is None:
         jrpc_req_id = 11
@@ -259,8 +267,14 @@ def worker_retrieve_sdk(worker_id, input_json=None):
             logger.error("Unable to retrieve worker details\n")
             return worker_retrieve_result
     if globals.proxy_mode and globals.blockchain_type == 'fabric':
-        worker_obj.load_worker(json.loads(worker_retrieve_result[4]))
-        worker_retrieve_result = json.loads(worker_retrieve_result[4])
+        response = worker_retrieve_result
+        worker_obj.load_worker(json.loads(response[4]))
+        worker_retrieve_result = {}
+        result = {"workerType" : response[1],
+                  "organizationId" : response[2],
+                  "applicationTypeId" : response[3],
+                  "details" : json.loads(response[4])}
+        worker_retrieve_result["result"] = result
     worker_obj.worker_id = worker_id
     worker_retrieve_result["workerId"] = worker_id
     logger.info("\n Worker ID\n%s\n", worker_id)
@@ -269,7 +283,7 @@ def worker_retrieve_sdk(worker_id, input_json=None):
 
 
 def worker_update_sdk(update_params, input_json=None):
-    logger.info("SDK code path\n")
+    logger.info("WorkerUpdate SDK code path\n")
     logger.info("Worker update params %s \n", update_params)
     worker_obj = worker_details.SGXWorkerDetails()
     # update_params = json.loads(update_params)
@@ -293,7 +307,7 @@ def worker_update_sdk(update_params, input_json=None):
 
 
 def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
-    logger.info("SDK code path\n")
+    logger.info("WorkerReceiptCreate SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     # Create receipt
@@ -318,7 +332,7 @@ def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
     return wo_receipt_resp
 
 def workorder_receiptretrieve_sdk(workorderId, input_json):
-    logger.info("SDK code path\n")
+    logger.info("ReceiptRetrieve SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     # Create receipt
@@ -333,7 +347,7 @@ def workorder_receiptretrieve_sdk(workorderId, input_json):
     return wo_receipt_resp
 
 def workorder_getresult_sdk(workorderId, input_json):
-    logger.info("SDK code path\n")
+    logger.info("WorkOderGetResult SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     work_order = _create_work_order_instance(globals.blockchain_type, config)
