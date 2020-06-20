@@ -2105,7 +2105,7 @@ class TestClass():
         assert (
                 check_negative_test_responses(
                     msg_response,
-                    "Invalid data format for workerId")
+                    "worker 6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0eee6a96dcebaeb14f2ae923456234564567 doesn't exists")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -2129,19 +2129,17 @@ class TestClass():
             globals.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
-
         assert (
-                verify_test(
-                    result_response, 2,
-                    self.test_obj.build_request_output['pre_test_output'],
-                    self.test_obj.build_request_output['action_obj'])
+                check_negative_test_responses(
+                    submit_response,
+                    "worker 6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0eee6a96dcebaeb14f2ae923456234564567 doesn't exists")
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
+
     @pytest.mark.workordersubmit
     @pytest.mark.listener
+    @pytest.mark.sdk
     @pytest.mark.negative
     def test_workordersubmit_payloadFormat_notJSONRPC(self):
         test_id = '18750'

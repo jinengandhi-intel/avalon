@@ -330,7 +330,20 @@ def workorder_receiptretrieve_sdk(workorderId, input_json):
     logger.info("Work order retrieve receipt response : {} \n \n ".format(
         wo_receipt_resp
     ))
-    return wo_receipt_resp
+
+    # Retrieve last update to receipt by passing 0xFFFFFFFF
+    jrpc_req_id += 1
+    receipt_update_retrieve = \
+        wo_receipt.work_order_receipt_update_retrieve(
+            workorderId,
+            None,
+            1 << 32,
+            id=jrpc_req_id)
+    logger.info("\n Last update to receipt receipt is:\n {}".format(
+        json.dumps(receipt_update_retrieve, indent=4)
+    ))
+
+    return receipt_update_retrieve
 
 def workorder_getresult_sdk(workorderId, input_json):
     logger.info("SDK code path\n")
