@@ -6,7 +6,6 @@ import globals
 import avalon_crypto_utils.crypto.crypto as crypto
 import avalon_crypto_utils.signature as signature
 from src.utilities.tamper_utility import tamper_request
-import avalon_crypto_utils.crypto_utility as enclave_helper
 from error_code.error_status import ReceiptCreateStatus
 import avalon_crypto_utils.crypto_utility as crypto_utility
 from avalon_sdk.work_order_receipt.work_order_receipt \
@@ -27,26 +26,22 @@ class WorkOrderReceiptCreate():
         self.tamper = {"params": {}}
         self.output_json_file_name = "work_order_create_receipt"
 
-    def add_json_values(self, input_json_temp,
+    def add_json_values(self, input_json_params,
                         worker_obj, private_key, tamper, wo_submit):
 
         self.private_key = private_key
         self.worker_obj = worker_obj
         # logger.info("------ Loaded string data: ABCDEFGHIJKLMNOP
         # %s ------2. %s\n", input_json_temp,  type(wo_submit))
-        final_hash_str = \
-            self.sig_obj.calculate_request_hash(wo_submit)
-
-        # public_key =  signing_key.GetPublicKey().Serialize()
-        input_json_temp = input_json_temp["params"]
-
-        input_params_list = input_json_temp.keys()
+        final_hash_str = self.sig_obj.calculate_request_hash(wo_submit)
+        input_json_temp = wo_submit["params"]
+        input_params_list = input_json_params["params"].keys()
         config_yaml = wconfig.read_config(__file__, worker_obj, input_json_temp)
         config_yaml["workOrderId"] = wo_submit["params"]["workOrderId"]
         config_yaml["workerServiceId"] = wo_submit["params"]["workerId"]
         for c_key, c_val in config_yaml.items():
             if c_key in input_params_list:
-                value = input_json_temp[c_key] if input_json_temp[c_key] != "" else c_val
+                value = input_json_temp[c_key] if input_json_temp.get(c_key, "") != "" else c_val
                 wconfig.set_parameter(self.params_obj, c_key, value)
 
         wo_receipt_str = (self.params_obj["workOrderId"] +
@@ -54,11 +49,11 @@ class WorkOrderReceiptCreate():
                           self.params_obj["workerId"] +
                           self.params_obj["requesterId"] +
                           str(self.params_obj["receiptCreateStatus"]) +
-                          input_json_temp["workOrderRequestHash"] +
+                          final_hash_str +
                           self.params_obj["requesterGeneratedNonce"])
 
         wo_receipt_bytes = bytes(wo_receipt_str, "UTF-8")
-        wo_receipt_hash = crypto.compute_message_hash(wo_receipt_bytes)
+        wo_receipt_hash = crypto_utility.compute_message_hash(wo_receipt_bytes)
         status, wo_receipt_sign = self.sig_obj.generate_signature(
             wo_receipt_hash,
             private_key
@@ -80,7 +75,7 @@ class WorkOrderReceiptCreate():
         return tampered_request
 
     def _compute_requester_signature(self):
-        self.public_key = self.private_key.GetPublicKey().Serialize()
+        self.public_key = crypto_utility.get_verifying_key(self.private_key)
         self.params_obj["receiptVerificationKey"] = self.public_key
 
     def configure_data(
@@ -94,7 +89,7 @@ class WorkOrderReceiptCreate():
         logger.info("***Pre test*****\n%s\n", pre_test_response)
         logger.info("***Input json*****\n%s\n", input_json)
         # private_key of client
-        private_key = enclave_helper.generate_signing_keys()
+        private_key = crypto_utility.generate_signing_keys()
         self.add_json_values(
             input_json, worker_obj, private_key,
             self.tamper, pre_test_response)

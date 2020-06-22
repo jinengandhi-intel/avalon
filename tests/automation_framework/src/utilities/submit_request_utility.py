@@ -372,3 +372,19 @@ def workorder_getresult_sdk(workorderId, input_json):
     logger.info("******Received Response*****\n%s\n", get_result_res)
 
     return get_result_res
+
+
+def workorder_receiptlookup_sdk(requesterId, input_json):
+    logger.info("ReceiptRetrieve SDK code path\n")
+    jrpc_req_id = input_json["id"]
+    config = config_file_read()
+
+    wo_receipt = _create_work_order_receipt_instance(globals.blockchain_type, config)
+
+    wo_receipt_resp = wo_receipt.work_order_receipt_lookup(
+        requester_id=requesterId, id=jrpc_req_id)
+
+    logger.info("Work order receipt lookup response : {} \n \n ".format(
+        wo_receipt_resp
+    ))
+    return wo_receipt_resp

@@ -227,3 +227,23 @@ def check_negative_test_responses(response, expected_res):
 
     if expected_res == error_msg:
         return TestStep.SUCCESS.value
+
+def check_workorder_receipt_lookup_response(response, operator, value):
+
+    ''' if globals.blockchain_type == "ethereum":
+        if operator(response[0], value):
+            err_cd = 0
+        else:
+            err_cd = 1
+    else:'''
+    if globals.blockchain_type == "fabric":
+        if operator(response[0], value):
+            err_cd = 0
+        else:
+            err_cd = 1
+    else:
+        if operator(response["result"]["totalCount"], value):
+            err_cd = 0
+        else:
+            err_cd = 1
+    return err_cd

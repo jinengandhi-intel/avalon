@@ -21,12 +21,14 @@ from src.work_order_get_result.work_order_get_result_params \
     import WorkOrderGetResult
 from src.work_order_submit.work_order_submit_params \
     import WorkOrderSubmit
+from src.work_order_receipt.work_order_receipt_lookup \
+    import WorkOrderReceiptLookUp
 from src.utilities.submit_request_utility import \
     submit_request_listener, worker_lookup_sdk, \
     worker_retrieve_sdk, workorder_receiptcreate_sdk, \
     workorder_submit_sdk, worker_register_sdk, \
     worker_setstatus_sdk, workorder_receiptretrieve_sdk, \
-    worker_update_sdk, workorder_getresult_sdk
+    worker_update_sdk, workorder_getresult_sdk, workorder_receiptlookup_sdk
 from src.libs.direct_listener import ListenerImpl
 from src.libs.direct_sdk import SDKImpl
 import types
@@ -133,6 +135,6 @@ def pre_test_workorder_env(input_file, output):
     impl_type = impl_instance()
     wo_submit = impl_type.work_order_submit(output)
 
-    if request_method == "WorkOrderReceiptRetrieve":
+    if request_method in ["WorkOrderReceiptRetrieve", "WorkOrderReceiptLookUp"]:
         impl_type.work_order_create_receipt(wo_submit)
     return wo_submit

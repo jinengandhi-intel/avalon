@@ -21,7 +21,8 @@ from src.libs.avalon_test_wrapper \
 from src.utilities.generic_utils import TestStep
 from src.utilities.verification_utils \
     import verify_test, check_worker_create_receipt_response, \
-    check_worker_retrieve_receipt_response
+    check_worker_retrieve_receipt_response, check_workorder_receipt_lookup_response
+import operator
 from src.libs.test_base import TestBase
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,7 @@ class TestClass():
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
     @pytest.mark.p1
+    @pytest.mark.listener
     def test_work_order_create_receipt_success(self):
         request_file = os.path.join(
             globals.work_order_receipt,
@@ -74,6 +76,7 @@ class TestClass():
 
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_create_work_order_receipt_invalid_requester_id(self):
         request_file = os.path.join(
             globals.work_order_receipt,
@@ -94,6 +97,7 @@ class TestClass():
 
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_create_work_order_receipt_hexstr_workorderRequesthash(
             self):
         request_file = os.path.join(
@@ -115,6 +119,7 @@ class TestClass():
 
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_create_work_order_receipt_wrong_rverificationkey(self):
         request_file = os.path.join(
             globals.work_order_receipt,
@@ -130,6 +135,26 @@ class TestClass():
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
+                is TestStep.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.work_order_receipt_lookup
+    @pytest.mark.sdk
+    def test_work_order_receipt_lookup_success(self):
+        request_file = os.path.join(
+            globals.work_order_receipt,
+            "work_order_receipt_lookup_success.json")
+
+        err_cd = self.test_obj.setup_and_build_request_receipt(
+            read_json(request_file))
+
+        receipt_response = submit_request(
+            self.test_obj.uri_client,
+            self.test_obj.build_request_output['request_obj'],
+            globals.wo_submit_output_json_file_name,
+            read_json(request_file))
+
+        assert (check_workorder_receipt_lookup_response(receipt_response, operator.gt, 0)
                 is TestStep.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
