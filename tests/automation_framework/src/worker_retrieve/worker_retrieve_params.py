@@ -15,6 +15,7 @@
 import json
 import logging
 import globals
+import random
 import avalon_crypto_utils.crypto_utility as crypto_utils
 import src.utilities.worker_utilities as wconfig
 
@@ -64,7 +65,8 @@ class WorkerRetrieve():
             if "result" in pre_test_response and \
             "ids" in pre_test_response["result"].keys():
                 if pre_test_response["result"]["totalCount"] != 0:
-                    worker_id = pre_test_response["result"]["ids"][0]
+                    totalCount = pre_test_response["result"]["totalCount"]
+                    worker_id = pre_test_response["result"]["ids"][random.randrange(0,totalCount,1)]
                 else:
                     logger.error("ERROR: No workers found")
             else:
