@@ -15,6 +15,7 @@
 import json
 import logging
 import globals
+import random
 import avalon_crypto_utils.crypto_utility as crypto_utils
 import src.utilities.worker_utilities as wconfig
 
@@ -31,20 +32,20 @@ class WorkerRetrieve():
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
-        pre_test_response["workerId"] = pre_test_response["result"]["ids"][0]
+        pre_test_response["workerId"] = self.retrieve_worker_id(pre_test_response)
         if input_json is not None:
             wconfig.add_json_values(self, input_json, pre_test_response)
         else:
             wconfig.set_parameter(self.params_obj, "workerId",
                 crypto_utils.strip_begin_end_public_key
-                (pre_test_response["result"]["ids"][0]))
+                (pre_test_response["workerId"])
 
         input_worker_retrieve = json.loads(wconfig.to_string(self))
         logger.info('*****Worker details Updated with Worker ID***** \
                            \n%s\n', input_worker_retrieve)
         return input_worker_retrieve
 
-    def rertieve_worker_id(self, pre_test_response):
+    def retrieve_worker_id(self, pre_test_response):
         worker_id = None
         if globals.proxy_mode and \
             globals.blockchain_type == "ethereum":
@@ -64,7 +65,7 @@ class WorkerRetrieve():
             if "result" in pre_test_response and \
             "ids" in pre_test_response["result"].keys():
                 if pre_test_response["result"]["totalCount"] != 0:
-                    worker_id = pre_test_response["result"]["ids"][0]
+                    worker_id = random.choice(pre_test_response["result"]["ids"])
                 else:
                     logger.error("ERROR: No workers found")
             else:
@@ -79,8 +80,8 @@ class WorkerRetrieve():
                 if input_json["params"]["workerId"] != "":
                     worker_id = input_json["params"]["workerId"]
                 else:
-                    worker_id = self.rertieve_worker_id(pre_test_response)
+                    worker_id = self.retrieve_worker_id(pre_test_response)
         else:
-            worker_id = self.rertieve_worker_id(pre_test_response)
+            worker_id = self.retrieve_worker_id(pre_test_response)
         return worker_id
 
