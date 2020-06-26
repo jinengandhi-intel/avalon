@@ -14,7 +14,7 @@
 
 import json
 import logging
-import globals
+import env
 import avalon_sdk.worker.worker_details as worker
 import avalon_crypto_utils.crypto_utility as crypto_utils
 import src.utilities.worker_utilities as wconfig
@@ -46,8 +46,8 @@ class WorkerUpdate():
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
-        if globals.proxy_mode and \
-            globals.blockchain_type == "ethereum":
+        if env.proxy_mode and \
+            env.blockchain_type == "ethereum":
             if "result" in pre_test_response and \
                 "ids" in pre_test_response["result"].keys():
                 if pre_test_response["result"]["totalCount"] != 0:
@@ -58,8 +58,8 @@ class WorkerUpdate():
                     logger.error("No workers found")
             else:
                 logger.error("Failed to lookup worker")
-        elif globals.proxy_mode and \
-            globals.blockchain_type == "fabric":
+        elif env.proxy_mode and \
+            env.blockchain_type == "fabric":
             worker_id = pre_test_response[2][0]
         else:
             if "result" in pre_test_response and \

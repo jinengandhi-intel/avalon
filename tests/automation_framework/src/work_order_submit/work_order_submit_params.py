@@ -16,10 +16,10 @@ import json
 import logging
 import random
 import os
-import globals
+import env
 import avalon_crypto_utils.crypto.crypto as crypto
 import avalon_crypto_utils.crypto_utility as crypto_utils
-from src.utilities.tamper_utility import tamper_request
+from src.utilities.worker_utilities import tamper_request
 import secrets
 from avalon_sdk.work_order.work_order_params import WorkOrderParams
 import src.utilities.worker_utilities as wconfig
@@ -291,14 +291,14 @@ class WorkOrderSubmit():
         private_key = crypto_utils.generate_signing_keys()
         if input_json is None:
             with open(os.path.join(
-                    globals.work_order_input_file,
+                    env.work_order_input_file,
                     "work_order_success.json"), "r") as file:
                 input_json = file.read().rstrip('\n')
 
             input_json = json.loads(input_json)
 
         self.add_json_values(input_json, pre_test_response, private_key,
-                             globals.wo_submit_tamper)
+                             self.tamper)
         input_work_order = self.compute_signature(self.tamper)
         logger.info('Compute Signature complete \n')
 
@@ -369,7 +369,7 @@ class WorkOrderSubmit():
             if "workloadId" in input_dict.keys():
                 d_params["workloadId"] = input_dict["workloadId"]
 
-            if globals.direct_test_mode == "listener":
+            if env.test_mode == "listener":
                 d_params["workerEncryptionKey"] = crypto_utils.strip_begin_end_public_key(d_params["workerEncryptionKey"])
                 d_params["sessionKeyIv"] = crypto.byte_array_to_hex(self.session_iv)
                 if self.encrypted_session_key:

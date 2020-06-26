@@ -5,7 +5,7 @@ from src.utilities.submit_request_utility import \
 import logging
 import os
 import json
-import globals
+import env
 from src.worker_lookup.worker_lookup_params \
     import WorkerLookUp
 from src.work_order_receipt.work_order_receipt_params \
@@ -42,14 +42,14 @@ class SDKImpl():
                                            \n%s\n', worker_id)
         retrieve_response = worker_retrieve_sdk(worker_id)
         # worker_obj.load_worker(retrieve_response['result']['details'])
-        # if globals.proxy_mode and \
-        #    globals.blockchain_type == "ethereum":
+        # if env.proxy_mode and \
+        #    env.blockchain_type == "ethereum":
         return retrieve_response
 
     def work_order_submit(self, response_output):
         submit_obj = WorkOrderSubmit()
         submit_request_file = os.path.join(
-            globals.work_order_input_file,
+            env.work_order_input_file,
             "work_order_success.json")
         submit_request_json = self.read_json(submit_request_file)
         wo_params = submit_obj.configure_data_sdk(
@@ -57,14 +57,14 @@ class SDKImpl():
             pre_test_response=response_output)
         submit_response = workorder_submit_sdk(wo_params)
         # input_work_order_submit = submit_obj.compute_signature(
-        #    globals.wo_submit_tamper)
+        #    env.wo_submit_tamper)
         logger.info("******Work Order submitted*****\n%s\n", submit_response)
         return wo_params
 
     def work_order_create_receipt(self, wo_submit):
         receipt_retrieve_obj = WorkOrderReceiptCreate()
         receipt_retrieve_file = os.path.join(
-            globals.work_order_receipt,
+            env.work_order_receipt,
             "work_order_receipt.json")
         receipt_request_json = self.read_json(receipt_retrieve_file)
         wo_create_receipt = receipt_retrieve_obj.configure_data_sdk(
@@ -79,7 +79,7 @@ class SDKImpl():
     def work_order_get_result(self, wo_submit):
         wo_getresult_obj = WorkOrderGetResult()
         wo_getresult_request_file = os.path.join(
-            globals.work_order_input_file,
+            env.work_order_input_file,
             "work_order_getresult.json")
         wo_getresult_request_json = self.read_json(wo_getresult_request_file)
         workorder_id = wo_getresult_obj.configure_data_sdk(

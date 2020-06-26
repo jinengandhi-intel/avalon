@@ -2,18 +2,17 @@ from src.libs.avalon_test_wrapper \
     import build_request_obj, read_json, submit_request, \
     pre_test_worker_env, pre_test_workorder_env
 import logging
-import globals
+import env
 
-from src.libs.direct_listener import ListenerImpl
-from src.libs.direct_sdk import SDKImpl
+from src.libs.listener import ListenerImpl
+from src.libs.sdk import SDKImpl
 
 logger = logging.getLogger(__name__)
 
 
-class TestBase():
-    __test__ = False
+class AvalonBase():
     def __init__(self):
-        self.uri_client = globals.uri_client
+        self.uri_client = env.uri_client
         self.build_request_output = {}
 
     def setup_and_build_request_register(self, input_file):
@@ -44,7 +43,7 @@ class TestBase():
         request_obj, action_obj = build_request_obj(
             input_file, pre_test_output=pre_test_output,
             pre_test_response=wo_submit)
-        logger.info("testbase wo_submit %s", wo_submit)
+        logger.info("AvalonBase wo_submit %s", wo_submit)
         self.build_request_output.update(
             {'request_obj': request_obj,
              'pre_test_output': pre_test_output,
@@ -114,7 +113,7 @@ class TestBase():
 
     def getresult(self, output_obj):
 
-        if globals.direct_test_mode == "listener":
+        if env.test_mode == "listener":
             listener_instance = ListenerImpl()
             response = listener_instance.work_order_get_result(output_obj)
         else:

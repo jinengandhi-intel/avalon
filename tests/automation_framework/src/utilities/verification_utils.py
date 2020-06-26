@@ -2,10 +2,10 @@ import json
 import logging
 import avalon_crypto_utils.signature as signature
 import avalon_crypto_utils.crypto_utility as enclave_helper
-import globals
+import env
 from error_code.error_status import SignatureStatus
 from error_code.error_status import WorkOrderStatus
-from src.utilities.generic_utils import TestStep
+from src.utilities.worker_utilities import ResultStatus
 
 logger = logging.getLogger(__name__)
 
@@ -133,31 +133,31 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
     verify_wo_signature_err = verify_work_order_signature(response['result'],
                                                           worker_obj, requester_nonce)
 
-    assert (verify_wo_signature_err is TestStep.SUCCESS.value)
+    assert (verify_wo_signature_err is ResultStatus.SUCCESS.value)
 
     decrypt_wo_response_err = decrypt_work_order_response(response['result'],
                                                           session_key,
                                                           session_iv)[0]
 
-    assert (decrypt_wo_response_err is TestStep.SUCCESS.value)
+    assert (decrypt_wo_response_err is ResultStatus.SUCCESS.value)
 
     # WorkOrderGetResult API Response validation with key parameters
     validate_response_code_err = validate_response_code(
         response, expected_res)
 
-    assert (validate_response_code_err is TestStep.SUCCESS.value)
+    assert (validate_response_code_err is ResultStatus.SUCCESS.value)
 
-    return TestStep.SUCCESS.value
+    return ResultStatus.SUCCESS.value
 
 def check_worker_lookup_response(response, operator, value):
 
-    ''' if globals.blockchain_type == "ethereum":
+    ''' if env.blockchain_type == "ethereum":
         if operator(response[0], value):
             err_cd = 0
         else:
             err_cd = 1
     else:'''
-    if globals.blockchain_type == "fabric":
+    if env.blockchain_type == "fabric":
         if operator(response[0], value):
             err_cd = 0
         else:
@@ -172,7 +172,7 @@ def check_worker_lookup_response(response, operator, value):
 
 def check_worker_retrieve_response(response):
 
-    ''' if globals.blockchain_type == "ethereum":
+    ''' if env.blockchain_type == "ethereum":
         if response[0] == 1:
             err_cd = 0
         else:
@@ -188,7 +188,7 @@ def check_worker_retrieve_response(response):
 
 def check_worker_create_receipt_response(response):
 
-    if globals.blockchain_type == "ethereum":
+    if env.blockchain_type == "ethereum":
         if response[0] == 1:
             err_cd = 0
         else:
@@ -203,7 +203,7 @@ def check_worker_create_receipt_response(response):
 
 
 def check_worker_retrieve_receipt_response(response):
-    if globals.blockchain_type == "ethereum":
+    if env.blockchain_type == "ethereum":
         if response[0] == 1:
             err_cd = 0
         else:
@@ -223,20 +223,20 @@ def check_negative_test_responses(response, expected_res):
         if error_msg == "Invalid data format for work order id" or\
             (error_msg == "Server error" and
                 response["error"]["data"]["message"] == "'workOrderId'"):
-            return TestStep.SUCCESS.value
+            return ResultStatus.SUCCESS.value
 
     if expected_res == error_msg:
-        return TestStep.SUCCESS.value
+        return ResultStatus.SUCCESS.value
 
 def check_workorder_receipt_lookup_response(response, operator, value):
 
-    ''' if globals.blockchain_type == "ethereum":
+    ''' if env.blockchain_type == "ethereum":
         if operator(response[0], value):
             err_cd = 0
         else:
             err_cd = 1
     else:'''
-    if globals.blockchain_type == "fabric":
+    if env.blockchain_type == "fabric":
         if operator(response[0], value):
             err_cd = 0
         else:

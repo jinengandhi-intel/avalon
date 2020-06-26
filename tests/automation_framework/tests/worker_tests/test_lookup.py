@@ -15,22 +15,22 @@
 import pytest
 import logging
 import os
-import globals
+import env
 from src.utilities.verification_utils \
     import check_worker_lookup_response
 from src.libs.avalon_test_wrapper \
     import read_json, submit_request
-from src.utilities.generic_utils import TestStep
+from src.utilities.worker_utilities import ResultStatus
 from src.utilities.verification_utils \
     import check_negative_test_responses
 import operator
-from src.libs.test_base import TestBase
+from src.libs.test_base import AvalonBase
 
 logger = logging.getLogger(__name__)
 
 
 class TestClass():
-    test_obj = TestBase()
+    test_obj = AvalonBase()
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup
@@ -41,7 +41,7 @@ class TestClass():
     def test_worker_lookup_success(self):
         test_id = '18271'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_lookup.json")
 
         err_cd = self.test_obj.setup_and_build_request_lookup(
@@ -50,13 +50,13 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.worker_lookup_output_json_file_name,
+            env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_worker_lookup_response(response, operator.gt, 0)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         self.test_obj.teardown()
 
@@ -70,7 +70,7 @@ class TestClass():
     def test_worker_lookup_workerType_not_unsigned_int(self):
         test_id = '18275'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_lookup_workerType_not_unsigned_int.json")
 
         err_cd = self.test_obj.setup_and_build_request_lookup(
@@ -79,13 +79,13 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.worker_lookup_output_json_file_name,
+            env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_worker_lookup_response(response, operator.eq, 0)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -95,7 +95,7 @@ class TestClass():
     def test_worker_lookup_empty_params(self):
         test_id = '18277'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_lookup_empty_params.json")
 
         err_cd = self.test_obj.setup_and_build_request_lookup(
@@ -104,13 +104,13 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.worker_lookup_output_json_file_name,
+            env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_worker_lookup_response(response, operator.gt, 0)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -121,7 +121,7 @@ class TestClass():
     def test_worker_lookup_jsonrpc_different_version(self):
         test_id = '18280'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_lookup_jsonrpc_different_version.json")
 
         err_cd = self.test_obj.setup_and_build_request_lookup(
@@ -130,13 +130,13 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.worker_lookup_output_json_file_name,
+            env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_worker_lookup_response(response, operator.gt, 0)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -148,7 +148,7 @@ class TestClass():
     def test_worker_lookup_diff_unit_length(self):
         test_id = '20364'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_lookup_diff_unit_length.json")
 
         err_cd = self.test_obj.setup_and_build_request_lookup(
@@ -157,13 +157,13 @@ class TestClass():
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.worker_lookup_output_json_file_name,
+            env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_worker_lookup_response(response, operator.eq, 0)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -174,7 +174,7 @@ class TestClass():
     def test_worker_lookup_method_field_change(self):
         test_id = '18278'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_lookup_method_field_change.json")
 
         msg_response = self.test_obj.post_json_msg(request_file)
@@ -185,7 +185,7 @@ class TestClass():
                 check_negative_test_responses(
                     msg_response,
                     "Improper Json request")
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -196,7 +196,7 @@ class TestClass():
     def test_worker_lookup_twice_params(self):
         test_id = '18279'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_lookup_twice_params.json")
 
         msg_response = self.test_obj.post_json_msg(request_file)
@@ -207,7 +207,7 @@ class TestClass():
                 check_negative_test_responses(
                     msg_response,
                     "Duplicate parameter params")
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -218,7 +218,7 @@ class TestClass():
     def test_workerlookup_params_unknownparameter (self):
         test_id = '20592'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "workerlookup_params_unknownparameter.json")
 
         msg_response = self.test_obj.post_json_msg(request_file)
@@ -229,7 +229,7 @@ class TestClass():
                 check_negative_test_responses(
                     msg_response,
                     "Invalid parameter unknownEncoding")
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 

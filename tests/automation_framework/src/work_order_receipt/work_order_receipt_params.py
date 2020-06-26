@@ -2,10 +2,10 @@ import json
 import logging
 import random
 import os
-import globals
+import env
 import avalon_crypto_utils.crypto.crypto as crypto
 import avalon_crypto_utils.signature as signature
-from src.utilities.tamper_utility import tamper_request
+from src.utilities.worker_utilities import tamper_request
 from error_code.error_status import ReceiptCreateStatus
 import avalon_crypto_utils.crypto_utility as crypto_utility
 from avalon_sdk.work_order_receipt.work_order_receipt \
@@ -82,7 +82,7 @@ class WorkOrderReceiptCreate():
             self, input_json, worker_obj, pre_test_response):
         if input_json is None:
             with open(os.path.join(
-                    globals.work_order_receipt,
+                    env.work_order_receipt,
                     "work_order_receipt.json"), "r") as file:
                 input_json = file.read().rstrip('\n')
         #input_json = json.loads(input_json)

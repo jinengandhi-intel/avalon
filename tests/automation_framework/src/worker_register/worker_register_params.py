@@ -14,7 +14,7 @@
 
 import json
 import logging
-import globals
+import env
 import src.utilities.worker_utilities as wconfig
 
 logger = logging.getLogger(__name__)

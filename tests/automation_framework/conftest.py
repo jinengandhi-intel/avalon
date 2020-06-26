@@ -7,7 +7,7 @@ import config.config as pconfig
 TCFHOME = os.environ.get("TCF_HOME", "../../")
 logger = logging.getLogger(__name__)
 sys.path.append(os.getcwd())
-import globals
+import env
 import utility.logger as plogger
 
 @pytest.fixture(scope="session", autouse=True)

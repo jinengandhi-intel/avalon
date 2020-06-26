@@ -15,21 +15,21 @@
 import pytest
 import logging
 import os
-import globals
+import env
 from src.libs.avalon_test_wrapper \
     import read_json, submit_request
-from src.utilities.generic_utils import TestStep
+from src.utilities.worker_utilities import ResultStatus
 from src.utilities.verification_utils \
     import verify_test, check_worker_create_receipt_response, \
     check_worker_retrieve_receipt_response, check_workorder_receipt_lookup_response
 import operator
-from src.libs.test_base import TestBase
+from src.libs.test_base import AvalonBase
 
 logger = logging.getLogger(__name__)
 
 
 class TestClass():
-    test_obj = TestBase()
+    test_obj = AvalonBase()
 
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
@@ -37,7 +37,7 @@ class TestClass():
     @pytest.mark.listener
     def test_work_order_create_receipt_success(self):
         request_file = os.path.join(
-            globals.work_order_receipt,
+            env.work_order_receipt,
             "work_order_receipt.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -46,11 +46,11 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_retrieve_receipt
@@ -58,7 +58,7 @@ class TestClass():
     @pytest.mark.p1
     def test_work_order_retrieve_receipt(self):
         request_file = os.path.join(
-            globals.work_order_receipt,
+            env.work_order_receipt,
             "work_order_receipt_retrieve.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt_retrieve(
@@ -67,11 +67,11 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_retrieve_receipt_response(receipt_response)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_create_receipt
@@ -79,7 +79,7 @@ class TestClass():
     @pytest.mark.listener
     def test_create_work_order_receipt_invalid_requester_id(self):
         request_file = os.path.join(
-            globals.work_order_receipt,
+            env.work_order_receipt,
             "work_order_receipt_invalid_requester_id.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -88,11 +88,11 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_create_receipt
@@ -101,7 +101,7 @@ class TestClass():
     def test_create_work_order_receipt_hexstr_workorderRequesthash(
             self):
         request_file = os.path.join(
-            globals.work_order_receipt,
+            env.work_order_receipt,
             "work_order_receipt_hexstr_workorderRequesthash.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -110,11 +110,11 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_create_receipt
@@ -122,7 +122,7 @@ class TestClass():
     @pytest.mark.listener
     def test_create_work_order_receipt_wrong_rverificationkey(self):
         request_file = os.path.join(
-            globals.work_order_receipt,
+            env.work_order_receipt,
             "work_order_receipt_wrong_rverificationkey.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -131,18 +131,18 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_create_receipt_response(receipt_response)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.work_order_receipt_lookup
     @pytest.mark.sdk
     def test_work_order_receipt_lookup_success(self):
         request_file = os.path.join(
-            globals.work_order_receipt,
+            env.work_order_receipt,
             "work_order_receipt_lookup_success.json")
 
         err_cd = self.test_obj.setup_and_build_request_receipt(
@@ -151,10 +151,10 @@ class TestClass():
         receipt_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_workorder_receipt_lookup_response(receipt_response, operator.gt, 0)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 

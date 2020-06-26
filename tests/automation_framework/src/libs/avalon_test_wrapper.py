@@ -1,4 +1,4 @@
-import globals
+import env
 import os
 import json
 import logging
@@ -29,8 +29,8 @@ from src.utilities.submit_request_utility import \
     workorder_submit_sdk, worker_register_sdk, \
     worker_setstatus_sdk, workorder_receiptretrieve_sdk, \
     worker_update_sdk, workorder_getresult_sdk, workorder_receiptlookup_sdk
-from src.libs.direct_listener import ListenerImpl
-from src.libs.direct_sdk import SDKImpl
+from src.libs.listener import ListenerImpl
+from src.libs.sdk import SDKImpl
 import types
 import avalon_sdk.worker.worker_details as worker
 TCFHOME = os.environ.get("TCF_HOME", "../../")
@@ -65,7 +65,7 @@ def build_request_obj(input_json_obj,
     worker_retrieve SDK function requires worker_id parameter.
     """
     action_obj = eval(input_json_obj.get("method")+"()")
-    if globals.direct_test_mode == "listener":
+    if env.test_mode == "listener":
         request_obj = action_obj.configure_data(
             input_json_obj, pre_test_output, pre_test_response)
     else:
@@ -81,7 +81,7 @@ def submit_request(uri_client, output_obj, output_file, input_file):
     as an output from build_request_obj function.
     """
     request_method = input_file.get("method")
-    if globals.direct_test_mode == "listener":
+    if env.test_mode == "listener":
         submit_response = submit_request_listener(
             uri_client, output_obj, output_file)
     else:
@@ -93,10 +93,10 @@ def submit_request(uri_client, output_obj, output_file, input_file):
 
 
 def impl_instance():
-    if globals.direct_test_mode == "sdk":
+    if env.test_mode == "sdk":
         logger.info("Inside SDK instance\n")
         return SDKImpl()
-    elif globals.direct_test_mode == "listener":
+    elif env.test_mode == "listener":
         logger.info("Inside Listener instance\n")
         return ListenerImpl()
 

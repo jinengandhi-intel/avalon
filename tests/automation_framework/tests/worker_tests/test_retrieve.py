@@ -15,7 +15,7 @@
 import pytest
 import logging
 import os
-import globals
+import env
 from src.worker_lookup.worker_lookup_params \
     import WorkerLookUp
 from src.utilities.verification_utils \
@@ -23,14 +23,14 @@ from src.utilities.verification_utils \
     validate_response_code, check_negative_test_responses
 from src.libs.avalon_test_wrapper \
     import read_json, submit_request
-from src.utilities.generic_utils import TestStep
-from src.libs.test_base import TestBase
+from src.utilities.worker_utilities import ResultStatus
+from src.libs.test_base import AvalonBase
 
 logger = logging.getLogger(__name__)
 
 
 class TestClass():
-    test_obj = TestBase()
+    test_obj = AvalonBase()
 
     @pytest.mark.worker
     @pytest.mark.worker_retrieve
@@ -41,7 +41,7 @@ class TestClass():
     def test_worker_retrieve_success(self):
         test_id = '18273'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_retrieve.json")
 
         err_cd = self.test_obj.setup_and_build_request_retrieve(
@@ -50,11 +50,11 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (check_worker_retrieve_response(submit_response)
-                is TestStep.SUCCESS.value)
+                is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -68,7 +68,7 @@ class TestClass():
     def test_worker_retrieve_empty_params(self):
         test_id = '18274'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "worker_retrieve_empty_params.json")
 
         err_cd = self.test_obj.setup_and_build_request_retrieve(
@@ -77,14 +77,14 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
             check_negative_test_responses(
                 submit_response,
                 "Worker Id not found in the database. Hence invalid parameter")
-            is TestStep.SUCCESS.value)
+            is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -95,7 +95,7 @@ class TestClass():
     def test_workerretrieve_params_unknownparameter(self):
         test_id = '20591'
         request_file = os.path.join(
-            globals.worker_input_file,
+            env.worker_input_file,
             "workerretrieve_params_unknownparameter.json")
 
         err_cd = self.test_obj.setup_and_build_request_retrieve(
@@ -104,14 +104,14 @@ class TestClass():
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
-            globals.wo_submit_output_json_file_name,
+            env.wo_submit_output_json_file_name,
             read_json(request_file))
 
         assert (
             check_negative_test_responses(
                 submit_response,
                 "Invalid parameter unknownEncoding")
-            is TestStep.SUCCESS.value)
+            is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 

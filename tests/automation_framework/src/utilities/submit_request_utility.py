@@ -3,7 +3,7 @@ import json
 import time
 import os
 import config.config as pconfig
-import globals
+import env
 from avalon_sdk.connector.direct.jrpc.jrpc_worker_registry import \
     JRPCWorkerRegistryImpl
 from avalon_sdk.connector.direct.jrpc.jrpc_work_order import \
@@ -27,17 +27,17 @@ TCFHOME = os.environ.get("TCF_HOME", "../../")
 
 def config_file_read():
     config = pconfig.parse_configuration_files(
-        globals.conffiles, globals.confpaths)
+        env.conffiles, env.confpaths)
     logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
-    config["tcf"]["json_rpc_uri"] = globals.uri_client_sdk
+    config["tcf"]["json_rpc_uri"] = env.uri_client_sdk
     return config
 
 
 def _create_worker_registry_instance(blockchain_type, config):
     # create worker registry instance for direct/proxy model
-    if globals.proxy_mode and blockchain_type == 'fabric':
+    if env.proxy_mode and blockchain_type == 'fabric':
         return FabricWorkerRegistryImpl(config)
-    elif globals.proxy_mode and blockchain_type == 'ethereum':
+    elif env.proxy_mode and blockchain_type == 'ethereum':
         return EthereumWorkerRegistryImpl(config)
     else:
         logger.info("Direct SDK code path\n")
@@ -46,9 +46,9 @@ def _create_worker_registry_instance(blockchain_type, config):
 
 def _create_work_order_instance(blockchain_type, config):
     # create work order instance for direct/proxy model
-    if globals.proxy_mode and blockchain_type == 'fabric':
+    if env.proxy_mode and blockchain_type == 'fabric':
         return FabricWorkOrderImpl(config)
-    elif globals.proxy_mode and blockchain_type == 'ethereum':
+    elif env.proxy_mode and blockchain_type == 'ethereum':
         return EthereumWorkOrderProxyImpl(config)
     else:
         logger.info("Direct SDK code path\n")
@@ -57,9 +57,9 @@ def _create_work_order_instance(blockchain_type, config):
 
 def _create_work_order_receipt_instance(blockchain_type, config):
     # create work order receipt instance for direct/proxy model
-    if globals.proxy_mode and blockchain_type == 'fabric':
+    if env.proxy_mode and blockchain_type == 'fabric':
         return None
-    elif globals.proxy_mode and blockchain_type == 'ethereum':
+    elif env.proxy_mode and blockchain_type == 'ethereum':
         # TODO need to implement
         return None
     else:
@@ -122,7 +122,7 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
     else:
         req_id = input_json_obj["id"]
     config = config_file_read()
-    work_order = _create_work_order_instance(globals.blockchain_type, config)
+    work_order = _create_work_order_instance(env.blockchain_type, config)
     logger.info(" work order id %s \n", wo_params.get_work_order_id())
     logger.info(" worker id %s \n", wo_params.get_worker_id())
     logger.info(" Requester ID %s \n", wo_params.get_requester_id())
@@ -138,7 +138,7 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
         wo_params.to_string(),
         id=req_id
     )
-    if globals.proxy_mode and (type(response) != dict):
+    if env.proxy_mode and (type(response) != dict):
         response = {}
     response["workOrderId"] = wo_params.get_work_order_id()
     logger.info('**********Received Response*********\n%s\n', response)
@@ -154,8 +154,8 @@ def worker_lookup_sdk(worker_type, input_json=None):
     config = config_file_read()
     worker_dict = {'SGX': WorkerType.TEE_SGX,
                    'MPC': WorkerType.MPC, 'ZK': WorkerType.ZK}
-    worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    if globals.blockchain_type == "ethereum":
+    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    if env.blockchain_type == "ethereum":
         if worker_type in worker_dict.keys():
             worker = WorkerType.TEE_SGX
         else:
@@ -187,8 +187,8 @@ def worker_register_sdk(register_params, input_json):
     worker_dict = {'SGX': WorkerType.TEE_SGX,
                    'MPC': WorkerType.MPC, 'ZK': WorkerType.ZK}
     config = config_file_read()
-    worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    if globals.proxy_mode and (globals.blockchain_type == "ethereum"):
+    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    if env.proxy_mode and (env.blockchain_type == "ethereum"):
         worker_register_result = worker_registry.worker_register(
             register_params["worker_id"],
             worker_dict[register_params["workerType"]],
@@ -218,8 +218,8 @@ def worker_setstatus_sdk(set_status_params, input_json):
                    3: WorkerStatus.DECOMMISSIONED,
                    4: WorkerStatus.COMPROMISED}
     config = config_file_read()
-    worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    if globals.proxy_mode and (globals.blockchain_type == "ethereum"):
+    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    if env.proxy_mode and (env.blockchain_type == "ethereum"):
         worker_setstatus_result = worker_registry.worker_set_status(
             set_status_params["worker_id"],
             status_dict[set_status_params["status"]])
@@ -227,7 +227,7 @@ def worker_setstatus_sdk(set_status_params, input_json):
         worker_setstatus_result = worker_registry.worker_set_status(
             set_status_params["worker_id"],
             status_dict[set_status_params["status"]], jrpc_req_id)
-    if globals.blockchain_type == "fabric":
+    if env.blockchain_type == "fabric":
         result = worker_setstatus_result
         worker_setstatus_result = {}
         worker_setstatus_result["error"] = {"code" : result.value, "message" : ""}
@@ -244,8 +244,8 @@ def worker_retrieve_sdk(worker_id, input_json=None):
     else:
         jrpc_req_id = input_json["id"]
     config = config_file_read()
-    worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    if globals.proxy_mode and globals.blockchain_type == 'ethereum':
+    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    if env.proxy_mode and env.blockchain_type == 'ethereum':
         for w_id in worker_id:
             worker = worker_registry\
                 .worker_retrieve(w_id, jrpc_req_id)
@@ -266,7 +266,7 @@ def worker_retrieve_sdk(worker_id, input_json=None):
         if "error" in worker_retrieve_result:
             logger.error("Unable to retrieve worker details\n")
             return worker_retrieve_result
-    if globals.proxy_mode and globals.blockchain_type == 'fabric':
+    if env.proxy_mode and env.blockchain_type == 'fabric':
         response = worker_retrieve_result
         worker_obj.load_worker(json.loads(response[4]))
         worker_retrieve_result = {}
@@ -292,8 +292,8 @@ def worker_update_sdk(update_params, input_json=None):
     else:
         jrpc_req_id = input_json["id"]
     config = config_file_read()
-    worker_registry = _create_worker_registry_instance(globals.blockchain_type, config)
-    if globals.proxy_mode and (globals.blockchain_type == "ethereum"):
+    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    if env.proxy_mode and (env.blockchain_type == "ethereum"):
         worker_update_result = worker_registry.worker_update(
             update_params["worker_id"],
             update_params["details"])
@@ -311,7 +311,7 @@ def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     # Create receipt
-    wo_receipt = _create_work_order_receipt_instance(globals.blockchain_type, config)
+    wo_receipt = _create_work_order_receipt_instance(env.blockchain_type, config)
     # Submit work order create receipt jrpc request
     wo_receipt_resp = wo_receipt.work_order_receipt_create(
         wo_create_receipt["workOrderId"],
@@ -336,7 +336,7 @@ def workorder_receiptretrieve_sdk(workorderId, input_json):
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     # Create receipt
-    wo_receipt = _create_work_order_receipt_instance(globals.blockchain_type, config)
+    wo_receipt = _create_work_order_receipt_instance(env.blockchain_type, config)
 
     wo_receipt_resp = wo_receipt.work_order_receipt_retrieve(
         workorderId, jrpc_req_id)
@@ -363,7 +363,7 @@ def workorder_getresult_sdk(workorderId, input_json):
     logger.info("WorkOderGetResult SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
-    work_order = _create_work_order_instance(globals.blockchain_type, config)
+    work_order = _create_work_order_instance(env.blockchain_type, config)
     logger.info("----- Validating WorkOrderGetResult Response ------")
 
 
@@ -379,7 +379,7 @@ def workorder_receiptlookup_sdk(requesterId, input_json):
     jrpc_req_id = input_json["id"]
     config = config_file_read()
 
-    wo_receipt = _create_work_order_receipt_instance(globals.blockchain_type, config)
+    wo_receipt = _create_work_order_receipt_instance(env.blockchain_type, config)
 
     wo_receipt_resp = wo_receipt.work_order_receipt_lookup(
         requester_id=requesterId, id=jrpc_req_id)

@@ -14,7 +14,7 @@
 
 import json
 import logging
-import globals
+import env
 import random
 import avalon_crypto_utils.crypto_utility as crypto_utils
 import src.utilities.worker_utilities as wconfig
@@ -38,7 +38,7 @@ class WorkerRetrieve():
         else:
             wconfig.set_parameter(self.params_obj, "workerId",
                 crypto_utils.strip_begin_end_public_key
-                (pre_test_response["workerId"])
+                (pre_test_response["workerId"]))
 
         input_worker_retrieve = json.loads(wconfig.to_string(self))
         logger.info('*****Worker details Updated with Worker ID***** \
@@ -47,8 +47,8 @@ class WorkerRetrieve():
 
     def retrieve_worker_id(self, pre_test_response):
         worker_id = None
-        if globals.proxy_mode and \
-            globals.blockchain_type == "ethereum":
+        if env.proxy_mode and \
+            env.blockchain_type == "ethereum":
             if "result" in pre_test_response and \
                 "ids" in pre_test_response["result"].keys():
                 if pre_test_response["result"]["totalCount"] != 0:
@@ -59,7 +59,7 @@ class WorkerRetrieve():
                     logger.error("No workers found")
             else:
                 logger.error("Failed to lookup worker")
-        elif globals.proxy_mode and globals.blockchain_type == "fabric":
+        elif env.proxy_mode and env.blockchain_type == "fabric":
             worker_id = pre_test_response[2][0]
         else:
             if "result" in pre_test_response and \
