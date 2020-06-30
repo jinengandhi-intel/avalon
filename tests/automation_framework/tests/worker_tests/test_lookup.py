@@ -117,29 +117,42 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.worker_lookup
     @pytest.mark.listener
-    @pytest.mark.sdk
     def test_worker_lookup_jsonrpc_different_version(self):
         test_id = '18280'
         request_file = os.path.join(
             env.worker_input_file,
             "worker_lookup_jsonrpc_different_version.json")
 
-        err_cd = self.test_obj.setup_and_build_request_lookup(
-            read_json(request_file))
-
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            read_json(request_file))
-
+        response = self.test_obj.post_json_msg(request_file)
         logger.info("**********Received Response*********\n%s\n", response)
 
-        assert (check_worker_lookup_response(response, operator.gt, 0)
+        assert (
+                check_negative_test_responses(
+                    response,
+                    "Improper Json request Missing or Invalid parameter or value")
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
+    @pytest.mark.worker
+    @pytest.mark.worker_lookup
+    @pytest.mark.listener
+    def test_worker_lookup_withoutid_params(self):
+        test_id = ''
+
+        request_file = os.path.join(
+                 env.worker_input_file,
+                "worker_lookup_withoutid_params.json")
+
+        response = self.test_obj.post_json_msg(request_file)
+        logger.info("**********Received Response*********\n%s\n", response)
+
+        assert (
+                check_negative_test_responses(
+                      response,
+                      "Improper Json request Missing or Invalid parameter or value")
+                is ResultStatus.SUCCESS.value)
+        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.worker
     @pytest.mark.worker_lookup

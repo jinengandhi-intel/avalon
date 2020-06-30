@@ -245,28 +245,12 @@ def worker_retrieve_sdk(worker_id, input_json=None):
         jrpc_req_id = input_json["id"]
     config = config_file_read()
     worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
-    if env.proxy_mode and env.blockchain_type == 'ethereum':
-        for w_id in worker_id:
-            worker = worker_registry\
-                .worker_retrieve(w_id, jrpc_req_id)
-            if worker["result"]["status"] == \
-                WorkerStatus.ACTIVE.value:
-                worker_retrieve_result = worker
-                worker_id = w_id
-                break
-        logger.info("\n Worker ID\n%s\n", worker_id)
-        logger.info("\n Worker retrieve response: {}\n".format(
-            json.dumps(worker_retrieve_result, indent=4)))
-    else:
-        worker_retrieve_result = worker_registry.worker_retrieve(
-            worker_id, jrpc_req_id)
-        logger.info("\n Worker retrieve response: {}\n".format(
-            json.dumps(worker_retrieve_result, indent=4)))
+    worker_retrieve_result = worker_registry.worker_retrieve(worker_id, jrpc_req_id)
 
-        if "error" in worker_retrieve_result:
-            logger.error("Unable to retrieve worker details\n")
-            return worker_retrieve_result
-    if env.proxy_mode and env.blockchain_type == 'fabric':
+    if "error" in worker_retrieve_result:
+        logger.error("Unable to retrieve worker details\n")
+        return worker_retrieve_result
+    if env.proxy_mode:
         response = worker_retrieve_result
         worker_obj.load_worker(json.loads(response[4]))
         worker_retrieve_result = {}
@@ -275,6 +259,7 @@ def worker_retrieve_sdk(worker_id, input_json=None):
                   "applicationTypeId" : response[3],
                   "details" : json.loads(response[4])}
         worker_retrieve_result["result"] = result
+    logger.info("\n Worker retrieve response: {}\n".format(worker_retrieve_result))
     worker_obj.worker_id = worker_id
     worker_retrieve_result["workerId"] = worker_id
     logger.info("\n Worker ID\n%s\n", worker_id)

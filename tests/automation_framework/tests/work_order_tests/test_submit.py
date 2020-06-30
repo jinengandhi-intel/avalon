@@ -478,7 +478,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk
+    @pytest.mark.sdk_1
     @pytest.mark.negative
     def test_workordersubmit_dataencryptionalgorithm_alternate(self):
         test_id = '18706'
@@ -571,7 +571,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk
+    @pytest.mark.sdk_1
     @pytest.mark.negative
     def test_workordersubmit_indata_empty(self):
         test_id = '18765'
@@ -602,7 +602,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk
+    @pytest.mark.sdk_1
     @pytest.mark.negative
     def test_workordersubmit_indata_remove(self):
         test_id = '18766'
@@ -1412,7 +1412,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk
+    @pytest.mark.sdk_1
     @pytest.mark.negative
     def test_workordersubmit_indata_index2randomstr(self):
         test_id = '18719'
@@ -1442,7 +1442,7 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk
+    @pytest.mark.sdk_1
     @pytest.mark.negative
     def test_workordersubmit_indata_index1randomstr(self):
         test_id = '18720'

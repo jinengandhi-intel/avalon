@@ -46,20 +46,7 @@ class WorkerUpdate():
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
-        if env.proxy_mode and \
-            env.blockchain_type == "ethereum":
-            if "result" in pre_test_response and \
-                "ids" in pre_test_response["result"].keys():
-                if pre_test_response["result"]["totalCount"] != 0:
-                    worker_id = pre_test_response["result"]["ids"][0]
-                    # Filter workers by status(active) field
-                    # Return first worker whose status is active
-                else:
-                    logger.error("No workers found")
-            else:
-                logger.error("Failed to lookup worker")
-        elif env.proxy_mode and \
-            env.blockchain_type == "fabric":
+        if env.proxy_mode:
             worker_id = pre_test_response[2][0]
         else:
             if "result" in pre_test_response and \

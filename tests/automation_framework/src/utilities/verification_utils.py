@@ -6,6 +6,7 @@ import env
 from error_code.error_status import SignatureStatus
 from error_code.error_status import WorkOrderStatus
 from src.utilities.worker_utilities import ResultStatus
+import inspect
 
 logger = logging.getLogger(__name__)
 
@@ -218,6 +219,9 @@ def check_worker_retrieve_receipt_response(response):
 
 
 def check_negative_test_responses(response, expected_res):
+    if env.proxy_mode:
+        test_obj = inspect.stack()[1][0].f_locals["self"].test_obj
+        response = test_obj.getresult(test_obj.build_request_output['request_obj'])
     error_msg = response.get("error", {}).get("message")
     if expected_res == "Invalid data format for work order id":
         if error_msg == "Invalid data format for work order id" or\
