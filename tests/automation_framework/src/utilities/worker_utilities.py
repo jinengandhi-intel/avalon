@@ -123,7 +123,7 @@ def add_json_values(caller, input_json_temp, pre_test_response):
     module = inspect.getmodule(frame[0])
     config_path = module.__file__
 
-    input_json  = input_json_temp["params"]
+    input_json  = input_json_temp["params"].copy()
     input_json["id"] = input_json_temp["id"]
     input_param_list = input_json_temp["params"].keys()
 
