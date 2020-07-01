@@ -151,14 +151,7 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
     return ResultStatus.SUCCESS.value
 
 def check_worker_lookup_response(response, operator, value):
-
-    ''' if env.blockchain_type == "ethereum":
-        if operator(response[0], value):
-            err_cd = 0
-        else:
-            err_cd = 1
-    else:'''
-    if env.blockchain_type == "fabric":
+    if env.proxy_mode:
         if operator(response[0], value):
             err_cd = 0
         else:
@@ -172,13 +165,6 @@ def check_worker_lookup_response(response, operator, value):
 
 
 def check_worker_retrieve_response(response):
-
-    ''' if env.blockchain_type == "ethereum":
-        if response[0] == 1:
-            err_cd = 0
-        else:
-            err_cd = 1
-    else:'''
     if response["result"]["workerType"] == 1:
         err_cd = 0
     else:
