@@ -111,14 +111,16 @@ class AvalonBase():
              'action_obj': action_obj})
         return 0
 
-    def getresult(self, output_obj):
-
-        if env.test_mode == "listener":
-            listener_instance = ListenerImpl()
-            response = listener_instance.work_order_get_result(output_obj)
+    def getresult(self, output_obj, submit_response):
+        if submit_response["error"]["code"] == 5:
+            if env.test_mode == "listener":
+                listener_instance = ListenerImpl()
+                response = listener_instance.work_order_get_result(output_obj)
+            else:
+                sdk_instance = SDKImpl()
+                response = sdk_instance.work_order_get_result(output_obj)
         else:
-            sdk_instance = SDKImpl()
-            response = sdk_instance.work_order_get_result(output_obj)
+            response = submit_response
         return response
 
     def post_json_msg(self, request_file):

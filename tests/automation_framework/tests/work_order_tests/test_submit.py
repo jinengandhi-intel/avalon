@@ -50,7 +50,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
             verify_test(
@@ -81,7 +82,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -111,9 +113,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for data hash of in data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -139,7 +145,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -171,7 +178,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -202,7 +210,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -233,9 +242,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for requesterNonce")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -261,7 +274,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -292,7 +306,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -323,7 +338,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -354,7 +370,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -384,10 +401,14 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
-                    "Invalid workload id")
+                    result_response,
+                    "Workload cannot be processed by this worker")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -424,7 +445,7 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.negative
-    def test_workordersubmit_workerencryptionkey_specialcharacter(self):
+    def test_workordersubmit_workeridworkloadid_same(self):
         test_id = '18732'
         request_file = os.path.join(
             env.work_order_input_file,
@@ -440,10 +461,14 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
-                    "Invalid data format for worker encryption key")
+                    result_response,
+                    "worker 0xABCD doesn't exists")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -468,9 +493,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid params Worker Encryption Key")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -497,7 +526,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 check_negative_test_responses(
@@ -527,7 +557,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -559,7 +590,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -590,7 +622,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 check_negative_test_responses(
@@ -621,11 +654,12 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Missing parameter inData")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -652,7 +686,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -682,9 +717,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for in/out data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -711,7 +750,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -743,7 +783,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -773,9 +814,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for data hash of in data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -802,7 +847,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -834,7 +880,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -865,7 +912,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -897,7 +945,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -929,11 +978,12 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for initialization vector of in data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -959,11 +1009,12 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Missing parameter requesterId")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -989,11 +1040,12 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for responseTimeoutMSecs")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1020,7 +1072,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -1052,7 +1105,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -1084,9 +1138,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for work order id")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1112,9 +1170,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for Worker id")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1139,10 +1201,14 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
-                    "Invalid workload id")
+                    result_response,
+                    "Workload cannot be processed by this worker")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1168,7 +1234,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -1200,7 +1267,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -1231,7 +1299,9 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 verify_test(
                     result_response, 0,
@@ -1261,9 +1331,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for data hash of in data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1290,7 +1364,9 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 verify_test(
                     result_response, 0,
@@ -1320,7 +1396,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -1349,9 +1426,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Missing in data parameter data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1376,9 +1457,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for data hash of in data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1403,9 +1488,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Missing in data parameter data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1431,7 +1520,9 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                check_negative_test_responses(
                    result_response,
@@ -1461,7 +1552,9 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                check_negative_test_responses(
                    result_response,
@@ -1489,9 +1582,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for work load id")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1515,10 +1612,14 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
-                    "Invalid workload id")
+                    result_response,
+                    "Workload cannot be processed by this worker")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1540,10 +1641,14 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
-                    "Invalid workload id")
+                    result_response,
+                    "Workload cannot be processed by this worker")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -1567,9 +1672,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for work order id")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1596,9 +1705,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for work order id")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1624,7 +1737,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
@@ -1655,9 +1769,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                check_negative_test_responses(
-                   submit_response,
+                   result_response,
                    "Invalid data format for requester id")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1682,9 +1800,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid data format for requesterNonce")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1709,9 +1831,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                check_negative_test_responses(
-                   submit_response,
+                   result_response,
                    "Invalid data format for requesterSignature")
                 is ResultStatus.SUCCESS.value)
         
@@ -1736,9 +1862,14 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                check_negative_test_responses(
-                   submit_response,
+                   result_response,
                    "Crypto Error (deserializeECDSAPublicKey): Could not deserialize public ECDSA key")
                 is ResultStatus.SUCCESS.value)
 
@@ -1766,7 +1897,9 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 verify_test(
                     result_response, 0,
@@ -1793,10 +1926,15 @@ class TestClass():
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))        
+            read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                   check_negative_test_responses(
-                   submit_response,
+                   result_response,
                    "Invalid data format for work order id")
                   is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1821,9 +1959,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                   check_negative_test_responses(
-                   submit_response,
+                   result_response,
                    "Invalid data format for session key iv")
                   is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1848,9 +1990,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid parameter requesterId")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1875,9 +2021,14 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid parameter workerEncryptionKey")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1902,9 +2053,14 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "Invalid parameter requesterNonce")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -1930,7 +2086,9 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 verify_test(
                     result_response, 0,
@@ -1958,9 +2116,14 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                   check_negative_test_responses(
-                   submit_response,
+                   result_response,
                    "Missing parameter encryptedRequestHash")
                   is ResultStatus.SUCCESS.value)
 
@@ -1984,9 +2147,14 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                   check_negative_test_responses(
-                   submit_response,
+                   result_response,
                    "Invalid params")
                   is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -2009,9 +2177,14 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                   check_negative_test_responses(
-                   submit_response,
+                   result_response,
                    "Server error")
                   is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -2034,10 +2207,15 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
+
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                   check_negative_test_responses(
-                   submit_response,
-                   "Invalid workload id")
+                   result_response,
+                   "Workload cannot be processed by this worker")
                   is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -2063,7 +2241,9 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 verify_test(
                     result_response, 0,
@@ -2129,9 +2309,13 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
+        result_response = self.test_obj.getresult(
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
+
         assert (
                 check_negative_test_responses(
-                    submit_response,
+                    result_response,
                     "worker 6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0eee6a96dcebaeb14f2ae923456234564567 doesn't exists")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -2195,7 +2379,8 @@ class TestClass():
             read_json(request_file))
 
         result_response = self.test_obj.getresult(
-            self.test_obj.build_request_output['request_obj'])
+            self.test_obj.build_request_output['request_obj'],
+            submit_response)
 
         assert (
                 verify_test(
