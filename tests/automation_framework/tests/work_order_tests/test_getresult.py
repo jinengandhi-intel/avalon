@@ -20,6 +20,8 @@ class TestClass():
     @pytest.mark.workordergetresult
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordergetresult_success(self):
         test_id = '18702'
@@ -49,6 +51,8 @@ class TestClass():
 
     @pytest.mark.workordergetresult
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordergetresult_workorderid_different(self):
@@ -79,6 +83,8 @@ class TestClass():
 
     @pytest.mark.workordergetresult
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordergetresult_workorderid_specialchar(self):
@@ -108,6 +114,8 @@ class TestClass():
 
     @pytest.mark.workordergetresult
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordergetresult_workorderid_null(self):
@@ -137,6 +145,8 @@ class TestClass():
 
     @pytest.mark.workordergetresult
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordergetresult_workorderid_nonhexstring(self):
@@ -166,6 +176,8 @@ class TestClass():
 
     @pytest.mark.workordergetresult
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordergetresult_workorderid_alphabetsonly(self):
@@ -194,6 +206,8 @@ class TestClass():
 
     @pytest.mark.workordergetresult
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordergetresult_workorderid_withoutquotes(self):

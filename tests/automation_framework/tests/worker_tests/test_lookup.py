@@ -36,6 +36,8 @@ class TestClass():
     @pytest.mark.worker_lookup
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.p1
     @pytest.mark.positive
     def test_worker_lookup_success(self):
@@ -67,6 +69,8 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.negative
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     def test_worker_lookup_workerType_not_unsigned_int(self):
         test_id = '18275'
         request_file = os.path.join(

@@ -31,6 +31,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.p1
     @pytest.mark.positive
     def test_workordersubmit_success(self):
@@ -64,6 +66,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_inDataDataEncryptionKey_hyphenecho(self):
         test_id = '18783'
@@ -96,6 +100,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_datahash_null(self):
         test_id = '18713'
@@ -127,6 +133,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_requesterId_null(self):
         test_id = '18739'
@@ -159,6 +167,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_sessionkeyivInDataIv_hexstring(
             self):
@@ -192,6 +202,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_verifysignature(self):
         test_id = '18450'
@@ -224,6 +236,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_requesternonce_specialcharacters(
             self):
@@ -256,6 +270,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_signingalgorithm_alternate(self):
         test_id = '18614'
@@ -288,6 +304,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_hashingalgorithm_alternate(self):
         test_id = '18704'
@@ -320,6 +338,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_requesterprivatekey_no(self):
         test_id = '18612'
@@ -352,6 +372,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_params_twiceheartdisease(self):
         test_id = '18811'
@@ -384,6 +406,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workloadid_invalid(self):
         test_id = '18807'
@@ -444,6 +468,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workeridworkloadid_same(self):
         test_id = '18732'
@@ -476,6 +502,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workerencryptionkey_empty(self):
         test_id = '18705'
@@ -540,6 +568,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     def test_workordersubmit_indexindata_50(self):
         test_id = '18707'
         request_file = os.path.join(
@@ -572,6 +602,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_index_orderchange(self):
         test_id = '18708'
@@ -668,6 +700,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_outdata_empty(self):
         test_id = '18711'
@@ -732,6 +766,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_index_negative(self):
         test_id = '18769'
@@ -765,6 +801,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_indatahash_empty(self):
         test_id = '18712'
@@ -797,6 +835,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_datahash_randomstr(self):
         test_id = '18772'
@@ -829,6 +869,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_data_multipleechoresult(self):
         test_id = '18774'
@@ -862,6 +904,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_echoclient(self):
         test_id = '18808'
@@ -894,6 +938,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_indata_alternatetextechoclient(self):
         test_id = '18809'
@@ -927,6 +973,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_indata_specialcharacter(self):
         test_id = '18810'
@@ -1053,6 +1101,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.positive
     def test_workordersubmit_dataencryptionalgorithm_list(self):
@@ -1086,6 +1136,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.positive
     def test_workordersubmit_workloadId_twoworkload(self):
@@ -1119,6 +1171,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.p1
     @pytest.mark.set1
     @pytest.mark.negative
@@ -1152,6 +1206,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.negative
     def test_workordersubmit_workerId_nullstring(self):
@@ -1184,6 +1240,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.negative
     def test_workordersubmit_workloadId_specialcharacters(self):
@@ -1215,6 +1273,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.positive
     def test_workordersubmit_encrypteddataencryptionkey_nullechoclient(self):
@@ -1248,6 +1308,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.positive
     def test_workordersubmit_dataencryptionalgorithm_listsamealgotwice(self):
@@ -1313,6 +1375,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.negative
     def test_workordersubmit_encrypteddataencryptionkey_remove(self):
@@ -1345,6 +1409,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.positive
     def test_workordersubmit_encrypteddataencryptionkey_emptyechoclient(self):
@@ -1378,6 +1444,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_outdata_success(self):
         test_id = '18710'
@@ -1566,6 +1634,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workloadid_emptystring(self):
         test_id = '18722'
@@ -1596,6 +1666,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workloadid_hexstring(self):
         test_id = '18723'
@@ -1655,6 +1727,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workorderid_increasedhexlength(self):
         test_id = '18727'
@@ -1687,6 +1761,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workorderidworkloadid_same(self):
         test_id = '18728'
@@ -1719,6 +1795,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_data_differentdataheartdisease(self):
         test_id = '18731'
@@ -1752,6 +1830,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_requesterId_specialcharacter(self):
         test_id = '18734'
@@ -1783,6 +1863,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_requesterNonce_param_empty(self):
         test_id = '18735'
@@ -1879,6 +1961,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_indataoutdata_success(self):
         test_id = '18703'
@@ -1910,6 +1994,8 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordersubmit_workorderId_remove(self):
@@ -1973,6 +2059,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_requesterId_differenthexlength(self):
         test_id = '18742'
@@ -2004,6 +2092,8 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordersubmit_workerEncryptionKey_notdefaulthex(self):
@@ -2037,6 +2127,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_requesterNonce_notdefaultlength(self):
         test_id = '18745'
@@ -2192,6 +2284,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workeridworkloadid_same(self):
         test_id = '18794'
@@ -2223,6 +2317,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_indata_firstinparams(self):
         test_id = '18796'
@@ -2292,6 +2388,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workerId_notdefaultlength(self):
         test_id = '18741'
@@ -2324,6 +2422,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_payloadFormat_notJSONRPC(self):
         test_id = '18750'
@@ -2361,6 +2461,8 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_workordersubmit_OutDataDataEncryptionKey_hyphen(self):
         test_id = '18784'

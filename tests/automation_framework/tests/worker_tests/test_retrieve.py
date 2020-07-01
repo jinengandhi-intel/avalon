@@ -36,6 +36,8 @@ class TestClass():
     @pytest.mark.worker_retrieve
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.p1
     @pytest.mark.positive
     def test_worker_retrieve_success(self):
@@ -62,6 +64,8 @@ class TestClass():
     @pytest.mark.worker_retrieve
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.p1
     @pytest.mark.set1
     @pytest.mark.negative

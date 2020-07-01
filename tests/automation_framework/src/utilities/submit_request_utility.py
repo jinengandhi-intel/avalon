@@ -139,7 +139,7 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
         id=req_id
     )
     if env.proxy_mode and (type(response) != dict):
-        response = {}
+        response = {"error": {"code" :5}}
     response["workOrderId"] = wo_params.get_work_order_id()
     logger.info('**********Received Response*********\n%s\n', response)
     return response
