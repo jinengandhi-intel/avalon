@@ -471,7 +471,7 @@ class TestClass():
     @pytest.mark.fabric
     @pytest.mark.ethereum
     @pytest.mark.negative
-    def test_workordersubmit_workeridworkloadid_same(self):
+    def test_workordersubmit_workerEncryptionKey_special_character(self):
         test_id = '18732'
         request_file = os.path.join(
             env.work_order_input_file,
@@ -1400,9 +1400,10 @@ class TestClass():
             submit_response)
 
         assert (
-                check_negative_test_responses(
-                    result_response,
-                    "Invalid data format for data hash of in data")
+                verify_test(
+                    result_response, 0,
+                    self.test_obj.build_request_output['pre_test_output'],
+                    self.test_obj.build_request_output['action_obj'])
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -2309,7 +2310,7 @@ class TestClass():
         assert (
                   check_negative_test_responses(
                    result_response,
-                   "Workload cannot be processed by this worker")
+                   "worker 0xABCD doesn't exists")
                   is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -2485,10 +2486,9 @@ class TestClass():
             submit_response)
 
         assert (
-                verify_test(
-                    result_response, 0,
-                    self.test_obj.build_request_output['pre_test_output'],
-                    self.test_obj.build_request_output['action_obj'])
+                check_negative_test_responses(
+                    result_response,
+                    "Invalid data format for data hash of in data")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 

@@ -111,8 +111,8 @@ class AvalonBase():
              'action_obj': action_obj})
         return 0
 
-    def getresult(self, output_obj, submit_response):
-        if submit_response["error"]["code"] == 5:
+    def getresult(self, output_obj, submit_response={}):
+        if submit_response.get("error", {}).get("code") == 5:
             if env.test_mode == "listener":
                 listener_instance = ListenerImpl()
                 response = listener_instance.work_order_get_result(output_obj)

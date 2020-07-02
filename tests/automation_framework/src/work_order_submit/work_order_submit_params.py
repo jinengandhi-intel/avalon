@@ -246,10 +246,11 @@ class WorkOrderSubmit():
 
             enc_indata_item = {'index': index,
                                'dataHash': dataHash_enc_data,
-                               'data': base64_enc_data,
-                               'encryptedDataEncryptionKey':
-                                   data_item['encryptedDataEncryptionKey'],
-                               'iv': data_item['iv']}
+                               'data': base64_enc_data}
+
+            for key in ["encryptedDataEncryptionKey", "iv"]:
+                if data_item.get(key) is not None:
+                    enc_indata_item[key] = data_item[key]
             data_copy.append(enc_indata_item)
 
             return data_copy

@@ -33,8 +33,6 @@ class TestClass():
 
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.p1
     @pytest.mark.listener
     def test_work_order_create_receipt_success(self):
@@ -57,8 +55,6 @@ class TestClass():
 
     @pytest.mark.work_order_retrieve_receipt
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.p1
     def test_work_order_retrieve_receipt(self):
         request_file = os.path.join(
@@ -80,8 +76,6 @@ class TestClass():
 
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.listener
     def test_create_work_order_receipt_invalid_requester_id(self):
         request_file = os.path.join(
@@ -103,8 +97,6 @@ class TestClass():
 
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.listener
     def test_create_work_order_receipt_hexstr_workorderRequesthash(
             self):
@@ -127,8 +119,6 @@ class TestClass():
 
     @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.listener
     def test_create_work_order_receipt_wrong_rverificationkey(self):
         request_file = os.path.join(
@@ -150,8 +140,6 @@ class TestClass():
 
     @pytest.mark.work_order_receipt_lookup
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     def test_work_order_receipt_lookup_success(self):
         request_file = os.path.join(
             env.work_order_receipt,

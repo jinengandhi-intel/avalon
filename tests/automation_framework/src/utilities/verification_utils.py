@@ -214,6 +214,10 @@ def check_negative_test_responses(response, expected_res):
     if expected_res == error_msg:
         return ResultStatus.SUCCESS.value
 
+    if (response.get("error", {}).get("code") == -1) and env.proxy_mode:
+        return ResultStatus.SUCCESS.value
+
+
 def check_workorder_receipt_lookup_response(response, operator, value):
 
     ''' if env.blockchain_type == "ethereum":

@@ -48,7 +48,7 @@ class WorkerRetrieve():
     def retrieve_worker_id(self, pre_test_response):
         worker_id = None
         if env.proxy_mode:
-            worker_id = pre_test_response[2][0]
+            worker_id = random.choice(pre_test_response[2][0])
         else:
             if "result" in pre_test_response and \
             "ids" in pre_test_response["result"].keys():

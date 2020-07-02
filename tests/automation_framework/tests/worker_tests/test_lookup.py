@@ -88,8 +88,9 @@ class TestClass():
 
         logger.info("**********Received Response*********\n%s\n", response)
 
-        assert (check_worker_lookup_response(response, operator.eq, 0)
-                is ResultStatus.SUCCESS.value)
+        assert (check_negative_test_responses(response,
+                "WorkType should be an Integer of range 1-3")
+            is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
