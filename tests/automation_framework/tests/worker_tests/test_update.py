@@ -34,6 +34,8 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_worker_update_success(self):
         test_id = '18265'
@@ -51,8 +53,12 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -61,6 +67,8 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_worker_update_unknown_parameter(self):
         test_id = '18266'
@@ -79,7 +87,12 @@ class TestClass():
 
         logger.info("**********Received Response*********\n%s\n", response)
 
-        assert (validate_response_code(response,-32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -88,6 +101,8 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.positive
     def test_worker_update_invalid_parameter(self):
         test_id = '18267'
@@ -106,7 +121,12 @@ class TestClass():
 
         logger.info("**********Received Response*********\n%s\n", response)
 
-        assert (validate_response_code(response, -32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -115,6 +135,8 @@ class TestClass():
     @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_worker_update_empty_details(self):
         test_id = '18293'
@@ -133,7 +155,12 @@ class TestClass():
 
         logger.info("**********Received Response*********\n%s\n", response)
 
-        assert (validate_response_code(response, -32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

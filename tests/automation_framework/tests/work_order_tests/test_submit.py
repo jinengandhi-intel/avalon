@@ -263,7 +263,7 @@ class TestClass():
         assert (
                 check_negative_test_responses(
                     result_response,
-                    "Invalid data format for requesterNonce")
+                    "Empty or Invalid data format for requesterNonce")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 

@@ -197,14 +197,14 @@ def worker_register_sdk(register_params, input_json):
             worker_dict[register_params["workerType"]],
             register_params["organization_id"],
             register_params["application_type_id"],
-            register_params["details"])
+            json.dumps(register_params["details"]))
     else:
         worker_register_result = worker_registry.worker_register(
             register_params["worker_id"],
             worker_dict[register_params["workerType"]],
             register_params["organization_id"],
             register_params["application_type_id"],
-            register_params["details"], jrpc_req_id)
+            json.dumps(register_params["details"]), jrpc_req_id)
     logger.info("\n Worker register response: {}\n".format(
         json.dumps(worker_register_result, indent=4)))
     return worker_register_result
@@ -230,12 +230,11 @@ def worker_setstatus_sdk(set_status_params, input_json):
         worker_setstatus_result = worker_registry.worker_set_status(
             set_status_params["worker_id"],
             status_dict[set_status_params["status"]], jrpc_req_id)
-    if env.blockchain_type == "fabric":
+    if env.proxy_mode:
         result = worker_setstatus_result
         worker_setstatus_result = {}
         worker_setstatus_result["error"] = {"code" : result.value, "message" : ""}
-    logger.info("\n Worker setstatus response: {}\n".format(
-        json.dumps(worker_setstatus_result, indent=4)))
+    logger.info("\n Worker setstatus response: {}\n".format(worker_setstatus_result))
     return worker_setstatus_result
 
 
@@ -284,13 +283,15 @@ def worker_update_sdk(update_params, input_json=None):
     if env.proxy_mode and (env.blockchain_type == "ethereum"):
         worker_update_result = worker_registry.worker_update(
             update_params["worker_id"],
-            update_params["details"])
+            json.dumps(update_params["details"]))
     else:
         worker_update_result = worker_registry.worker_update(
             update_params["worker_id"],
-            update_params["details"], jrpc_req_id)
-    logger.info("\n Worker update response: {}\n".format(
-        json.dumps(worker_update_result, indent=4)))
+            json.dumps(update_params["details"]), jrpc_req_id)
+    if env.proxy_mode and (type(worker_update_result) != dict):
+        response = worker_update_result.value
+        worker_update_result = {"error": {"code": response, "message" : ""}}
+    logger.info("\n Worker update response: {}\n".format(worker_update_result))
     return worker_update_result
 
 
@@ -359,6 +360,8 @@ def workorder_getresult_sdk(workorderId, input_json):
         workorderId, jrpc_req_id)
     logger.info("****** WorkOrderGetResult Received Response*****\n%s\n", get_result_res)
 
+    if env.proxy_mode and (get_result_res is None):
+        get_result_res = {"error": {"code": -1}}
     return get_result_res
 
 

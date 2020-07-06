@@ -78,7 +78,7 @@ class AvalonBase():
         logger.info("***Pre test output*****\n%s\n", pre_test_output)
         logger.info("***wo_submit*****\n%s\n", wo_submit)
         # submit_request = json.loads(wo_submit)
-        result_response = self.getresult(wo_submit)
+        result_response = self.getresult(wo_submit, {"error": {"code": 5}})
         request_obj, action_obj = build_request_obj(
             input_file, pre_test_output=pre_test_output,
             pre_test_response=wo_submit)

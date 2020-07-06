@@ -33,6 +33,9 @@ class TestClass():
     @pytest.mark.worker
     @pytest.mark.listener
     @pytest.mark.positive
+    @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     def test_worker_set_status_success(self):
         test_id = '18268'
         request_file = os.path.join(
@@ -49,8 +52,11 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
-
-        assert (validate_response_code(response,-32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -74,8 +80,11 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
-
-        assert (validate_response_code(response,-32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -99,8 +108,11 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
-
-        assert (validate_response_code(response,-32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -125,8 +137,11 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
-
-        assert (validate_response_code(response, -32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -135,6 +150,9 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.set1
     @pytest.mark.positive
+    @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     def test_worker_set_status_params_status_2(self):
         test_id = '18289'
         request_file = os.path.join(
@@ -151,8 +169,11 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
-
-        assert (validate_response_code(response, -32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -161,6 +182,9 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.set1
     @pytest.mark.positive
+    @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     def test_worker_set_status_params_status_3(self):
         test_id = '18290'
         request_file = os.path.join(
@@ -177,8 +201,11 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
-
-        assert (validate_response_code(response, -32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -187,6 +214,9 @@ class TestClass():
     @pytest.mark.listener
     @pytest.mark.set1
     @pytest.mark.positive
+    @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
     def test_worker_set_status_params_status_4(self):
         test_id = '18291'
         request_file = os.path.join(
@@ -203,8 +233,11 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
-
-        assert (validate_response_code(response,-32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -229,8 +262,11 @@ class TestClass():
             read_json(request_file))
 
         logger.info("**********Received Response*********\n%s\n", response)
-
-        assert (validate_response_code(response, -32601)
+        if env.proxy_mode:
+            response_code = 0
+        else:
+            response_code = -32601
+        assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
