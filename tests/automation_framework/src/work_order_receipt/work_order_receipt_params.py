@@ -3,7 +3,6 @@ import logging
 import random
 import os
 import env
-import avalon_crypto_utils.crypto.crypto as crypto
 import avalon_crypto_utils.signature as signature
 from src.utilities.worker_utilities import tamper_request
 from error_code.error_status import ReceiptCreateStatus

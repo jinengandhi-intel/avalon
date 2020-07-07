@@ -17,7 +17,6 @@ import logging
 import random
 import os
 import env
-import avalon_crypto_utils.crypto.crypto as crypto
 import avalon_crypto_utils.crypto_utility as crypto_utils
 from src.utilities.worker_utilities import tamper_request
 import secrets
@@ -104,8 +103,8 @@ class WorkOrderSubmit():
         first_string += worker_order_id + worker_id + workload_id + requester_id
 
         concat_hash = bytes(first_string, "UTF-8")
-        self.hash_1 = crypto.byte_array_to_base64(
-            crypto.compute_message_hash(concat_hash))
+        self.hash_1 = crypto_utils.byte_array_to_base64(
+            crypto_utils.compute_message_hash(concat_hash))  #byte_array_to_base64
 
         in_data = wconfig.get_parameter(self.params_obj, "inData")
         out_data = wconfig.get_parameter(self.params_obj, "outData")
@@ -119,11 +118,11 @@ class WorkOrderSubmit():
             self.hash_3 = self._compute_hash_string(out_data)
 
         final_string = self.hash_1 + self.hash_2 + self.hash_3
-        self.final_hash = crypto.compute_message_hash(
+        self.final_hash = crypto_utils.compute_message_hash(
             bytes(final_string, 'UTF-8'))
 
-        encrypted_request_hash = crypto.byte_array_to_hex(
-            self.encrypt_data(
+        encrypted_request_hash = crypto_utils.byte_array_to_hex(
+            crypto_utils.encrypt_data(
                 self.final_hash, self.session_key,
                 self.session_iv))
 
@@ -148,8 +147,8 @@ class WorkOrderSubmit():
                 iv = data_item['iv'].encode('UTF-8')
             hash_string = datahash + data + e_key + iv
             complete_bytes = bytes(hash_string)
-            hash = crypto.compute_message_hash(complete_bytes)
-            final_hash_str = final_hash_str + crypto.byte_array_to_base64(hash)
+            hash = crypto_utils.compute_message_hash(complete_bytes)
+            final_hash_str = final_hash_str + crypto_utils.byte_array_to_base64(hash)
         return final_hash_str
 
     def _compute_requester_signature(self):
@@ -159,7 +158,7 @@ class WorkOrderSubmit():
                 self.private_key.sign_digest_deterministic(
                     bytes(self.final_hash),
                     sigencode=sigencode_der)
-            self.requester_signature = crypto.byte_array_to_base64(
+            self.requester_signature = crypto_utils.byte_array_to_base64(
                 signature_result)
             if self.params_obj["requesterSignature"] == "":
                 self.params_obj["requesterSignature"] = self.requester_signature
@@ -207,42 +206,42 @@ class WorkOrderSubmit():
             else:
                 e_key = "null".encode('UTF-8')
             if (not e_key) or (e_key == "null".encode('UTF-8')):
-                enc_data = self.encrypt_data(data, self.session_key, self.session_iv)
-                base64_enc_data = (crypto.byte_array_to_base64(enc_data))
+                enc_data = crypto_utils.encrypt_data(data, self.session_key, self.session_iv)
+                base64_enc_data = (crypto_utils.byte_array_to_base64(enc_data))
                 if 'dataHash' in data_item:
                     if not data_item['dataHash']:
-                        dataHash_enc_data = (crypto.byte_array_to_hex(
-                            crypto.compute_message_hash(data)))
+                        dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(data)))
                     else:
-                        dataHash_enc_data = (crypto.byte_array_to_hex(
-                            crypto.compute_message_hash(data_item['dataHash'])))
+                        dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(data_item['dataHash'])))
                 logger.debug("encrypted indata - %s",
-                             crypto.byte_array_to_base64(enc_data))
+                             crypto_utils.byte_array_to_base64(enc_data))
             elif e_key == "-".encode('UTF-8'):
                 # Skip encryption and just encode workorder data
                 # to base64 format
-                base64_enc_data = (crypto.byte_array_to_base64(data))
+                base64_enc_data = (crypto_utils.byte_array_to_base64(data))
                 if 'dataHash' in data_item:
                     if not data_item['dataHash']:
-                        dataHash_enc_data = (crypto.byte_array_to_hex(
-                            crypto.compute_message_hash(data)))
+                        dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(data)))
                     else:
-                        dataHash_enc_data = (crypto.byte_array_to_hex(
-                            crypto.compute_message_hash(data_item['dataHash'])))
+                        dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(data_item['dataHash'])))
             else:
                 data_key = None
                 data_iv = None
-                enc_data = self.encrypt_data(data, data_key, data_iv)
-                base64_enc_data = (crypto.byte_array_to_base64(enc_data))
+                enc_data = crypto_utils.encrypt_data(data, data_key, data_iv)
+                base64_enc_data = (crypto_utils.byte_array_to_base64(enc_data))
                 if 'dataHash' in data_item:
                     if not data_item['dataHash']:
-                        dataHash_enc_data = (crypto.byte_array_to_hex(
-                            crypto.compute_message_hash(data)))
+                        dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(data)))
                     else:
-                        dataHash_enc_data = (crypto.byte_array_to_hex(
-                            crypto.compute_message_hash(data_item['dataHash'])))
+                        dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(data_item['dataHash'])))
                 logger.debug("encrypted indata - %s",
-                             crypto.byte_array_to_base64(enc_data))
+                             crypto_utils.byte_array_to_base64(enc_data))
 
             enc_indata_item = {'index': index,
                                'dataHash': dataHash_enc_data,
@@ -256,25 +255,6 @@ class WorkOrderSubmit():
             return data_copy
         except Exception:
             return None
-
-    def encrypt_data(self, data, encryption_key, iv):
-        """
-        Function to encrypt data based on encryption key and iv
-        Parameters:
-            - data is each item in inData or outData part of workorder request
-              as per TCF API 6.1.7 Work Order Data Formats
-            - encryption_key is the key
-              used to encrypt the data
-            - iv is an initialization vector if
-              required by the data encryption algorithm.
-              The default is all zeros.iv must be a unique
-              random number for every
-              encryption operation.
-        """
-        logger.debug("encrypted_session_key: %s", encryption_key)
-        val = iv if iv else 0
-        encrypted_data = crypto.SKENC_EncryptMessage(encryption_key, val, data)
-        return encrypted_data
 
     def compute_signature(self, tamper):
 
@@ -372,9 +352,9 @@ class WorkOrderSubmit():
 
             if env.test_mode == "listener":
                 d_params["workerEncryptionKey"] = crypto_utils.strip_begin_end_public_key(d_params["workerEncryptionKey"])
-                d_params["sessionKeyIv"] = crypto.byte_array_to_hex(self.session_iv)
+                d_params["sessionKeyIv"] = crypto_utils.byte_array_to_hex(self.session_iv)
                 if self.encrypted_session_key:
-                    d_params["encryptedSessionKey"] = crypto.byte_array_to_hex(self.encrypted_session_key)
+                    d_params["encryptedSessionKey"] = crypto_utils.byte_array_to_hex(self.encrypted_session_key)
 
         except Exception as e:
             logger.error("Exception Occurred inside get_default_params ", e)
