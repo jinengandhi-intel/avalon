@@ -114,7 +114,8 @@ class TestClass():
 
         logger.info("**********Received Response*********\n%s\n", response)
 
-        assert (check_worker_lookup_response(response, operator.gt, 0)
+        assert (check_negative_test_responses(response,
+                "Empty params in the request")
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -202,7 +203,7 @@ class TestClass():
         assert (
                 check_negative_test_responses(
                     msg_response,
-                    "Improper Json request")
+                    "Improper Json request Missing or Invalid parameter or value")
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

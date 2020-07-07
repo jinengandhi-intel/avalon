@@ -467,9 +467,6 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_workerEncryptionKey_special_character(self):
         test_id = '18732'
@@ -494,16 +491,39 @@ class TestClass():
         assert (
                 check_negative_test_responses(
                     result_response,
-                    "worker 0xABCD doesn't exists")
+                    "Empty or Invalid dataformat for workerEncryptionKey")
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.fabric
     @pytest.mark.ethereum
+    @pytest.mark.negative
+    def test_workordersubmit_sdk_workerEncryptionKey_special_character(self):
+        with pytest.raises(ValueError,
+                           match="Encrypting Session key failed: Invalid session key or worker encryption key"):
+            test_id = '18732'
+            request_file = os.path.join(
+                env.work_order_input_file,
+                "work_order_workerEncryptionKey_special_character.json")
+
+            err_cd = \
+                self.test_obj.setup_and_build_request_wo_submit(
+                    read_json(request_file))
+
+            submit_response = submit_request(
+                self.test_obj.uri_client,
+                self.test_obj.build_request_output['request_obj'],
+                env.wo_submit_output_json_file_name,
+                read_json(request_file))
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.listener
     @pytest.mark.negative
     def test_workordersubmit_workerencryptionkey_empty(self):
         test_id = '18705'
@@ -532,6 +552,30 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
+    @pytest.mark.negative
+    def test_workordersubmit_sdk_workerencryptionkey_empty(self):
+        with pytest.raises(ValueError, match="Empty or Invalid dataformat for workerEncryptionKey"):
+            test_id = '18705'
+            request_file = os.path.join(
+                env.work_order_input_file,
+                "work_order_worker_encryption_key.json")
+
+            err_cd = \
+                self.test_obj.setup_and_build_request_wo_submit(
+                    read_json(request_file))
+
+            submit_response = submit_request(
+                self.test_obj.uri_client,
+                self.test_obj.build_request_output['request_obj'],
+                env.wo_submit_output_json_file_name,
+                read_json(request_file))
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
@@ -1100,11 +1144,8 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.set1
-    @pytest.mark.positive
+    @pytest.mark.negative
     def test_workordersubmit_dataencryptionalgorithm_list(self):
         test_id = '18793'
         request_file = os.path.join(
@@ -1126,11 +1167,36 @@ class TestClass():
             submit_response)
 
         assert (
-                verify_test(
-                    result_response, 0,
-                    self.test_obj.build_request_output['pre_test_output'],
-                    self.test_obj.build_request_output['action_obj'])
-                is ResultStatus.FAILURE.value)
+                check_negative_test_responses(
+                    result_response,
+                    "Invalid data format for dataEncryptionAlgorithm")
+                is ResultStatus.SUCCESS.value)
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
+    @pytest.mark.set1
+    @pytest.mark.negative
+    def test_workordersubmit_sdk_dataencryptionalgorithm_list(self):
+        with pytest.raises(ValueError, match="Data Encryption Algorithm is not String"):
+            test_id = '18793'
+            request_file = os.path.join(
+                env.work_order_input_file,
+                "work_order_multiple_dataEncryptionAlgorithm.json")
+
+            err_cd = \
+                self.test_obj.setup_and_build_request_wo_submit(
+                    read_json(request_file))
+
+            submit_response = submit_request(
+                self.test_obj.uri_client,
+                self.test_obj.build_request_output['request_obj'],
+                env.wo_submit_output_json_file_name,
+                read_json(request_file))
+
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
@@ -1307,11 +1373,8 @@ class TestClass():
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.set1
-    @pytest.mark.positive
+    @pytest.mark.negative
     def test_workordersubmit_dataencryptionalgorithm_listsamealgotwice(self):
         test_id = '18788'
         request_file = os.path.join(
@@ -1333,11 +1396,35 @@ class TestClass():
             submit_response)
 
         assert (
-                verify_test(
-                    result_response, 0,
-                    self.test_obj.build_request_output['pre_test_output'],
-                    self.test_obj.build_request_output['action_obj'])
-                is ResultStatus.FAILURE.value)
+                check_negative_test_responses(
+                    result_response,
+                    "Invalid data format for dataEncryptionAlgorithm")
+                is ResultStatus.SUCCESS.value)
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
+
+    @pytest.mark.workordersubmit
+    @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
+    @pytest.mark.set1
+    @pytest.mark.negative
+    def test_workordersubmit_sdk_dataencryptionalgorithm_listsamealgotwice(self):
+        with pytest.raises(ValueError, match="Data Encryption Algorithm is not String"):
+            test_id = '18788'
+            request_file = os.path.join(
+                env.work_order_input_file,
+                "work_order_submit_dataEncryptionAlgorithm_list_same_algo_twice.json")
+
+            err_cd = \
+                self.test_obj.setup_and_build_request_wo_submit(
+                    read_json(request_file))
+
+            submit_response = submit_request(
+                self.test_obj.uri_client,
+                self.test_obj.build_request_output['request_obj'],
+                env.wo_submit_output_json_file_name,
+                read_json(request_file))
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
@@ -2092,9 +2179,6 @@ class TestClass():
 
 
     @pytest.mark.workordersubmit
-    @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
     @pytest.mark.listener
     @pytest.mark.negative
     def test_workordersubmit_workerEncryptionKey_notdefaulthex(self):
@@ -2124,6 +2208,30 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
+    @pytest.mark.workordersubmit
+    @pytest.mark.sdk
+    @pytest.mark.fabric
+    @pytest.mark.ethereum
+    @pytest.mark.negative
+    def test_workordersubmit_sdk_workerEncryptionKey_notdefaulthex(self):
+        with pytest.raises(ValueError,
+                           match="Encrypting Session key failed: Invalid session key or worker encryption key"):
+            test_id = '18743'
+            request_file = os.path.join(
+                env.work_order_input_file,
+                "workordersubmit_workerEncryptionKey_notdefaulthex.json")
+
+            err_cd = \
+                self.test_obj.setup_and_build_request_wo_submit(
+                    read_json(request_file))
+
+            submit_response = submit_request(
+                self.test_obj.uri_client,
+                self.test_obj.build_request_output['request_obj'],
+                env.wo_submit_output_json_file_name,
+                read_json(request_file))
+
+        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit
     @pytest.mark.listener

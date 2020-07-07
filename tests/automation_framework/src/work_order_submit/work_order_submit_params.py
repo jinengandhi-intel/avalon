@@ -66,7 +66,8 @@ class WorkOrderSubmit():
                 wconfig.set_parameter(self.params_obj, c_key, value)
 
         if self.params_obj.get("workerEncryptionKey") is not None:
-            self.params_obj["workerEncryptionKey"] = self.params_obj.get("workerEncryptionKey", '').encode("UTF-8").hex()
+            value = input_json["workerEncryptionKey"] if input_json["workerEncryptionKey"] != "" else self.params_obj.get("workerEncryptionKey", '').encode("UTF-8").hex()
+            self.params_obj["workerEncryptionKey"] = value
 
         if "inData" in input_params_list:
             if input_json["inData"] != "":
@@ -102,24 +103,22 @@ class WorkOrderSubmit():
 
         first_string += worker_order_id + worker_id + workload_id + requester_id
 
-        concat_hash = bytes(first_string, "UTF-8")
-        self.hash_1 = crypto_utils.byte_array_to_base64(
-            crypto_utils.compute_message_hash(concat_hash))  #byte_array_to_base64
+        concat_hash = first_string.encode("UTF-8")
+        self.hash_1 = crypto_utils.compute_message_hash(concat_hash)
 
         in_data = wconfig.get_parameter(self.params_obj, "inData")
         out_data = wconfig.get_parameter(self.params_obj, "outData")
 
-        self.hash_2 = ""
+        self.hash_2 = bytearray()
         if in_data is not None:
             self.hash_2 = self._compute_hash_string(in_data)
 
-        self.hash_3 = ""
+        self.hash_3 = bytearray()
         if out_data is not None:
             self.hash_3 = self._compute_hash_string(out_data)
 
         final_string = self.hash_1 + self.hash_2 + self.hash_3
-        self.final_hash = crypto_utils.compute_message_hash(
-            bytes(final_string, 'UTF-8'))
+        self.final_hash = crypto_utils.compute_message_hash(final_string)
 
         encrypted_request_hash = crypto_utils.byte_array_to_hex(
             crypto_utils.encrypt_data(
@@ -132,23 +131,23 @@ class WorkOrderSubmit():
         final_hash_str = ""
         hash_string = ""
         for data_item in data:
-            data = "".encode('UTF-8')
-            datahash = "".encode('UTF-8')
-            e_key = "".encode('UTF-8')
-            iv = "".encode('UTF-8')
+            data = ""
+            datahash = ""
+            e_key = ""
+            iv = ""
             if 'dataHash' in data_item:
-                datahash = data_item['dataHash'].encode('UTF-8')
+                datahash = data_item['dataHash']
             if 'data' in data_item:
-                data = data_item['data'].encode('UTF-8')
+                data = data_item['data']
             if 'encryptedDataEncryptionKey' in data_item:
                 e_key = \
-                    data_item['encryptedDataEncryptionKey'].encode('UTF-8')
+                    data_item['encryptedDataEncryptionKey']
             if 'iv' in data_item:
-                iv = data_item['iv'].encode('UTF-8')
-            hash_string = datahash + data + e_key + iv
-            complete_bytes = bytes(hash_string)
-            hash = crypto_utils.compute_message_hash(complete_bytes)
-            final_hash_str = final_hash_str + crypto_utils.byte_array_to_base64(hash)
+                iv = data_item['iv']
+            concat_string = datahash + data + e_key + iv
+            hash_string += concat_string
+
+        final_hash_str = crypto_utils.compute_message_hash(hash_string.encode("UTF-8"))
         return final_hash_str
 
     def _compute_requester_signature(self):

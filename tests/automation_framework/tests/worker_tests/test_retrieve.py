@@ -87,7 +87,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 submit_response,
-                "Worker Id not found in the database. Hence invalid parameter")
+                "Worker Id not found")
             is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
