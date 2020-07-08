@@ -249,18 +249,21 @@ def worker_retrieve_sdk(worker_id, input_json=None):
     worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
     worker_retrieve_result = worker_registry.worker_retrieve(worker_id, jrpc_req_id)
 
+    if env.proxy_mode:
+        if worker_retrieve_result is None:
+            worker_retrieve_result = {"error": {"code": '', "message": "Worker Id not found"}}
+        else:
+            response = worker_retrieve_result
+            worker_obj.load_worker(json.loads(response[4]))
+            worker_retrieve_result = {}
+            result = {"workerType": response[1],
+                      "organizationId": response[2],
+                      "applicationTypeId": response[3],
+                      "details": json.loads(response[4])}
+            worker_retrieve_result["result"] = result
     if "error" in worker_retrieve_result:
         logger.error("Unable to retrieve worker details\n")
         return worker_retrieve_result
-    if env.proxy_mode:
-        response = worker_retrieve_result
-        worker_obj.load_worker(json.loads(response[4]))
-        worker_retrieve_result = {}
-        result = {"workerType" : response[1],
-                  "organizationId" : response[2],
-                  "applicationTypeId" : response[3],
-                  "details" : json.loads(response[4])}
-        worker_retrieve_result["result"] = result
     logger.info("\n Worker retrieve response: {}\n".format(worker_retrieve_result))
     worker_obj.worker_id = worker_id
     worker_retrieve_result["workerId"] = worker_id

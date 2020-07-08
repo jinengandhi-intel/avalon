@@ -2594,10 +2594,11 @@ class TestClass():
             submit_response)
 
         assert (
-                check_negative_test_responses(
-                    result_response,
-                    "Invalid data format for data hash of in data")
-                is ResultStatus.SUCCESS.value)
+            verify_test(
+                result_response, 0,
+                self.test_obj.build_request_output['pre_test_output'],
+                self.test_obj.build_request_output['action_obj'])
+            is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.workordersubmit

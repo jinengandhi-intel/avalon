@@ -32,8 +32,9 @@ class WorkOrderReceiptCreate():
         self.worker_obj = worker_obj
         # logger.info("------ Loaded string data: ABCDEFGHIJKLMNOP
         # %s ------2. %s\n", input_json_temp,  type(wo_submit))
-        final_hash_str = self.sig_obj.calculate_request_hash(wo_submit)
         input_json_temp = wo_submit["params"]
+        wo_request_hash = self.sig_obj.calculate_request_hash(input_json_temp)
+        final_hash_str = crypto_utility.byte_array_to_base64(wo_request_hash)
         input_params_list = input_json_params["params"].keys()
         config_yaml = wconfig.read_config(__file__, worker_obj, input_json_temp)
         config_yaml["workOrderId"] = wo_submit["params"]["workOrderId"]

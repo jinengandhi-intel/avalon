@@ -6,6 +6,7 @@ import env
 from error_code.error_status import SignatureStatus
 from error_code.error_status import WorkOrderStatus
 from src.utilities.worker_utilities import ResultStatus
+import base64
 
 logger = logging.getLogger(__name__)
 
@@ -119,6 +120,19 @@ def decrypt_work_order_response(response, session_key, session_iv):
 
     return err_cd, decrypted_data
 
+def decode_work_order_response(out_data):
+    decode_data_err = 1
+    output = []
+    try:
+        for result in out_data:
+            data = result["data"]
+            output.append(base64.b64decode(data).decode('UTF-8'))
+        decode_data_err = 0
+        logger.info("Data is %s.\n", output)
+    except Exception as e:
+        logger.exception("Error occured during decoding of data, %s.\n", e)
+    return decode_data_err, output
+
 
 def verify_test(response, expected_res, worker_obj, work_order_obj):
     if type(work_order_obj) != dict:
@@ -130,16 +144,23 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
         session_iv = work_order_obj["sessionKeyIv"]
         requester_nonce = work_order_obj["requesterNonce"]
 
-    verify_wo_signature_err = verify_work_order_signature(response['result'],
+    outData = response.get("result", {}).get("outData", [])
+    decode_result =  all([x.get("encryptedDataEncryptionKey") == "-" for x in outData])
+    if decode_result:
+        decode_wo_response_err = decode_work_order_response(outData)[0]
+
+        assert (decode_wo_response_err is ResultStatus.SUCCESS.value)
+    else:
+        verify_wo_signature_err = verify_work_order_signature(response['result'],
                                                           worker_obj, requester_nonce)
 
-    assert (verify_wo_signature_err is ResultStatus.SUCCESS.value)
+        assert (verify_wo_signature_err is ResultStatus.SUCCESS.value)
 
-    decrypt_wo_response_err = decrypt_work_order_response(response['result'],
+        decrypt_wo_response_err = decrypt_work_order_response(response['result'],
                                                           session_key,
                                                           session_iv)[0]
 
-    assert (decrypt_wo_response_err is ResultStatus.SUCCESS.value)
+        assert (decrypt_wo_response_err is ResultStatus.SUCCESS.value)
 
     # WorkOrderGetResult API Response validation with key parameters
     validate_response_code_err = validate_response_code(
