@@ -144,7 +144,7 @@ class TestClass():
     @pytest.mark.worker_lookup
     @pytest.mark.listener
     def test_worker_lookup_withoutid_params(self):
-        test_id = ''
+        test_id = '21237'
 
         request_file = os.path.join(
                  env.worker_input_file,

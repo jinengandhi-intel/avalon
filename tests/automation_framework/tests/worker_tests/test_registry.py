@@ -476,7 +476,7 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.positive
     def test_workerregister_proofDataType_empty(self):
-        test_id = '18281'
+        test_id = '21238'
         request_file = os.path.join(
             env.worker_input_file,
             "workerregister_proofDataType_empty.json")

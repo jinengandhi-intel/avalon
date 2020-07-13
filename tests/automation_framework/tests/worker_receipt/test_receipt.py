@@ -36,6 +36,7 @@ class TestClass():
     @pytest.mark.p1
     @pytest.mark.listener
     def test_work_order_create_receipt_success(self):
+        test_id = '18558'
         request_file = os.path.join(
             env.work_order_receipt,
             "work_order_receipt.json")
@@ -56,7 +57,8 @@ class TestClass():
     @pytest.mark.work_order_retrieve_receipt
     @pytest.mark.sdk
     @pytest.mark.p1
-    def test_work_order_retrieve_receipt(self):
+    def test_work_order_retrieve_receipt_success(self):
+        test_id = '21233'
         request_file = os.path.join(
             env.work_order_receipt,
             "work_order_receipt_retrieve.json")
@@ -78,6 +80,7 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_create_work_order_receipt_invalid_requester_id(self):
+        test_id = '21234'
         request_file = os.path.join(
             env.work_order_receipt,
             "work_order_receipt_invalid_requester_id.json")
@@ -100,6 +103,7 @@ class TestClass():
     @pytest.mark.listener
     def test_create_work_order_receipt_hexstr_workorderRequesthash(
             self):
+        test_id ='21235'
         request_file = os.path.join(
             env.work_order_receipt,
             "work_order_receipt_hexstr_workorderRequesthash.json")
@@ -121,6 +125,7 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_create_work_order_receipt_wrong_rverificationkey(self):
+        test_id = '21236'
         request_file = os.path.join(
             env.work_order_receipt,
             "work_order_receipt_wrong_rverificationkey.json")
@@ -141,6 +146,7 @@ class TestClass():
     @pytest.mark.work_order_receipt_lookup
     @pytest.mark.sdk
     def test_work_order_receipt_lookup_success(self):
+        test_id = '18605'
         request_file = os.path.join(
             env.work_order_receipt,
             "work_order_receipt_lookup_success.json")

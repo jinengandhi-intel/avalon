@@ -504,7 +504,7 @@ class TestClass():
     def test_workordersubmit_sdk_workerEncryptionKey_special_character(self):
         with pytest.raises(ValueError,
                            match="Encrypting Session key failed: Invalid session key or worker encryption key"):
-            test_id = '18732'
+            test_id = '21228'
             request_file = os.path.join(
                 env.work_order_input_file,
                 "work_order_workerEncryptionKey_special_character.json")
@@ -560,7 +560,7 @@ class TestClass():
     @pytest.mark.negative
     def test_workordersubmit_sdk_workerencryptionkey_empty(self):
         with pytest.raises(ValueError, match="Empty or Invalid dataformat for workerEncryptionKey"):
-            test_id = '18705'
+            test_id = '21229'
             request_file = os.path.join(
                 env.work_order_input_file,
                 "work_order_worker_encryption_key.json")
