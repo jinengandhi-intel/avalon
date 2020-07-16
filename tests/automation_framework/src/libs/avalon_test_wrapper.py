@@ -23,18 +23,18 @@ from src.work_order_submit.work_order_submit_params \
     import WorkOrderSubmit
 from src.work_order_receipt.work_order_receipt_lookup \
     import WorkOrderReceiptLookUp
+from src.libs.avalon_libs import AvalonImpl
 from src.utilities.submit_request_utility import \
     submit_request_listener, worker_lookup_sdk, \
     worker_retrieve_sdk, workorder_receiptcreate_sdk, \
     workorder_submit_sdk, worker_register_sdk, \
     worker_setstatus_sdk, workorder_receiptretrieve_sdk, \
     worker_update_sdk, workorder_getresult_sdk, workorder_receiptlookup_sdk
-from src.libs.listener import ListenerImpl
-from src.libs.sdk import SDKImpl
-import types
-import avalon_sdk.worker.worker_details as worker
+from src.utilities.worker_utilities import configure_data
+
 TCFHOME = os.environ.get("TCF_HOME", "../../")
 logger = logging.getLogger(__name__)
+avalon_lib_instance = AvalonImpl()
 
 
 def read_json(request_file):
@@ -65,12 +65,8 @@ def build_request_obj(input_json_obj,
     worker_retrieve SDK function requires worker_id parameter.
     """
     action_obj = eval(input_json_obj.get("method")+"()")
-    if env.test_mode == "listener":
-        request_obj = action_obj.configure_data(
-            input_json_obj, pre_test_output, pre_test_response)
-    else:
-        request_obj = action_obj.configure_data_sdk(
-            input_json_obj, pre_test_output, pre_test_response)
+    request_obj = configure_data(
+            action_obj, input_json_obj, pre_test_output, pre_test_response)
     return request_obj, action_obj
 
 
@@ -92,15 +88,6 @@ def submit_request(uri_client, output_obj, output_file, input_file):
     return submit_response
 
 
-def impl_instance():
-    if env.test_mode == "sdk":
-        logger.info("Inside SDK instance\n")
-        return SDKImpl()
-    elif env.test_mode == "listener":
-        logger.info("Inside Listener instance\n")
-        return ListenerImpl()
-
-
 def pre_test_worker_env(input_file):
     """
     This function sets up the environment required to run the test.
@@ -109,20 +96,20 @@ def pre_test_worker_env(input_file):
     """
     response = None
     request_method = input_file.get("method")
-    impl_type = impl_instance()
 
     if request_method == "WorkerRegister":
         logger.info("No setup required for \n%s\n", request_method)
         return 0
 
     if request_method != "WorkerLookUp":
-        response = impl_type.worker_lookup()
+        response = avalon_lib_instance.worker_lookup()
         logger.info("******Received WorkerLookUp Response******\n%s\n", response)
 
     if request_method not in ["WorkerLookUp", "WorkerRetrieve", "WorkerUpdate",
                               "WorkerSetStatus"]:
-        response = impl_type.worker_retrieve(response)
+        response = avalon_lib_instance.worker_retrieve(response)
     return response
+
 
 def pre_test_workorder_env(input_file, output):
     """
@@ -132,9 +119,8 @@ def pre_test_workorder_env(input_file, output):
         the worker details and pass that as the output.
         """
     request_method = input_file["method"]
-    impl_type = impl_instance()
-    wo_submit = impl_type.work_order_submit(output)
+    wo_submit = avalon_lib_instance.work_order_submit(output)
 
     if request_method in ["WorkOrderReceiptRetrieve", "WorkOrderReceiptLookUp"]:
-        impl_type.work_order_create_receipt(wo_submit)
+        avalon_lib_instance.work_order_create_receipt(wo_submit)
     return wo_submit

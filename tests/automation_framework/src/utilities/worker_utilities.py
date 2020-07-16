@@ -182,3 +182,13 @@ def tamper_request(input_json, tamper_instance, tamper):
 
     tampered_json = json.dumps(input_json_temp)
     return tampered_json
+
+
+def configure_data(action_obj, input_json, worker_obj, pre_test_response):
+    if env.test_mode == "listener":
+        configure_data_output = action_obj.configure_data(
+            input_json, worker_obj, pre_test_response)
+    else:
+        configure_data_output = action_obj.configure_data_sdk(
+            input_json, worker_obj, pre_test_response)
+    return configure_data_output

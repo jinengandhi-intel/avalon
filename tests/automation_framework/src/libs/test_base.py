@@ -3,10 +3,9 @@ from src.libs.avalon_test_wrapper \
     pre_test_worker_env, pre_test_workorder_env
 import logging
 import env
+from src.libs.avalon_libs import AvalonImpl
 
-from src.libs.listener import ListenerImpl
-from src.libs.sdk import SDKImpl
-
+avalon_lib_instance = AvalonImpl()
 logger = logging.getLogger(__name__)
 
 
@@ -113,12 +112,7 @@ class AvalonBase():
 
     def getresult(self, output_obj, submit_response={}):
         if submit_response.get("error", {}).get("code") == 5:
-            if env.test_mode == "listener":
-                listener_instance = ListenerImpl()
-                response = listener_instance.work_order_get_result(output_obj)
-            else:
-                sdk_instance = SDKImpl()
-                response = sdk_instance.work_order_get_result(output_obj)
+            response = avalon_lib_instance.work_order_get_result(output_obj)
         else:
             response = submit_response
         return response
