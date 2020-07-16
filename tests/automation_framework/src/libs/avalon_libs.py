@@ -94,7 +94,7 @@ class AvalonImpl():
         else:
             submit_response = workorder_submit_sdk(configure_data_output)
         logger.info("******Work Order submitted*****\n%s\n", submit_response)
-        return configure_data_output
+        return json_obj
 
     def work_order_get_result(self, wo_submit):
         wo_getresult_obj = WorkOrderGetResult()
