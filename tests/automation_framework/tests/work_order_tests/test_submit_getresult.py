@@ -230,7 +230,7 @@ class TestClass():
         assert (
                 check_negative_test_responses(
                     submit_response,
-                    "Invalid params")
+                    "Invalid work order Id")
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

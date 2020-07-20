@@ -93,6 +93,7 @@ class AvalonImpl():
             json_obj["requesterNonce"] = submit_obj.params_obj["requesterNonce"]
         else:
             submit_response = workorder_submit_sdk(configure_data_output)
+            json_obj = configure_data_output
         logger.info("******Work Order submitted*****\n%s\n", submit_response)
         return json_obj
 
