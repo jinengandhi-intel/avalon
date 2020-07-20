@@ -14,14 +14,12 @@ class AvalonBase():
         self.uri_client = env.uri_client
         self.build_request_output = {}
 
-    def setup_and_build_request_register(self, input_file):
-        pre_test_output = pre_test_worker_env(input_file)
+    def setup_and_build_request_worker_register(self, input_file):
         request_obj, action_obj = build_request_obj(input_file)
         self.build_request_output.update({'request_obj': request_obj})
         return 0
 
-    def setup_and_build_request_lookup(self, input_file):
-        pre_test_output = pre_test_worker_env(input_file)
+    def setup_and_build_request_worker_lookup(self, input_file):
         request_obj, action_obj = build_request_obj(input_file)
         self.build_request_output.update({'request_obj': request_obj})
         return 0
@@ -49,7 +47,7 @@ class AvalonBase():
              'action_obj': wo_submit})
         return 0
 
-    def setup_and_build_request_retrieve(self, input_file):
+    def setup_and_build_request_worker_retrieve(self, input_file):
         pre_test_output = pre_test_worker_env(input_file)
         request_obj, action_obj = build_request_obj(
             input_file, pre_test_response=pre_test_output)
@@ -59,7 +57,7 @@ class AvalonBase():
              'action_obj': action_obj})
         return 0
 
-    def setup_and_build_request_receipt(self, input_file):
+    def setup_and_build_request_create_receipt(self, input_file):
         pre_test_output = pre_test_worker_env(input_file)
         wo_submit = pre_test_workorder_env(input_file, pre_test_output)
         request_obj, action_obj = build_request_obj(

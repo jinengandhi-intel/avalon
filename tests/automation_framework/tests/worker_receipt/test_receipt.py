@@ -41,7 +41,7 @@ class TestClass():
             env.work_order_receipt,
             "work_order_receipt.json")
 
-        err_cd = self.test_obj.setup_and_build_request_receipt(
+        err_cd = self.test_obj.setup_and_build_request_create_receipt(
             read_json(request_file))
 
         receipt_response = submit_request(
@@ -85,7 +85,7 @@ class TestClass():
             env.work_order_receipt,
             "work_order_receipt_invalid_requester_id.json")
 
-        err_cd = self.test_obj.setup_and_build_request_receipt(
+        err_cd = self.test_obj.setup_and_build_request_create_receipt(
             read_json(request_file))
 
         receipt_response = submit_request(
@@ -108,7 +108,7 @@ class TestClass():
             env.work_order_receipt,
             "work_order_receipt_hexstr_workorderRequesthash.json")
 
-        err_cd = self.test_obj.setup_and_build_request_receipt(
+        err_cd = self.test_obj.setup_and_build_request_create_receipt(
             read_json(request_file))
 
         receipt_response = submit_request(
@@ -130,7 +130,7 @@ class TestClass():
             env.work_order_receipt,
             "work_order_receipt_wrong_rverificationkey.json")
 
-        err_cd = self.test_obj.setup_and_build_request_receipt(
+        err_cd = self.test_obj.setup_and_build_request_create_receipt(
             read_json(request_file))
 
         receipt_response = submit_request(
@@ -151,7 +151,7 @@ class TestClass():
             env.work_order_receipt,
             "work_order_receipt_lookup_success.json")
 
-        err_cd = self.test_obj.setup_and_build_request_receipt(
+        err_cd = self.test_obj.setup_and_build_request_create_receipt(
             read_json(request_file))
 
         receipt_response = submit_request(

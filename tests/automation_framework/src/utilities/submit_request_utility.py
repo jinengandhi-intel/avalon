@@ -69,7 +69,6 @@ def _create_work_order_receipt_instance(blockchain_type, config):
 
 def submit_request_listener(
         uri_client, input_json_str, output_json_file_name):
-    logger.info("Listener code path\n")
     req_time = time.strftime("%Y%m%d_%H%M%S")
     request_method = input_json_str["method"]
     input_json_str = json.dumps(input_json_str)
@@ -79,7 +78,6 @@ def submit_request_listener(
     with open(signed_input_file, 'w') as req_file:
         req_file.write(json.dumps(input_json_str, ensure_ascii=False))
 
-    logger.info("in submit listener %s", input_json_str)
     if request_method == "WorkOrderGetResult":
         logger.info("- Validating WorkOrderGetResult Response-")
         response = {}
@@ -116,19 +114,13 @@ def submit_request_listener(
 
 
 def workorder_submit_sdk(wo_params, input_json_obj=None):
-    logger.info("WorkOrderSubmit SDK code path\n")
     if input_json_obj is None:
         req_id = 3
     else:
         req_id = input_json_obj["id"]
     config = config_file_read()
     work_order = _create_work_order_instance(env.blockchain_type, config)
-    logger.info(" work order id %s \n", wo_params.get_work_order_id())
-    logger.info(" worker id %s \n", wo_params.get_worker_id())
-    logger.info(" Requester ID %s \n", wo_params.get_requester_id())
-    logger.info(" To string %s \n", wo_params.to_string())
 
-    logger.info(" worker id %s \n", wo_params.get_worker_id())
     logger.info("Work order submit request : %s, \n \n ",
                 wo_params.to_jrpc_string(req_id))
     response = work_order.work_order_submit(

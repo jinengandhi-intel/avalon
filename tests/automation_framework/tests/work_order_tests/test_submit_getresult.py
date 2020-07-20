@@ -7,7 +7,8 @@ from src.libs.avalon_test_wrapper \
     import read_json, submit_request
 from src.libs.test_base import AvalonBase
 from src.utilities.verification_utils \
-    import verify_test, check_negative_test_responses
+    import verify_test, check_negative_test_responses,\
+    validate_response_code
 from src.utilities.worker_utilities import ResultStatus
 from src.utilities.worker_utilities import GetResultWaitTime
 import time
@@ -38,7 +39,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
-        logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
             verify_test(
@@ -71,8 +71,6 @@ class TestClass():
             env.wo_submit_output_json_file_name,
             read_json(request_file))
 
-        logger.info("submit_response: \n%s\n", submit_response)
-
         assert (
                 check_negative_test_responses(
                     submit_response,
@@ -102,7 +100,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
-        logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
                 check_negative_test_responses(
@@ -133,7 +130,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
-        logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
                 check_negative_test_responses(
@@ -164,7 +160,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
-        logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
                 check_negative_test_responses(
@@ -195,7 +190,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
-        logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
                 check_negative_test_responses(
@@ -225,7 +219,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
             read_json(request_file))
-        logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
                 check_negative_test_responses(

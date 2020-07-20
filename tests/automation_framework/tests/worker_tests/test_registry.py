@@ -40,7 +40,7 @@ class TestClass():
             env.worker_input_file,
             "worker_register.json")
 
-        err_cd = self.test_obj.setup_and_build_request_lookup(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -48,8 +48,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -66,7 +64,7 @@ class TestClass():
             env.worker_input_file,
             "worker_register_unknown_parameter.json")
 
-        err_cd = self.test_obj.setup_and_build_request_lookup(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -74,8 +72,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -93,7 +89,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_hashingAlgorithm_KECCAK_256.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -101,8 +97,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -120,7 +114,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_signingAlgorithm_RSA_OAEP_3072.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -128,8 +122,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -147,7 +139,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_dataEncryptionAlgorithm_list.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -155,8 +147,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -175,7 +165,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_orgnizationid_32bytes.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -183,8 +173,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -203,7 +191,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_applicationTypeId_32bytes.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -211,8 +199,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -231,7 +217,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_workOrderPayloadFormats_JSON_RPC_JWT.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -239,8 +225,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -259,7 +243,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_workerId_null.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -267,8 +251,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -287,7 +269,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_hashingAlgorithm_alternate.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -295,8 +277,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -315,7 +295,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_signingAlgorithm_alternate.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -323,8 +303,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -343,7 +321,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_keyEncryptionAlgorithm_alternate.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -351,8 +329,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -371,7 +347,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_dataEncryptionAlgorithm_alternate.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -379,8 +355,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -398,7 +372,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_workerType_invalid.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -406,8 +380,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -426,7 +398,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_organizationId_empty.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -434,8 +406,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -454,7 +424,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_applicationTypeId_empty.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -462,8 +432,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
@@ -481,7 +449,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_proofDataType_empty.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -489,8 +457,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -508,7 +474,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_proofDataType_invalid.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -516,8 +482,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)
@@ -535,7 +499,7 @@ class TestClass():
             env.worker_input_file,
             "workerregister_proofDataType_null.json")
 
-        err_cd = self.test_obj.setup_and_build_request_register(
+        err_cd = self.test_obj.setup_and_build_request_worker_register(
             read_json(request_file))
 
         response = submit_request(
@@ -543,8 +507,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (validate_response_code(response,-32601)
                 is ResultStatus.SUCCESS.value)

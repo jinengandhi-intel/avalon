@@ -97,15 +97,10 @@ def pre_test_worker_env(input_file):
     response = None
     request_method = input_file.get("method")
 
-    if request_method == "WorkerRegister":
-        logger.info("No setup required for \n%s\n", request_method)
-        return 0
+    response = avalon_lib_instance.worker_lookup()
+    logger.info("******Received WorkerLookUp Response******\n%s\n", response)
 
-    if request_method != "WorkerLookUp":
-        response = avalon_lib_instance.worker_lookup()
-        logger.info("******Received WorkerLookUp Response******\n%s\n", response)
-
-    if request_method not in ["WorkerLookUp", "WorkerRetrieve", "WorkerUpdate",
+    if request_method not in ["WorkerRetrieve", "WorkerUpdate",
                               "WorkerSetStatus"]:
         response = avalon_lib_instance.worker_retrieve(response)
     return response

@@ -46,7 +46,7 @@ class TestClass():
             env.worker_input_file,
             "worker_lookup.json")
 
-        err_cd = self.test_obj.setup_and_build_request_lookup(
+        err_cd = self.test_obj.setup_and_build_request_worker_lookup(
             read_json(request_file))
 
         response = submit_request(
@@ -55,12 +55,8 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
-
         assert (check_worker_lookup_response(response, operator.gt, 0)
                 is ResultStatus.SUCCESS.value)
-
-        self.test_obj.teardown()
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -77,7 +73,7 @@ class TestClass():
             env.worker_input_file,
             "worker_lookup_workerType_not_unsigned_int.json")
 
-        err_cd = self.test_obj.setup_and_build_request_lookup(
+        err_cd = self.test_obj.setup_and_build_request_worker_lookup(
             read_json(request_file))
 
         response = submit_request(
@@ -85,8 +81,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_negative_test_responses(response,
                 "WorkType should be an Integer of range 1-3")
@@ -103,7 +97,7 @@ class TestClass():
             env.worker_input_file,
             "worker_lookup_empty_params.json")
 
-        err_cd = self.test_obj.setup_and_build_request_lookup(
+        err_cd = self.test_obj.setup_and_build_request_worker_lookup(
             read_json(request_file))
 
         response = submit_request(
@@ -111,8 +105,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_negative_test_responses(response,
                 "Empty params in the request")
@@ -130,6 +122,7 @@ class TestClass():
             "worker_lookup_jsonrpc_different_version.json")
 
         response = self.test_obj.post_json_msg(request_file)
+
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (
@@ -151,6 +144,7 @@ class TestClass():
                 "worker_lookup_withoutid_params.json")
 
         response = self.test_obj.post_json_msg(request_file)
+
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (
@@ -170,7 +164,7 @@ class TestClass():
             env.worker_input_file,
             "worker_lookup_diff_unit_length.json")
 
-        err_cd = self.test_obj.setup_and_build_request_lookup(
+        err_cd = self.test_obj.setup_and_build_request_worker_lookup(
             read_json(request_file))
 
         response = submit_request(
@@ -178,8 +172,6 @@ class TestClass():
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
-
-        logger.info("**********Received Response*********\n%s\n", response)
 
         assert (check_worker_lookup_response(response, operator.eq, 0)
                 is ResultStatus.SUCCESS.value)

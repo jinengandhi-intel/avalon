@@ -51,7 +51,6 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
         if env.proxy_mode:
             response_code = 0
         else:
@@ -79,7 +78,6 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
         if env.proxy_mode:
             response_code = 0
         else:
@@ -107,7 +105,6 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
         if env.proxy_mode:
             response_code = 0
         else:
@@ -136,7 +133,6 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
         if env.proxy_mode:
             response_code = 0
         else:
@@ -168,7 +164,6 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
         if env.proxy_mode:
             response_code = 0
         else:
@@ -200,7 +195,6 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
         if env.proxy_mode:
             response_code = 0
         else:
@@ -232,7 +226,6 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
         if env.proxy_mode:
             response_code = 0
         else:
@@ -261,7 +254,6 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             read_json(request_file))
 
-        logger.info("**********Received Response*********\n%s\n", response)
         if env.proxy_mode:
             response_code = 0
         else:
