@@ -56,7 +56,7 @@ def validate_response_code(response, expected_res):
 
         if check_result_key == "result":
             if (set(check_result["result"].keys()).issubset
-               (response["result"].keys())):
+                    (response["result"].keys())):
 
                 # Expected Keys : check_result["result"].keys()
                 # Actual Keys : response["result"].keys()
@@ -85,11 +85,13 @@ def is_valid_params(request_elements, keys_count=None):
 
 
 def verify_work_order_signature(response, worker_obj, requester_nonce):
-    verify_key = worker_obj['result']['details']['workerTypeData']['verificationKey']
+    verify_key = \
+        worker_obj['result']['details']['workerTypeData']['verificationKey']
 
     try:
         verify_obj = signature.ClientSignature()
-        sig_bool = verify_obj.verify_signature(response, verify_key, requester_nonce)
+        sig_bool = verify_obj.verify_signature(
+            response, verify_key, requester_nonce)
 
         if sig_bool is SignatureStatus.PASSED:
             err_cd = 0
@@ -120,6 +122,7 @@ def decrypt_work_order_response(response, session_key, session_iv):
 
     return err_cd, decrypted_data
 
+
 def decode_work_order_response(out_data):
     decode_data_err = 1
     output = []
@@ -135,7 +138,7 @@ def decode_work_order_response(out_data):
 
 
 def verify_test(response, expected_res, worker_obj, work_order_obj):
-    if type(work_order_obj) != dict:
+    if not isinstance(work_order_obj, dict):
         session_key = work_order_obj.session_key
         session_iv = work_order_obj.session_iv
         requester_nonce = work_order_obj.params_obj["requesterNonce"]
@@ -146,7 +149,8 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
 
     outData = response.get("result", {}).get("outData", [])
     if len(outData) >= 1:
-        decode_result = all([x.get("encryptedDataEncryptionKey") == "-" for x in outData])
+        decode_result = all(
+            [x.get("encryptedDataEncryptionKey") == "-" for x in outData])
     else:
         decode_result = False
     if decode_result:
@@ -154,14 +158,13 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
 
         assert (decode_wo_response_err is ResultStatus.SUCCESS.value)
     else:
-        verify_wo_signature_err = verify_work_order_signature(response['result'],
-                                                          worker_obj, requester_nonce)
+        verify_wo_signature_err = verify_work_order_signature(
+            response['result'], worker_obj, requester_nonce)
 
         assert (verify_wo_signature_err is ResultStatus.SUCCESS.value)
 
-        decrypt_wo_response_err = decrypt_work_order_response(response['result'],
-                                                          session_key,
-                                                          session_iv)[0]
+        decrypt_wo_response_err = decrypt_work_order_response(
+            response['result'], session_key, session_iv)[0]
 
         assert (decrypt_wo_response_err is ResultStatus.SUCCESS.value)
 
@@ -172,6 +175,7 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
     assert (validate_response_code_err is ResultStatus.SUCCESS.value)
 
     return ResultStatus.SUCCESS.value
+
 
 def check_worker_lookup_response(response, operator, value):
     if env.proxy_mode:
@@ -243,7 +247,6 @@ def check_negative_test_responses(response, expected_res):
 
 
 def check_workorder_receipt_lookup_response(response, operator, value):
-
     ''' if env.blockchain_type == "ethereum":
         if operator(response[0], value):
             err_cd = 0

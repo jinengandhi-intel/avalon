@@ -36,10 +36,14 @@ class WorkerUpdate():
         worker_obj = worker.SGXWorkerDetails()
         if input_json is not None:
             wconfig.add_json_values(self, input_json, pre_test_response)
-        wconfig.set_parameter(self.params_obj, "workerId",
-            crypto_utils.strip_begin_end_public_key(pre_test_response["result"]["ids"][0]))
+        wconfig.set_parameter(
+            self.params_obj,
+            "workerId",
+            crypto_utils.strip_begin_end_public_key(
+                pre_test_response["result"]["ids"][0]))
 
-        input_worker_retrieve = json.loads(wconfig.to_string(self, detail_obj=True))
+        input_worker_retrieve = json.loads(
+            wconfig.to_string(self, detail_obj=True))
         logger.info('*****Worker details Updated with Worker ID***** \
                            \n%s\n', input_worker_retrieve)
         return input_worker_retrieve
@@ -50,7 +54,7 @@ class WorkerUpdate():
             worker_id = pre_test_response[2][0]
         else:
             if "result" in pre_test_response and \
-                "ids" in pre_test_response["result"].keys():
+                    "ids" in pre_test_response["result"].keys():
                 if pre_test_response["result"]["totalCount"] != 0:
                     worker_id = pre_test_response["result"]["ids"][0]
                 else:
@@ -64,4 +68,3 @@ class WorkerUpdate():
         update_params = {"worker_id": worker_id, "details": details}
 
         return update_params
-

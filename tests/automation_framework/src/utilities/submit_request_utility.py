@@ -28,7 +28,6 @@ TCFHOME = os.environ.get("TCF_HOME", "../../")
 def config_file_read():
     config = pconfig.parse_configuration_files(
         env.conffiles, env.confpaths)
-    logger.info(" URI client %s \n", config["tcf"]["json_rpc_uri"])
     config["tcf"]["json_rpc_uri"] = env.uri_client_sdk
     return config
 
@@ -40,7 +39,6 @@ def _create_worker_registry_instance(blockchain_type, config):
     elif env.proxy_mode and blockchain_type == 'ethereum':
         return EthereumWorkerRegistryImpl(config)
     else:
-        logger.info("Direct SDK code path\n")
         return JRPCWorkerRegistryImpl(config)
 
 
@@ -51,7 +49,6 @@ def _create_work_order_instance(blockchain_type, config):
     elif env.proxy_mode and blockchain_type == 'ethereum':
         return EthereumWorkOrderProxyImpl(config)
     else:
-        logger.info("Direct SDK code path\n")
         return JRPCWorkOrderImpl(config)
 
 
@@ -63,7 +60,6 @@ def _create_work_order_receipt_instance(blockchain_type, config):
         # TODO need to implement
         return None
     else:
-        logger.info("Direct SDK code path\n")
         return JRPCWorkOrderReceiptImpl(config)
 
 
@@ -100,7 +96,9 @@ def submit_request_listener(
                 break
             response = uri_client._postmsg(input_json_str)
     else:
-        logger.info('**********Received Request*********\n%s\n', input_json_str)
+        logger.info(
+            '**********Received Request*********\n%s\n',
+            input_json_str)
         response = uri_client._postmsg(input_json_str)
         logger.info('**********Received Response*********\n%s\n', response)
 
@@ -130,7 +128,7 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
         wo_params.to_string(),
         id=req_id
     )
-    if env.proxy_mode and (type(response) != dict):
+    if env.proxy_mode and (not isinstance(response, dict)):
         if response.value == 0:
             response = {"error": {"code": 5}}
         else:
@@ -149,7 +147,8 @@ def worker_lookup_sdk(worker_type, input_json=None):
     config = config_file_read()
     worker_dict = {'SGX': WorkerType.TEE_SGX,
                    'MPC': WorkerType.MPC, 'ZK': WorkerType.ZK}
-    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    worker_registry = _create_worker_registry_instance(
+        env.blockchain_type, config)
     if env.blockchain_type == "ethereum":
         if worker_type in worker_dict.keys():
             worker = WorkerType.TEE_SGX
@@ -163,7 +162,8 @@ def worker_lookup_sdk(worker_type, input_json=None):
         )
     else:
         worker_lookup_response = worker_registry.worker_lookup(
-        worker_type=worker_dict.get(worker_type, worker_type), id=jrpc_req_id)
+            worker_type=worker_dict.get(worker_type, worker_type),
+            id=jrpc_req_id)
     logger.info("\n Worker lookup response: {}\n".format(
         json.dumps(worker_lookup_response, indent=4)
     ))
@@ -182,7 +182,8 @@ def worker_register_sdk(register_params, input_json):
     worker_dict = {'SGX': WorkerType.TEE_SGX,
                    'MPC': WorkerType.MPC, 'ZK': WorkerType.ZK}
     config = config_file_read()
-    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    worker_registry = _create_worker_registry_instance(
+        env.blockchain_type, config)
     if env.proxy_mode and (env.blockchain_type == "ethereum"):
         worker_register_result = worker_registry.worker_register(
             register_params["worker_id"],
@@ -213,7 +214,8 @@ def worker_setstatus_sdk(set_status_params, input_json):
                    3: WorkerStatus.DECOMMISSIONED,
                    4: WorkerStatus.COMPROMISED}
     config = config_file_read()
-    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    worker_registry = _create_worker_registry_instance(
+        env.blockchain_type, config)
     if env.proxy_mode and (env.blockchain_type == "ethereum"):
         worker_setstatus_result = worker_registry.worker_set_status(
             set_status_params["worker_id"],
@@ -225,8 +227,10 @@ def worker_setstatus_sdk(set_status_params, input_json):
     if env.proxy_mode:
         result = worker_setstatus_result
         worker_setstatus_result = {}
-        worker_setstatus_result["error"] = {"code" : result.value, "message" : ""}
-    logger.info("\n Worker setstatus response: {}\n".format(worker_setstatus_result))
+        worker_setstatus_result["error"] = {
+            "code": result.value, "message": ""}
+    logger.info("\n Worker setstatus response: {}\n".format(
+        worker_setstatus_result))
     return worker_setstatus_result
 
 
@@ -238,12 +242,17 @@ def worker_retrieve_sdk(worker_id, input_json=None):
     else:
         jrpc_req_id = input_json["id"]
     config = config_file_read()
-    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
-    worker_retrieve_result = worker_registry.worker_retrieve(worker_id, jrpc_req_id)
+    worker_registry = _create_worker_registry_instance(
+        env.blockchain_type, config)
+    worker_retrieve_result = worker_registry.worker_retrieve(
+        worker_id, jrpc_req_id)
 
     if env.proxy_mode:
         if worker_retrieve_result is None:
-            worker_retrieve_result = {"error": {"code": '', "message": "Worker Id not found"}}
+            worker_retrieve_result = {
+                "error": {
+                    "code": '',
+                    "message": "Worker Id not found"}}
         else:
             response = worker_retrieve_result
             worker_obj.load_worker(json.loads(response[4]))
@@ -256,7 +265,8 @@ def worker_retrieve_sdk(worker_id, input_json=None):
     if "error" in worker_retrieve_result:
         logger.error("Unable to retrieve worker details\n")
         return worker_retrieve_result
-    logger.info("\n Worker retrieve response: {}\n".format(worker_retrieve_result))
+    logger.info("\n Worker retrieve response: {}\n".format(
+        worker_retrieve_result))
     worker_obj.worker_id = worker_id
     worker_retrieve_result["workerId"] = worker_id
     logger.info("\n Worker ID\n%s\n", worker_id)
@@ -274,7 +284,8 @@ def worker_update_sdk(update_params, input_json=None):
     else:
         jrpc_req_id = input_json["id"]
     config = config_file_read()
-    worker_registry = _create_worker_registry_instance(env.blockchain_type, config)
+    worker_registry = _create_worker_registry_instance(
+        env.blockchain_type, config)
     if env.proxy_mode and (env.blockchain_type == "ethereum"):
         worker_update_result = worker_registry.worker_update(
             update_params["worker_id"],
@@ -283,9 +294,9 @@ def worker_update_sdk(update_params, input_json=None):
         worker_update_result = worker_registry.worker_update(
             update_params["worker_id"],
             json.dumps(update_params["details"]), jrpc_req_id)
-    if env.proxy_mode and (type(worker_update_result) != dict):
+    if env.proxy_mode and (not isinstance(worker_update_result, dict)):
         response = worker_update_result.value
-        worker_update_result = {"error": {"code": response, "message" : ""}}
+        worker_update_result = {"error": {"code": response, "message": ""}}
     logger.info("\n Worker update response: {}\n".format(worker_update_result))
     return worker_update_result
 
@@ -295,7 +306,8 @@ def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     # Create receipt
-    wo_receipt = _create_work_order_receipt_instance(env.blockchain_type, config)
+    wo_receipt = _create_work_order_receipt_instance(
+        env.blockchain_type, config)
     # Submit work order create receipt jrpc request
     wo_receipt_resp = wo_receipt.work_order_receipt_create(
         wo_create_receipt["workOrderId"],
@@ -315,12 +327,14 @@ def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
     ))
     return wo_receipt_resp
 
+
 def workorder_receiptretrieve_sdk(workorderId, input_json):
     logger.info("ReceiptRetrieve SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     # Create receipt
-    wo_receipt = _create_work_order_receipt_instance(env.blockchain_type, config)
+    wo_receipt = _create_work_order_receipt_instance(
+        env.blockchain_type, config)
 
     wo_receipt_resp = wo_receipt.work_order_receipt_retrieve(
         workorderId, jrpc_req_id)
@@ -343,17 +357,18 @@ def workorder_receiptretrieve_sdk(workorderId, input_json):
 
     return receipt_update_retrieve
 
+
 def workorder_getresult_sdk(workorderId, input_json):
-    logger.info("WorkOderGetResult SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     work_order = _create_work_order_instance(env.blockchain_type, config)
     logger.info("----- Validating WorkOrderGetResult Response ------")
 
-
     get_result_res = work_order.work_order_get_result(
         workorderId, jrpc_req_id)
-    logger.info("****** WorkOrderGetResult Received Response*****\n%s\n", get_result_res)
+    logger.info(
+        "****** WorkOrderGetResult Received Response*****\n%s\n",
+        get_result_res)
 
     if env.proxy_mode and (get_result_res is None):
         get_result_res = {"error": {"code": -1}}
@@ -361,11 +376,11 @@ def workorder_getresult_sdk(workorderId, input_json):
 
 
 def workorder_receiptlookup_sdk(requesterId, input_json):
-    logger.info("ReceiptRetrieve SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
 
-    wo_receipt = _create_work_order_receipt_instance(env.blockchain_type, config)
+    wo_receipt = _create_work_order_receipt_instance(
+        env.blockchain_type, config)
 
     wo_receipt_resp = wo_receipt.work_order_receipt_lookup(
         requester_id=requesterId, id=jrpc_req_id)

@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class AvalonImpl():
-    
+
     def worker_lookup(self):
         lookup_obj = WorkerLookUp()
         configure_data_output = configure_data(
@@ -56,7 +56,8 @@ class AvalonImpl():
                 env.uri_client, configure_data_output,
                 env.worker_retrieve_output_json_file_name)
             worker_obj.load_worker(retrieve_response['result']['details'])
-            retrieve_response['workerId'] = configure_data_output["params"]["workerId"]
+            retrieve_response['workerId'] = \
+                configure_data_output["params"]["workerId"]
         else:
             retrieve_response = worker_retrieve_sdk(configure_data_output)
 
@@ -67,23 +68,27 @@ class AvalonImpl():
 
     def work_order_submit(self, response_output):
         submit_obj = WorkOrderSubmit()
-        
-        submit_config_file = os.path.join(env.work_order_input_file, "work_order_submit.ini")
+
+        submit_config_file = os.path.join(
+            env.work_order_input_file,
+            "work_order_submit.ini")
         submit_request_json = read_config(submit_config_file, "test_id")
-        
+
         configure_data_output = configure_data(
             submit_obj, input_json=submit_request_json,
             worker_obj=None, pre_test_response=response_output)
-        
+
         if env.test_mode == "listener":
             submit_response = submit_request_listener(
                 env.uri_client, configure_data_output,
                 env.wo_submit_output_json_file_name)
-            input_work_order_submit = submit_obj.compute_signature(submit_obj.tamper)
+            input_work_order_submit = submit_obj.compute_signature(
+                submit_obj.tamper)
             json_obj = json.loads(input_work_order_submit)
             json_obj["sessionKey"] = submit_obj.session_key
             json_obj["sessionKeyIv"] = submit_obj.session_iv
-            json_obj["requesterNonce"] = submit_obj.params_obj["requesterNonce"]
+            json_obj["requesterNonce"] = \
+                submit_obj.params_obj["requesterNonce"]
         else:
             submit_response = workorder_submit_sdk(configure_data_output)
             json_obj = configure_data_output
@@ -93,8 +98,11 @@ class AvalonImpl():
     def work_order_get_result(self, wo_submit):
         wo_getresult_obj = WorkOrderGetResult()
 
-        getresult_config_file = os.path.join(env.work_order_input_file, "work_order_get_result.ini")
-        wo_getresult_request_json = read_config(getresult_config_file, "test_id")
+        getresult_config_file = os.path.join(
+            env.work_order_input_file,
+            "work_order_get_result.ini")
+        wo_getresult_request_json = read_config(
+            getresult_config_file, "test_id")
 
         configure_data_output = configure_data(
             wo_getresult_obj, input_json=wo_getresult_request_json,
@@ -118,11 +126,12 @@ class AvalonImpl():
     def work_order_create_receipt(self, wo_submit):
         if env.test_mode == "sdk":
             receipt_retrieve_obj = WorkOrderReceiptCreate()
-            
-            create_receipt_config =  os.path.join(
-            env.work_order_receipt, "work_order_create_receipt.ini")
-            receipt_request_json = read_config(create_receipt_config, "test_config")
-  
+
+            create_receipt_config = os.path.join(
+                env.work_order_receipt, "work_order_create_receipt.ini")
+            receipt_request_json = read_config(
+                create_receipt_config, "test_config")
+
             wo_create_receipt = receipt_retrieve_obj.configure_data_sdk(
                 input_json=receipt_request_json, worker_obj=None,
                 pre_test_response=wo_submit)

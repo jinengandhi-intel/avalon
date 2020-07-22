@@ -30,13 +30,16 @@ class WorkOrderGetResult():
         params = input_json_temp["params"]
         for keys in params.keys():
             if "workOrderId" in keys:
-                value = params["workOrderId"] if params["workOrderId"] != '' else wo_submit["params"]["workOrderId"]
+                value = params["workOrderId"] \
+                    if params["workOrderId"] != '' \
+                    else wo_submit["params"]["workOrderId"]
                 wconfig.set_parameter(self.params_obj, "workOrderId", value)
             else:
-                wconfig.set_parameter(self.params_obj, keys, input_json_temp["params"][keys])
+                wconfig.set_parameter(
+                    self.params_obj, keys, input_json_temp["params"][keys])
 
     def configure_data(self, input_json, worker_obj, pre_test_response):
-        wconfig.set_parameter(self.id_obj, "id", (pre_test_response["id"]+1))
+        wconfig.set_parameter(self.id_obj, "id", (pre_test_response["id"] + 1))
 
         logger.info("listen Pre test*****\n%s\n", pre_test_response)
         self.add_json_values(
@@ -54,4 +57,3 @@ class WorkOrderGetResult():
                 workorder_id = input_json["params"]["workOrderId"]
             logger.info("workorder_id %s", workorder_id)
         return workorder_id
-

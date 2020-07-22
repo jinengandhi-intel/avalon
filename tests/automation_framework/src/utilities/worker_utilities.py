@@ -27,6 +27,8 @@ from configparser import ConfigParser
 """
 status code defined for test case
 """
+
+
 @unique
 class ResultStatus(IntEnum):
     SUCCESS = 0
@@ -37,9 +39,14 @@ class ResultStatus(IntEnum):
 class GetResultWaitTime(IntEnum):
     LOOP_WAIT_TIME = 3
 
+
 logger = logging.getLogger(__name__)
 
-inputs_params = ["workerId", "organizationId", "applicationTypeId", "requesterGeneratedNonce"]
+inputs_params = [
+    "workerId",
+    "organizationId",
+    "applicationTypeId",
+    "requesterGeneratedNonce"]
 
 
 def set_parameter(input_dict, param, value):
@@ -114,7 +121,8 @@ def read_yaml(calling_path, response=None, input_data={}):
                     if key in input_keys:
                         default_params[key] = response["result"][key]
                 if "workerEncryptionKey" in input_keys:
-                    default_params[key] = details["workerTypeData"]['encryptionKey']
+                    default_params[key] = \
+                        details["workerTypeData"]['encryptionKey']
 
     return default_params
 
@@ -124,7 +132,7 @@ def add_json_values(caller, input_json_temp, pre_test_response):
     module = inspect.getmodule(frame[0])
     config_path = module.__file__
 
-    input_json  = input_json_temp["params"].copy()
+    input_json = input_json_temp["params"].copy()
     input_json["id"] = input_json_temp["id"]
     input_param_list = input_json_temp["params"].keys()
 
@@ -140,7 +148,8 @@ def add_json_values(caller, input_json_temp, pre_test_response):
                     value = details_json[d_key]
                 set_parameter(caller.details_obj, d_key, value)
         else:
-            value = input_json[key] if input_json[key] != "" else config_yaml[key]
+            value = input_json[key] \
+                if input_json[key] != "" else config_yaml[key]
         set_parameter(caller.params_obj, key, value)
     tamper = caller.tamper
     for key in tamper["params"].keys():
@@ -194,6 +203,7 @@ def configure_data(action_obj, input_json, worker_obj, pre_test_response):
             input_json, worker_obj, pre_test_response)
     return configure_data_output
 
+
 def handle_value(val):
     if val == "NONE":
         output = None
@@ -204,6 +214,7 @@ def handle_value(val):
     else:
         output = yaml.safe_load(val)
     return output
+
 
 def config_data_update(input, key, value):
     if key in input.keys():
@@ -235,10 +246,11 @@ def read_config(config_file, test_id):
     for key, value in parser.items("DEFAULT"):
         test_config[key] = yaml.safe_load(value)
     if parser.has_section(test_id):
-        test_items = list(set(parser.items(test_id)) - set(parser.items("DEFAULT")))
+        test_items = list(set(parser.items(test_id)) -
+                          set(parser.items("DEFAULT")))
         logger.info("test items is %s", test_items)
         for key, value in test_items:
             config_data_update(test_config, key, value)
-    
+
     logger.info("Test config is %s\n", test_config)
     return test_config

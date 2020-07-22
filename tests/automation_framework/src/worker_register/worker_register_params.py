@@ -44,9 +44,14 @@ class WorkerRegister():
         wconfig.add_json_values(self, input_json, pre_test_response)
         if self.params_obj.get("workerType") == 1:
             self.params_obj["workerType"] = "SGX"
-        register_params = {"worker_id": wconfig.get_parameter(self.params_obj, "workerId"),
-                           "workerType": wconfig.get_parameter(self.params_obj, "workerType"),
-                           "organization_id": wconfig.get_parameter(self.params_obj, "organizationId"),
-                           "application_type_id": wconfig.get_parameter(self.params_obj, "applicationTypeId"),
-                           "details": input_json["params"].get("details")}
+        register_params = {
+            "worker_id": wconfig.get_parameter(
+                self.params_obj, "workerId"),
+            "workerType": wconfig.get_parameter(
+                self.params_obj, "workerType"),
+            "organization_id": wconfig.get_parameter(
+                self.params_obj, "organizationId"),
+            "application_type_id": wconfig.get_parameter(
+                    self.params_obj, "applicationTypeId"),
+            "details": input_json["params"].get("details")}
         return register_params

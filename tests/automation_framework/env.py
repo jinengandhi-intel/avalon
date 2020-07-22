@@ -27,7 +27,7 @@ blockchain_type = ''
 # Direct test mode = listener or client_sdk
 test_mode = "sdk"
 
-proxy_mode = False 
+proxy_mode = False
 
 # Config file path
 conffiles = [TCFHOME + "/sdk/avalon_sdk/tcf_connector.toml"]

@@ -41,7 +41,8 @@ class WorkOrderReceiptCreate():
         config_yaml["workerServiceId"] = wo_submit["params"]["workerId"]
         for c_key, c_val in config_yaml.items():
             if c_key in input_params_list:
-                value = input_json_temp[c_key] if input_json_temp.get(c_key, "") != "" else c_val
+                value = input_json_temp[c_key] if input_json_temp.get(
+                    c_key, "") != "" else c_val
                 wconfig.set_parameter(self.params_obj, c_key, value)
 
         wo_receipt_str = (self.params_obj["workOrderId"] +
@@ -59,10 +60,16 @@ class WorkOrderReceiptCreate():
             private_key
         )
         if "workOrderRequestHash" in input_params_list:
-            wconfig.set_parameter(self.params_obj, "workOrderRequestHash", final_hash_str)
+            wconfig.set_parameter(
+                self.params_obj,
+                "workOrderRequestHash",
+                final_hash_str)
 
         if "requesterSignature" in input_params_list:
-            wconfig.set_parameter(self.params_obj, "requesterSignature", wo_receipt_sign)
+            wconfig.set_parameter(
+                self.params_obj,
+                "requesterSignature",
+                wo_receipt_sign)
 
     def compute_signature(self, tamper):
 
@@ -85,7 +92,7 @@ class WorkOrderReceiptCreate():
                     env.work_order_receipt,
                     "work_order_receipt.json"), "r") as file:
                 input_json = file.read().rstrip('\n')
-        #input_json = json.loads(input_json)
+
         logger.info("***Pre test*****\n%s\n", pre_test_response)
         logger.info("***Input json*****\n%s\n", input_json)
         # private_key of client

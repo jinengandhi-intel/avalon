@@ -1,3 +1,5 @@
+import utility.logger as plogger
+import env
 import pytest
 import json
 import os
@@ -7,8 +9,7 @@ import config.config as pconfig
 TCFHOME = os.environ.get("TCF_HOME", "../../")
 logger = logging.getLogger(__name__)
 sys.path.append(os.getcwd())
-import env
-import utility.logger as plogger
+
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_config(args=None):

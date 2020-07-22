@@ -23,8 +23,10 @@ class WorkOrderReceiptRetrieve():
         input_request_wo_submit = json.loads(wo_submit)
 
         if "workOrderId" in input_json_temp.keys():
-            wconfig.set_parameter(self.params_obj, "workOrderId", input_request_wo_submit
-                                   ["params"]["workOrderId"])
+            wconfig.set_parameter(
+                self.params_obj,
+                "workOrderId",
+                input_request_wo_submit["params"]["workOrderId"])
 
     def configure_data(
             self, input_json, worker_obj, wo_submit):

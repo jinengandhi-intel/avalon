@@ -49,7 +49,7 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -145,7 +145,6 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-
     @pytest.mark.worker
     @pytest.mark.workerregister
     @pytest.mark.listener
@@ -158,7 +157,6 @@ class TestClass():
         err_cd = self.test_obj.setup_and_build_request_worker_register(
             test_data)
 
-
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
@@ -169,7 +167,6 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
 
     @pytest.mark.worker
     @pytest.mark.workerregister
@@ -189,11 +186,10 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
 
     @pytest.mark.worker
     @pytest.mark.workerregister
@@ -218,7 +214,6 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-
     @pytest.mark.worker
     @pytest.mark.workerregister
     @pytest.mark.listener
@@ -241,7 +236,6 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
 
     @pytest.mark.worker
     @pytest.mark.workerregister
@@ -266,7 +260,6 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-
     @pytest.mark.worker
     @pytest.mark.workerregister
     @pytest.mark.listener
@@ -285,11 +278,10 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
 
     @pytest.mark.worker
     @pytest.mark.workerregister
@@ -302,18 +294,17 @@ class TestClass():
 
         err_cd = self.test_obj.setup_and_build_request_worker_register(
             test_data)
-  
+
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
 
     @pytest.mark.worker
     @pytest.mark.workerregister
@@ -333,11 +324,10 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
 
     @pytest.mark.worker
     @pytest.mark.workerregister
@@ -349,18 +339,17 @@ class TestClass():
 
         err_cd = self.test_obj.setup_and_build_request_worker_register(
             test_data)
-  
+
         response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
 
     @pytest.mark.worker
     @pytest.mark.workerregister
@@ -380,11 +369,10 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
 
     @pytest.mark.worker
     @pytest.mark.workerregister
@@ -427,7 +415,7 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -450,7 +438,7 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -473,7 +461,7 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (validate_response_code(response,-32601)
+        assert (validate_response_code(response, -32601)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

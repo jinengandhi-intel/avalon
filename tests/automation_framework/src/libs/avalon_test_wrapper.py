@@ -54,16 +54,17 @@ def build_request_obj(input_json_obj,
     worker_lookup SDK function requires worker_type parameter
     worker_retrieve SDK function requires worker_id parameter.
     """
-    action_obj = eval(input_json_obj.get("method")+"()")
+    action_obj = eval(input_json_obj.get("method") + "()")
     request_obj = configure_data(
-            action_obj, input_json_obj, pre_test_output, pre_test_response)
+        action_obj, input_json_obj, pre_test_output, pre_test_response)
     return request_obj, action_obj
 
 
 def submit_request(uri_client, output_obj, output_file, input_file):
     """
-    Single function that is called from the test with the relevant input parameters.
-    For listener, output_obj is the JSON obj, for SDK it is the parameter that is received
+    Single function that is called from the test with the relevant
+    input parameters. For listener, output_obj is the JSON obj, for
+    SDK it is the parameter that is received
     as an output from build_request_obj function.
     """
     request_method = input_file.get("method")
@@ -106,6 +107,8 @@ def pre_test_workorder_env(input_file, output):
     request_method = input_file["method"]
     wo_submit = avalon_lib_instance.work_order_submit(output)
 
-    if request_method in ["WorkOrderReceiptRetrieve", "WorkOrderReceiptLookUp"]:
+    if request_method in [
+        "WorkOrderReceiptRetrieve",
+            "WorkOrderReceiptLookUp"]:
         avalon_lib_instance.work_order_create_receipt(wo_submit)
     return wo_submit

@@ -317,7 +317,8 @@ class TestClass():
     @pytest.mark.negative
     def test_workordersubmit_sdk_workerEncryptionKey_special_character(self):
         with pytest.raises(ValueError,
-                           match="Encrypting Session key failed: Invalid session key or worker encryption key"):
+                           match="Encrypting Session key failed: "
+                           "Invalid session key or worker encryption key"):
             test_id = '21228'
 
             test_data = read_config(self.config_file, test_id)
@@ -367,7 +368,9 @@ class TestClass():
     @pytest.mark.ethereum
     @pytest.mark.negative
     def test_workordersubmit_sdk_workerencryptionkey_empty(self):
-        with pytest.raises(ValueError, match="Empty or Invalid dataformat for workerEncryptionKey"):
+        with pytest.raises(
+                ValueError,
+                match="Empty or Invalid dataformat for workerEncryptionKey"):
             test_id = '21229'
             test_data = read_config(self.config_file, test_id)
 
@@ -567,7 +570,6 @@ class TestClass():
     @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.negative
-    # @pytest.mark.sdk (AttributeError: 'dict' object has no attribute 'to_jrpc_string)
     def test_workordersubmit_indata_unknownparametervalue(self):
         test_id = '18768'
 
@@ -934,7 +936,9 @@ class TestClass():
     @pytest.mark.set1
     @pytest.mark.negative
     def test_workordersubmit_sdk_dataencryptionalgorithm_list(self):
-        with pytest.raises(ValueError, match="Data Encryption Algorithm is not String"):
+        with pytest.raises(
+                ValueError,
+                match="Data Encryption Algorithm is not String"):
             test_id = '21231'
             test_data = read_config(self.config_file, test_id)
 
@@ -1147,8 +1151,11 @@ class TestClass():
     @pytest.mark.ethereum
     @pytest.mark.set1
     @pytest.mark.negative
-    def test_workordersubmit_sdk_dataencryptionalgorithm_listsamealgotwice(self):
-        with pytest.raises(ValueError, match="Data Encryption Algorithm is not String"):
+    def test_workordersubmit_sdk_dataencryptionalgorithm_listsamealgotwice(
+            self):
+        with pytest.raises(
+                ValueError,
+                match="Data Encryption Algorithm is not String"):
             test_id = '21230'
             test_data = read_config(self.config_file, test_id)
 
@@ -2054,7 +2061,10 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 msg_response,
-                "worker 6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0eee6a96dcebaeb14f2ae923456234564567 doesn't exists")
+                "worker "
+                "6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0"
+                "eee6a96dcebaeb14f2ae923456234564567 "
+                "doesn't exists")
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -2085,7 +2095,10 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "worker 6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0eee6a96dcebaeb14f2ae923456234564567 doesn't exists")
+                "worker "
+                "6ba1f459476bc43b65fd554f6b65910a8f551e4bcb"
+                "0eee6a96dcebaeb14f2ae923456234564567"
+                "doesn't exists")
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 

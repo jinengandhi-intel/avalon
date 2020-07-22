@@ -80,9 +80,11 @@ class TestClass():
             env.worker_lookup_output_json_file_name,
             test_data)
 
-        assert (check_negative_test_responses(response,
-                "WorkType should be an Integer of range 1-3")
-            is ResultStatus.SUCCESS.value)
+        assert (
+            check_negative_test_responses(
+                response,
+                "WorkType should be an Integer of range 1-3") is
+            ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -103,7 +105,7 @@ class TestClass():
             test_data)
 
         assert (check_negative_test_responses(response,
-                "Empty params in the request")
+                                              "Empty params in the request")
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -123,10 +125,10 @@ class TestClass():
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (
-                check_negative_test_responses(
-                    response,
-                    "Improper Json request Missing or Invalid parameter or value")
-                is ResultStatus.SUCCESS.value)
+            check_negative_test_responses(
+                response,
+                "Improper Json request Missing or Invalid parameter or value")
+            is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -137,18 +139,18 @@ class TestClass():
         test_id = '21237'
 
         request_file = os.path.join(
-                 env.worker_input_file,
-                "worker_lookup_withoutid_params.json")
+            env.worker_input_file,
+            "worker_lookup_withoutid_params.json")
 
         response = self.test_obj.post_json_msg(request_file)
 
         logger.info("**********Received Response*********\n%s\n", response)
 
         assert (
-                check_negative_test_responses(
-                      response,
-                      "Improper Json request Missing or Invalid parameter or value")
-                is ResultStatus.SUCCESS.value)
+            check_negative_test_responses(
+                response,
+                "Improper Json request Missing or Invalid parameter or value")
+            is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.worker
@@ -189,10 +191,10 @@ class TestClass():
         logger.info("**********Received Response*********\n%s\n", msg_response)
 
         assert (
-                check_negative_test_responses(
-                    msg_response,
-                    "Improper Json request Missing or Invalid parameter or value")
-                is ResultStatus.SUCCESS.value)
+            check_negative_test_responses(
+                msg_response,
+                "Improper Json request Missing or Invalid parameter or value")
+            is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -212,10 +214,10 @@ class TestClass():
         logger.info("**********Received Response*********\n%s\n", msg_response)
 
         assert (
-                check_negative_test_responses(
-                    msg_response,
-                    "Duplicate parameter params")
-                is ResultStatus.SUCCESS.value)
+            check_negative_test_responses(
+                msg_response,
+                "Duplicate parameter params")
+            is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -223,7 +225,7 @@ class TestClass():
     @pytest.mark.worker_lookup
     @pytest.mark.listener
     @pytest.mark.negative
-    def test_workerlookup_params_unknownparameter (self):
+    def test_workerlookup_params_unknownparameter(self):
         test_id = '20592'
 
         request_file = os.path.join(
@@ -235,11 +237,9 @@ class TestClass():
         logger.info("**********Received Response*********\n%s\n", msg_response)
 
         assert (
-                check_negative_test_responses(
-                    msg_response,
-                    "Invalid parameter unknownEncoding")
-                is ResultStatus.SUCCESS.value)
+            check_negative_test_responses(
+                msg_response,
+                "Invalid parameter unknownEncoding")
+            is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
-

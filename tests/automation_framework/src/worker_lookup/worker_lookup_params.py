@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 WORKER_TYPE = "workerType"
 ID = "id"
 
+
 class WorkerLookUp():
     def __init__(self):
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerLookUp", "id": 1}

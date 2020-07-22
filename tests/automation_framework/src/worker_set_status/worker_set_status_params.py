@@ -45,7 +45,7 @@ class WorkerSetStatus():
             worker_id = pre_test_response[2][0]
         else:
             if "result" in pre_test_response and \
-                "ids" in pre_test_response["result"].keys():
+                    "ids" in pre_test_response["result"].keys():
                 if pre_test_response["result"]["totalCount"] != 0:
                     worker_id = pre_test_response["result"]["ids"][0]
                 else:
@@ -58,4 +58,3 @@ class WorkerSetStatus():
             status = input_json["params"]["status"]
         set_status_params = {"worker_id": worker_id, "status": status}
         return set_status_params
-

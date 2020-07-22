@@ -77,7 +77,6 @@ class TestClass():
             env.worker_input_file,
             "worker_retrieve_empty_params.json")
 
-
         err_cd = self.test_obj.setup_and_build_request_worker_retrieve(
             test_data)
 
@@ -123,4 +122,3 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-
