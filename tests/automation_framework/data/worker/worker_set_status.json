@@ -1,9 +1,0 @@
-{
-    "jsonrpc": "2.0",
-    "method": "WorkerSetStatus",
-    "id": 3,
-    "params": {
-        "workerId": "",
-        "status": 1
-    }
-}

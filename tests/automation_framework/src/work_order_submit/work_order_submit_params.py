@@ -270,10 +270,8 @@ class WorkOrderSubmit():
         # private_key of client
         private_key = crypto_utils.generate_signing_keys()
         if input_json is None:
-            with open(os.path.join(
-                    env.work_order_input_file,
-                    "work_order_success.json"), "r") as file:
-                input_json = file.read().rstrip('\n')
+            submit_config_file = os.path.join(env.work_order_input_file, "work_order_submit.ini")
+            input_json = wconfig.read_config(submit_config_file, "test_id")
 
             input_json = json.loads(input_json)
 
@@ -339,7 +337,7 @@ class WorkOrderSubmit():
         return wo_params
 
     def get_default_params(self, pre_response, input_dict):
-        d_params = wconfig.read_config(__file__, pre_response)
+        d_params = wconfig.read_yaml(__file__, pre_response)
         try:
             d_params["requesterNonce"] = secrets.token_hex(16)
             d_params["requesterId"]    = secrets.token_hex(32)

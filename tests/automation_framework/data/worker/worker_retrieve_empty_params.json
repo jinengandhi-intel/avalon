@@ -1,7 +1,0 @@
-{
-    "jsonrpc": "2.0",
-    "method": "WorkerRetrieve",
-    "id": 11,
-    "params": {
-    }
-}

@@ -37,16 +37,6 @@ logger = logging.getLogger(__name__)
 avalon_lib_instance = AvalonImpl()
 
 
-def read_json(request_file):
-    # Read the method name from JSON file
-    with open(request_file, "r") as file:
-        input_json = file.read().rstrip('\n')
-
-    input_json_obj = json.loads(input_json)
-
-    return input_json_obj
-
-
 def build_request_obj(input_json_obj,
                       pre_test_output=None, pre_test_response=None):
     """

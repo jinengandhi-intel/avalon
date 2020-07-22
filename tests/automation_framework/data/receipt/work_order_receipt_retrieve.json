@@ -1,8 +1,0 @@
-{
-    "jsonrpc": "2.0",
-    "method": "WorkOrderReceiptRetrieve",
-    "id": 11,
-    "params": {
-        "workOrderId": ""
-    }
-}
