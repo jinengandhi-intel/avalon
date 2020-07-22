@@ -4,18 +4,21 @@ import os
 import env
 import json
 from src.libs.avalon_test_wrapper \
-    import read_json, submit_request
+    import submit_request
 from src.libs.test_base import AvalonBase
 from src.utilities.verification_utils \
     import verify_test, check_negative_test_responses
-from src.utilities.worker_utilities import ResultStatus
-from src.utilities.worker_utilities import GetResultWaitTime
+from src.utilities.worker_utilities \
+    import ResultStatus, GetResultWaitTime, read_config
 import time
 logger = logging.getLogger(__name__)
 
 
 class TestClass():
     test_obj = AvalonBase()
+    config_file = os.path.join(
+            env.work_order_input_file, "work_order_get_result.ini")
+            
 
     @pytest.mark.workordergetresult
     @pytest.mark.listener
@@ -25,19 +28,18 @@ class TestClass():
     @pytest.mark.positive
     def test_workordergetresult_success(self):
         test_id = '18702'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "work_order_getresult.json")
+
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
         logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
@@ -57,19 +59,18 @@ class TestClass():
     @pytest.mark.negative
     def test_workordergetresult_workorderid_different(self):
         test_id = '18873'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "workordergetresult_workorderid_different.json")
+
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
 
         logger.info("submit_response: \n%s\n", submit_response)
 
@@ -89,19 +90,17 @@ class TestClass():
     @pytest.mark.negative
     def test_workordergetresult_workorderid_specialchar(self):
         test_id = '18874'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "workordergetresult_workorderid_specialchar.json")
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
         logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
@@ -120,19 +119,17 @@ class TestClass():
     @pytest.mark.negative
     def test_workordergetresult_workorderid_null(self):
         test_id = '18875'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "workordergetresult_workorderid_null.json")
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
         logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
@@ -151,19 +148,17 @@ class TestClass():
     @pytest.mark.negative
     def test_workordergetresult_workorderid_nonhexstring(self):
         test_id = '18876'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "workordergetresult_workorderid_nonhexstring.json")
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
         logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
@@ -182,19 +177,17 @@ class TestClass():
     @pytest.mark.negative
     def test_workordergetresult_workorderid_alphabetsonly(self):
         test_id = '18877'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "workordergetresult_workorderid_alphabetsonly.json")
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
         logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
@@ -212,19 +205,17 @@ class TestClass():
     @pytest.mark.negative
     def test_workordergetresult_workorderid_withoutquotes(self):
         test_id = '18878'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "workordergetresult_workorderid_withoutquotes.json")
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
         logger.info("submit_response: \n%s\n", submit_response)
 
         assert (
@@ -239,19 +230,17 @@ class TestClass():
     @pytest.mark.negative
     def test_workordergetresult_emptyparameter(self):
         test_id = '20322'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "workordergetresult_emptyparameter.json")
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
         logger.info("submit_response: \n%s\n", submit_response)
 
         assert (validate_response_code(submit_response, 2)
@@ -264,19 +253,17 @@ class TestClass():
     @pytest.mark.negative
     def test_workordergetresult_unknownparameter(self):
         test_id = '18879'
-        request_file = os.path.join(
-            env.work_order_input_file,
-            "workordergetresult_unknownparameter.json")
+        test_data = read_config(self.config_file, test_id)
 
         err_cd = \
             self.test_obj.setup_and_build_request_wo_getresult(
-                read_json(request_file))
+                test_data)
 
         submit_response = submit_request(
             self.test_obj.uri_client,
             self.test_obj.build_request_output['request_obj'],
             env.wo_submit_output_json_file_name,
-            read_json(request_file))
+            test_data)
         logger.info("submit_response: \n%s\n", submit_response)
 
 

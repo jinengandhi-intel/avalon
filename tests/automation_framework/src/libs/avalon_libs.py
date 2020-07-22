@@ -18,22 +18,14 @@ from src.utilities.submit_request_utility import \
     worker_lookup_sdk, \
     worker_retrieve_sdk, workorder_receiptcreate_sdk, \
     workorder_submit_sdk, workorder_getresult_sdk
-from src.utilities.worker_utilities import configure_data
+from src.utilities.worker_utilities \
+    import configure_data, read_config
 import avalon_sdk.worker.worker_details as worker
 logger = logging.getLogger(__name__)
 
 
 class AvalonImpl():
-
-    def read_json(self, request_file):
-        # Read the method name from JSON file
-        with open(request_file, "r") as file:
-            input_json = file.read().rstrip('\n')
-
-        input_json_obj = json.loads(input_json)
-
-        return input_json_obj
-
+    
     def worker_lookup(self):
         lookup_obj = WorkerLookUp()
         configure_data_output = configure_data(
@@ -75,13 +67,14 @@ class AvalonImpl():
 
     def work_order_submit(self, response_output):
         submit_obj = WorkOrderSubmit()
-        submit_request_file = os.path.join(
-            env.work_order_input_file,
-            "work_order_success.json")
-        submit_request_json = self.read_json(submit_request_file)
+        
+        submit_config_file = os.path.join(env.work_order_input_file, "work_order_submit.ini")
+        submit_request_json = read_config(submit_config_file, "test_id")
+        
         configure_data_output = configure_data(
             submit_obj, input_json=submit_request_json,
             worker_obj=None, pre_test_response=response_output)
+        
         if env.test_mode == "listener":
             submit_response = submit_request_listener(
                 env.uri_client, configure_data_output,
@@ -99,10 +92,10 @@ class AvalonImpl():
 
     def work_order_get_result(self, wo_submit):
         wo_getresult_obj = WorkOrderGetResult()
-        wo_getresult_request_file = os.path.join(
-            env.work_order_input_file,
-            "work_order_getresult.json")
-        wo_getresult_request_json = self.read_json(wo_getresult_request_file)
+
+        getresult_config_file = os.path.join(env.work_order_input_file, "work_order_get_result.ini")
+        wo_getresult_request_json = read_config(getresult_config_file, "test_id")
+
         configure_data_output = configure_data(
             wo_getresult_obj, input_json=wo_getresult_request_json,
             worker_obj=None,
@@ -125,10 +118,11 @@ class AvalonImpl():
     def work_order_create_receipt(self, wo_submit):
         if env.test_mode == "sdk":
             receipt_retrieve_obj = WorkOrderReceiptCreate()
-            receipt_retrieve_file = os.path.join(
-                env.work_order_receipt,
-                "work_order_receipt.json")
-            receipt_request_json = self.read_json(receipt_retrieve_file)
+            
+            create_receipt_config =  os.path.join(
+            env.work_order_receipt, "work_order_create_receipt.ini")
+            receipt_request_json = read_config(create_receipt_config, "test_config")
+  
             wo_create_receipt = receipt_retrieve_obj.configure_data_sdk(
                 input_json=receipt_request_json, worker_obj=None,
                 pre_test_response=wo_submit)

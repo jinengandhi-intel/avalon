@@ -22,8 +22,9 @@ from src.utilities.verification_utils \
     import check_worker_lookup_response, check_worker_retrieve_response, \
     validate_response_code, check_negative_test_responses
 from src.libs.avalon_test_wrapper \
-    import read_json, submit_request, read_config
-from src.utilities.worker_utilities import ResultStatus
+    import submit_request
+from src.utilities.worker_utilities \
+    import ResultStatus, read_config
 from src.libs.test_base import AvalonBase
 
 logger = logging.getLogger(__name__)

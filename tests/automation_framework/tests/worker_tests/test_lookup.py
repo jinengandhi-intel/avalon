@@ -19,8 +19,9 @@ import env
 from src.utilities.verification_utils \
     import check_worker_lookup_response
 from src.libs.avalon_test_wrapper \
-    import read_json, submit_request, read_config
-from src.utilities.worker_utilities import ResultStatus
+    import submit_request
+from src.utilities.worker_utilities \
+    import ResultStatus, read_config
 from src.utilities.verification_utils \
     import check_negative_test_responses
 import operator

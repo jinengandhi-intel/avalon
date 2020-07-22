@@ -1,5 +1,5 @@
 from src.libs.avalon_test_wrapper \
-    import build_request_obj, read_json, submit_request, \
+    import build_request_obj, submit_request, \
     pre_test_worker_env, pre_test_workorder_env
 import logging
 import env

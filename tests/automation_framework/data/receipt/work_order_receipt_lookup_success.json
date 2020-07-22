@@ -1,8 +1,0 @@
-{
-    "jsonrpc": "2.0",
-    "method": "WorkOrderReceiptLookUp",
-    "id": 11,
-    "params": {
-        "requesterId": "0x3456"
-    }
-}

@@ -22,6 +22,7 @@ import inspect
 import secrets
 import random
 from enum import IntEnum, unique
+from configparser import ConfigParser
 
 """
 status code defined for test case
@@ -91,7 +92,7 @@ def update_global_params(default_params):
             default_params[param] = eval(param)
 
 
-def read_config(calling_path, response=None, input_data={}):
+def read_yaml(calling_path, response=None, input_data={}):
     config_file = calling_path.replace(".py", ".yaml")
     test_mode = env.test_mode
     file_contents = open(config_file, "r")
@@ -127,7 +128,7 @@ def add_json_values(caller, input_json_temp, pre_test_response):
     input_json["id"] = input_json_temp["id"]
     input_param_list = input_json_temp["params"].keys()
 
-    config_yaml = read_config(config_path, pre_test_response, input_json)
+    config_yaml = read_yaml(config_path, pre_test_response, input_json)
     for key in input_param_list:
         if key == "details":
             details_input_list = input_json["details"].keys()
@@ -192,3 +193,52 @@ def configure_data(action_obj, input_json, worker_obj, pre_test_response):
         configure_data_output = action_obj.configure_data_sdk(
             input_json, worker_obj, pre_test_response)
     return configure_data_output
+
+def handle_value(val):
+    if val == "NONE":
+        output = None
+    elif val in ["-", "null"]:
+        output = val
+    elif isinstance(val, list) or isinstance(val, int):
+        output = val
+    else:
+        output = yaml.safe_load(val)
+    return output
+
+def config_data_update(input, key, value):
+    if key in input.keys():
+        if value == "remove":
+            del input[key]
+        elif isinstance(yaml.safe_load(value), dict):
+            value = yaml.safe_load(value)
+            for n_k, n_v in value.items():
+                if isinstance(n_v, dict):
+                    config_data_update(input[key], n_k, n_v)
+                else:
+                    input[key][n_k] = handle_value(n_v)
+        else:
+            input[key] = handle_value(value)
+        return
+    for k, v in input.items():
+        if k in ["inData", "outData"]:
+            for data_val in v:
+                config_data_update(data_val, key, value)
+        elif isinstance(v, dict):
+            config_data_update(v, key, value)
+
+
+def read_config(config_file, test_id):
+    parser = ConfigParser(defaults=None)
+    parser.optionxform = lambda option: option
+    parser.read(config_file)
+    test_config = {}
+    for key, value in parser.items("DEFAULT"):
+        test_config[key] = yaml.safe_load(value)
+    if parser.has_section(test_id):
+        test_items = list(set(parser.items(test_id)) - set(parser.items("DEFAULT")))
+        logger.info("test items is %s", test_items)
+        for key, value in test_items:
+            config_data_update(test_config, key, value)
+    
+    logger.info("Test config is %s\n", test_config)
+    return test_config
