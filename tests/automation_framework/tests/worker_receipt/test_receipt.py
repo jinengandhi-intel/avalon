@@ -59,7 +59,6 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.work_order_retrieve_receipt
     @pytest.mark.sdk
     def test_work_order_retrieve_receipt_success(self):
         test_id = '21233'
@@ -79,7 +78,6 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_create_work_order_receipt_invalid_requester_id(self):
@@ -100,7 +98,6 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_create_work_order_receipt_hexstr_workorderRequesthash(
@@ -122,7 +119,6 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
     @pytest.mark.listener
     def test_create_work_order_receipt_wrong_rverificationkey(self):
@@ -143,7 +139,6 @@ class TestClass():
                 is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.work_order_receipt_lookup
     @pytest.mark.sdk
     def test_work_order_receipt_lookup_success(self):
         test_id = '18605'
