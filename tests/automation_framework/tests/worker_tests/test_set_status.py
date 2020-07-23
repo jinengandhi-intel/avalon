@@ -19,8 +19,6 @@ import env
 from src.utilities.verification_utils \
     import check_worker_lookup_response, check_worker_retrieve_response, \
     validate_response_code
-from src.libs.avalon_test_wrapper \
-    import submit_request
 from src.utilities.worker_utilities \
     import ResultStatus, read_config
 from src.libs.test_base import AvalonBase
@@ -32,96 +30,49 @@ class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(env.worker_input_file, "worker_setstatus.ini")
 
+    if env.proxy_mode:
+        expected_response = 0
+    else:
+        expected_response = -32601
+
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_set_status_success(self):
-        test_id = '18268'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_status(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        if env.proxy_mode:
-            response_code = 0
-        else:
-            response_code = -32601
-        assert (validate_response_code(response, response_code)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_set_status_unknown_parameter(self):
-        test_id = '18269'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_status(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        if env.proxy_mode:
-            response_code = 0
-        else:
-            response_code = -32601
-        assert (validate_response_code(response, response_code)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_set_status_invalid_parameter(self):
-        test_id = '18270'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_status(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        if env.proxy_mode:
-            response_code = 0
-        else:
-            response_code = -32601
-        assert (validate_response_code(response, response_code)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_set_status_params_status_0(self):
-        test_id = '18287'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_status(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        if env.proxy_mode:
-            response_code = 0
-        else:
-            response_code = -32601
-        assert (validate_response_code(response, response_code)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -130,23 +81,10 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_set_status_params_status_2(self):
-        test_id = '18289'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_status(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        if env.proxy_mode:
-            response_code = 0
-        else:
-            response_code = -32601
-        assert (validate_response_code(response, response_code)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -155,23 +93,10 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_set_status_params_status_3(self):
-        test_id = '18290'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_status(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        if env.proxy_mode:
-            response_code = 0
-        else:
-            response_code = -32601
-        assert (validate_response_code(response, response_code)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -180,46 +105,20 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_set_status_params_status_4(self):
-        test_id = '18291'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_status(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        if env.proxy_mode:
-            response_code = 0
-        else:
-            response_code = -32601
-        assert (validate_response_code(response, response_code)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_set_status_params_status_5(self):
-        test_id = '18292'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_status(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        if env.proxy_mode:
-            response_code = 0
-        else:
-            response_code = -32601
-        assert (validate_response_code(response, response_code)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

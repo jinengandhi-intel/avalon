@@ -14,13 +14,19 @@ worker_input_file = os.path.join(os.getcwd(), 'data', 'worker')
 work_order_receipt = os.path.join(os.getcwd(), 'data', 'receipt')
 
 # output filename
-wo_submit_output_json_file_name = 'work_order_success'
+wo_submit_output_json_file_name = 'work_order_submit'
 
 worker_lookup_output_json_file_name = "worker_lookup"
 
 worker_retrieve_output_json_file_name = "worker_retrieve"
 
-wo_result_output_json_file_name = "worker_get_result"
+worker_register_output_json_file_name = "worker_register"
+
+worker_setstatus_output_json_file_name = "worker_setstatus"
+
+worker_update_output_json_file_name = "worker_update"
+
+wo_result_output_json_file_name = "work_order_getresult"
 
 blockchain_type = ''
 

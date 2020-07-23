@@ -61,9 +61,7 @@ class AvalonImpl():
         else:
             retrieve_response = worker_retrieve_sdk(configure_data_output)
 
-        logger.info("Worker Retrieved : {}\n ".format(
-            json.dumps(retrieve_response, indent=4)
-        ))
+        logger.info("Worker Retrieved : {%s}\n ",retrieve_response)
         return retrieve_response
 
     def work_order_submit(self, response_output):

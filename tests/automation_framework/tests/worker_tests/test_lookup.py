@@ -18,8 +18,6 @@ import os
 import env
 from src.utilities.verification_utils \
     import check_worker_lookup_response
-from src.libs.avalon_test_wrapper \
-    import submit_request
 from src.utilities.worker_utilities \
     import ResultStatus, read_config
 from src.utilities.verification_utils \
@@ -38,19 +36,10 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_lookup_success(self):
-        test_id = '18271'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_lookup(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        assert (check_worker_lookup_response(response, operator.gt, 0)
+        assert (check_worker_lookup_response(result_response, operator.gt, 0)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -59,21 +48,12 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_lookup_workerType_not_unsigned_int(self):
-        test_id = '18275'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_lookup(
-            test_data)
-
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
         assert (
             check_negative_test_responses(
-                response,
+                result_response,
                 "WorkType should be an Integer of range 1-3") is
             ResultStatus.SUCCESS.value)
 
@@ -81,19 +61,10 @@ class TestClass():
 
     @pytest.mark.listener
     def test_worker_lookup_empty_params(self):
-        test_id = '18277'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_lookup(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        assert (check_negative_test_responses(response,
+        assert (check_negative_test_responses(result_response,
                                               "Empty params in the request")
                 is ResultStatus.SUCCESS.value)
 
@@ -101,7 +72,7 @@ class TestClass():
 
     @pytest.mark.listener
     def test_worker_lookup_jsonrpc_different_version(self):
-        test_id = '18280'
+        
 
         request_file = os.path.join(
             env.worker_input_file,
@@ -121,7 +92,7 @@ class TestClass():
 
     @pytest.mark.listener
     def test_worker_lookup_withoutid_params(self):
-        test_id = '21237'
+        
 
         request_file = os.path.join(
             env.worker_input_file,
@@ -140,26 +111,17 @@ class TestClass():
 
     @pytest.mark.listener
     def test_worker_lookup_diff_unit_length(self):
-        test_id = '20364'
-        test_data = read_config(self.config_file, test_id)
 
-        err_cd = self.test_obj.setup_and_build_request_worker_lookup(
-            test_data)
+        result_response = self.test_obj.run_test(self.config_file)
 
-        response = submit_request(
-            self.test_obj.uri_client,
-            self.test_obj.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
-            test_data)
-
-        assert (check_worker_lookup_response(response, operator.eq, 0)
+        assert (check_worker_lookup_response(result_response, operator.eq, 0)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_lookup_method_field_change(self):
-        test_id = '18278'
+        
 
         request_file = os.path.join(
             env.worker_input_file,
@@ -179,7 +141,7 @@ class TestClass():
 
     @pytest.mark.listener
     def test_worker_lookup_twice_params(self):
-        test_id = '18279'
+        
 
         request_file = os.path.join(
             env.worker_input_file,
@@ -199,7 +161,7 @@ class TestClass():
 
     @pytest.mark.listener
     def test_workerlookup_params_unknownparameter(self):
-        test_id = '20592'
+        
 
         request_file = os.path.join(
             env.worker_input_file,

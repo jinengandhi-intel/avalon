@@ -3,7 +3,10 @@ from src.libs.avalon_test_wrapper \
     pre_test_worker_env, pre_test_workorder_env
 import logging
 import env
+import inspect
 from src.libs.avalon_libs import AvalonImpl
+from src.utilities.worker_utilities \
+    import ResultStatus, read_config
 
 avalon_lib_instance = AvalonImpl()
 logger = logging.getLogger(__name__)
@@ -13,6 +16,7 @@ class AvalonBase():
     def __init__(self):
         self.uri_client = env.uri_client
         self.build_request_output = {}
+        self.output_json_file_name = ""
 
     def setup_and_build_request_worker_register(self, input_file):
         request_obj, action_obj = build_request_obj(input_file)
@@ -123,3 +127,57 @@ class AvalonBase():
         response = self.uri_client._postmsg(json_str)
         logger.info('**********Received Response*********\n%s\n', response)
         return response
+
+    def run_test(self, config_file):
+        test_name = inspect.stack()[1].function
+        test_data = read_config(config_file, test_name)
+        result_response = ""
+
+        if "work_order_submit" in config_file:
+            self.setup_and_build_request_wo_submit(
+                test_data)
+            self.output_json_file_name = \
+                env.wo_submit_output_json_file_name
+        elif "work_order_get_result" in config_file:
+            self.setup_and_build_request_wo_getresult(
+                test_data)
+            self.output_json_file_name = \
+                env.wo_result_output_json_file_name
+        elif "worker_lookup" in config_file:
+            self.setup_and_build_request_worker_lookup(
+                test_data)
+            self.output_json_file_name = \
+                env.worker_lookup_output_json_file_name
+        elif "worker_retrieve" in config_file:
+            self.setup_and_build_request_worker_retrieve(
+                test_data)
+            self.output_json_file_name = \
+                env.worker_retrieve_output_json_file_name
+        elif "worker_register" in config_file:
+            self.setup_and_build_request_worker_register(
+                test_data)
+            self.output_json_file_name = \
+                env.worker_register_output_json_file_name
+        elif "worker_setstatus" in config_file:
+            self.setup_and_build_request_worker_status(
+                test_data)
+            self.output_json_file_name = \
+                env.worker_setstatus_output_json_file_name
+        elif "worker_update" in config_file:
+            self.setup_and_build_request_worker_update(
+                test_data)
+            self.output_json_file_name = \
+                env.worker_update_output_json_file_name
+
+        submit_response = submit_request(
+            self.uri_client,
+            self.build_request_output['request_obj'],
+            self.output_json_file_name,
+            test_data)
+
+        if "work_order_submit" in config_file:
+            result_response = self.getresult(
+                self.build_request_output['request_obj'],
+                submit_response)
+
+        return result_response
