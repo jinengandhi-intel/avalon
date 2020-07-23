@@ -531,7 +531,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Missing parameter inData")
+                "Indata is empty")
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 

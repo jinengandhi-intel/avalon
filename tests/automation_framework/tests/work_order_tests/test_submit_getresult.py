@@ -158,7 +158,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 submit_response,
-                "Work order Id not found in the database."
+                "Work order Id not found in the database. "
                 "Hence invalid parameter")
             is ResultStatus.SUCCESS.value)
 
