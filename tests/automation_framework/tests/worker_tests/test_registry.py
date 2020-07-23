@@ -32,10 +32,7 @@ class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(env.worker_input_file, "worker_register.ini")
 
-    @pytest.mark.worker
-    @pytest.mark.worker_register
     @pytest.mark.listener
-    @pytest.mark.positive
     def test_worker_register_success(self):
         test_id = '18262'
         test_data = read_config(self.config_file, test_id)
@@ -54,10 +51,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_register
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_worker_register_unknown_parameter(self):
         test_id = '18263'
         test_data = read_config(self.config_file, test_id)
@@ -76,11 +70,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.positive
     def test_workerregister_hashingAlgorithm_KECCAK256(self):
         test_id = '18881'
         test_data = read_config(self.config_file, test_id)
@@ -99,11 +90,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.positive
     def test_workerregister_signingAlgorithm_RSAOAEP3072(self):
         test_id = '18883'
         test_data = read_config(self.config_file, test_id)
@@ -122,11 +110,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_dataEncryptionAlgorithm_list(self):
         test_id = '18886'
         test_data = read_config(self.config_file, test_id)
@@ -145,11 +130,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.positive
     def test_workerregister_orgnizationid_32bytes(self):
         test_id = '18892'
         test_data = read_config(self.config_file, test_id)
@@ -168,11 +150,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.positive
     def test_workerregister_applicationTypeId_32bytes(self):
         test_id = '18893'
         test_data = read_config(self.config_file, test_id)
@@ -191,11 +170,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_workOrderPayloadFormats_JSONRPCJWT(self):
         test_id = '18894'
         test_data = read_config(self.config_file, test_id)
@@ -214,11 +190,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_workerId_null(self):
         test_id = '18880'
         test_data = read_config(self.config_file, test_id)
@@ -237,11 +210,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_hashingAlgorithm_alternate(self):
         test_id = '18882'
         test_data = read_config(self.config_file, test_id)
@@ -260,11 +230,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_signingAlgorithm_alternate(self):
         test_id = '18884'
         test_data = read_config(self.config_file, test_id)
@@ -283,11 +250,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_keyEncryptionAlgorithm_alternate(self):
         test_id = '18885'
         test_data = read_config(self.config_file, test_id)
@@ -306,11 +270,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_dataEncryptionAlgorithm_alternate(self):
         test_id = '18887'
         test_data = read_config(self.config_file, test_id)
@@ -329,10 +290,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workerregister_workerType_invalid(self):
         test_id = '18888'
         test_data = read_config(self.config_file, test_id)
@@ -351,11 +309,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_organizationId_empty(self):
         test_id = '18889'
         test_data = read_config(self.config_file, test_id)
@@ -374,11 +329,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_applicationTypeId_empty(self):
         test_id = '18890'
         test_data = read_config(self.config_file, test_id)
@@ -397,11 +349,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.positive
     def test_workerregister_proofDataType_empty(self):
         test_id = '21238'
         test_data = read_config(self.config_file, test_id)
@@ -420,11 +369,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_proofDataType_invalid(self):
         test_id = '20362'
         test_data = read_config(self.config_file, test_id)
@@ -443,11 +389,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.workerregister
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.negative
     def test_workerregister_proofDataType_null(self):
         test_id = '20363'
         test_data = read_config(self.config_file, test_id)

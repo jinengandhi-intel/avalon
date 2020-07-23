@@ -34,14 +34,9 @@ class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(env.worker_input_file, "worker_lookup.ini")
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.p1
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_worker_lookup_success(self):
         test_id = '18271'
         test_data = read_config(self.config_file, test_id)
@@ -60,13 +55,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
-    @pytest.mark.negative
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     def test_worker_lookup_workerType_not_unsigned_int(self):
         test_id = '18275'
         test_data = read_config(self.config_file, test_id)
@@ -88,8 +79,6 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
     def test_worker_lookup_empty_params(self):
         test_id = '18277'
@@ -110,8 +99,6 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
     def test_worker_lookup_jsonrpc_different_version(self):
         test_id = '18280'
@@ -132,8 +119,6 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
     def test_worker_lookup_withoutid_params(self):
         test_id = '21237'
@@ -153,10 +138,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_worker_lookup_diff_unit_length(self):
         test_id = '20364'
         test_data = read_config(self.config_file, test_id)
@@ -175,10 +157,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_worker_lookup_method_field_change(self):
         test_id = '18278'
 
@@ -198,10 +177,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_worker_lookup_twice_params(self):
         test_id = '18279'
 
@@ -221,10 +197,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_lookup
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workerlookup_params_unknownparameter(self):
         test_id = '20592'
 

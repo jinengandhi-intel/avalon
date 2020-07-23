@@ -20,12 +20,9 @@ class TestClass():
     config_file = os.path.join(
         env.work_order_input_file, "work_order_get_result.ini")
 
-    @pytest.mark.workordergetresult
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordergetresult_success(self):
         test_id = '18702'
 
@@ -50,12 +47,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordergetresult_workorderid_different(self):
         test_id = '18873'
 
@@ -79,12 +73,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordergetresult_workorderid_specialchar(self):
         test_id = '18874'
         test_data = read_config(self.config_file, test_id)
@@ -107,12 +98,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordergetresult_workorderid_null(self):
         test_id = '18875'
         test_data = read_config(self.config_file, test_id)
@@ -135,12 +123,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordergetresult_workorderid_nonhexstring(self):
         test_id = '18876'
         test_data = read_config(self.config_file, test_id)
@@ -164,12 +149,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordergetresult_workorderid_alphabetsonly(self):
         test_id = '18877'
         test_data = read_config(self.config_file, test_id)
@@ -191,12 +173,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordergetresult_workorderid_withoutquotes(self):
         test_id = '18878'
         test_data = read_config(self.config_file, test_id)
@@ -219,8 +198,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
-    @pytest.mark.negative
+    @pytest.mark.sdk
+    @pytest.mark.proxy
+    @pytest.mark.listener
     def test_workordergetresult_emptyparameter(self):
         test_id = '20322'
         test_data = read_config(self.config_file, test_id)
@@ -241,8 +221,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
-    @pytest.mark.negative
+    @pytest.mark.sdk
+    @pytest.mark.proxy
+    @pytest.mark.listener
     def test_workordergetresult_unknownparameter(self):
         test_id = '18879'
         test_data = read_config(self.config_file, test_id)
@@ -263,9 +244,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordergetresult
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordergetresult_workorderId_empty(self):
         test_id = '18729'
         request_file = os.path.join(

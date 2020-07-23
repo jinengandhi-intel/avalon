@@ -32,12 +32,9 @@ class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(env.worker_input_file, "worker_setstatus.ini")
 
-    @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.positive
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     def test_worker_set_status_success(self):
         test_id = '18268'
         test_data = read_config(self.config_file, test_id)
@@ -60,9 +57,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_worker_set_status_unknown_parameter(self):
         test_id = '18269'
         test_data = read_config(self.config_file, test_id)
@@ -85,9 +80,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_worker_set_status_invalid_parameter(self):
         test_id = '18270'
         test_data = read_config(self.config_file, test_id)
@@ -110,10 +103,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.set1
-    @pytest.mark.negative
     def test_worker_set_status_params_status_0(self):
         test_id = '18287'
         test_data = read_config(self.config_file, test_id)
@@ -136,13 +126,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.set1
-    @pytest.mark.positive
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     def test_worker_set_status_params_status_2(self):
         test_id = '18289'
         test_data = read_config(self.config_file, test_id)
@@ -165,13 +151,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.set1
-    @pytest.mark.positive
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     def test_worker_set_status_params_status_3(self):
         test_id = '18290'
         test_data = read_config(self.config_file, test_id)
@@ -194,13 +176,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.set1
-    @pytest.mark.positive
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     def test_worker_set_status_params_status_4(self):
         test_id = '18291'
         test_data = read_config(self.config_file, test_id)
@@ -223,10 +201,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
     @pytest.mark.listener
-    @pytest.mark.set1
-    @pytest.mark.negative
     def test_worker_set_status_params_status_5(self):
         test_id = '18292'
         test_data = read_config(self.config_file, test_id)

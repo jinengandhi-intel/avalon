@@ -34,14 +34,9 @@ class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(env.worker_input_file, "worker_retrieve.ini")
 
-    @pytest.mark.worker
-    @pytest.mark.worker_retrieve
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.p1
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_worker_retrieve_success(self):
         test_id = '18273'
         test_data = read_config(self.config_file, test_id)
@@ -60,15 +55,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_retrieve
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.p1
-    @pytest.mark.set1
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_worker_retrieve_empty_params(self):
         test_id = '18274'
         test_data = read_config(self.config_file, test_id)
@@ -94,10 +83,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_retrieve
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workerretrieve_params_unknownparameter(self):
         test_id = '20591'
         test_data = read_config(self.config_file, test_id)

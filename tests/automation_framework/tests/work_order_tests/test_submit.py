@@ -31,13 +31,9 @@ class TestClass():
     config_file = os.path.join(
         env.work_order_input_file, "work_order_submit.ini")
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.p1
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_success(self):
         test_id = '18697'
 
@@ -64,12 +60,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_inDataDataEncryptionKey_hyphenecho(self):
         test_id = '18783'
 
@@ -96,12 +89,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_datahash_null(self):
         test_id = '18713'
 
@@ -127,12 +117,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_requesterId_null(self):
         test_id = '18739'
 
@@ -158,12 +145,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_sessionkeyivInDataIv_hexstring(
             self):
         test_id = '18738'
@@ -191,12 +175,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_requesternonce_specialcharacters(
             self):
         test_id = '18736'
@@ -223,12 +204,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workloadid_invalid(self):
         test_id = '18807'
 
@@ -254,9 +232,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_methodname_list(self):
         test_id = '18797'
 
@@ -282,9 +258,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_workerEncryptionKey_special_character(self):
         test_id = '18732'
 
@@ -310,11 +284,8 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_sdk_workerEncryptionKey_special_character(self):
         with pytest.raises(ValueError,
                            match="Encrypting Session key failed: "
@@ -334,9 +305,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_workerencryptionkey_empty(self):
         test_id = '18705'
 
@@ -362,11 +331,8 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_sdk_workerencryptionkey_empty(self):
         with pytest.raises(
                 ValueError,
@@ -385,10 +351,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk_1
-    @pytest.mark.negative
+    @pytest.mark.sdk
     def test_workordersubmit_dataencryptionalgorithm_alternate(self):
         test_id = '18706'
 
@@ -414,11 +378,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     def test_workordersubmit_indexindata_50(self):
         test_id = '18707'
 
@@ -445,12 +407,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_index_orderchange(self):
         test_id = '18708'
 
@@ -477,10 +436,8 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk_1
-    @pytest.mark.negative
+    @pytest.mark.sdk
     def test_workordersubmit_indata_empty(self):
         test_id = '18765'
 
@@ -506,10 +463,8 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk_1
-    @pytest.mark.negative
+    @pytest.mark.sdk
     def test_workordersubmit_indata_remove(self):
         test_id = '18766'
 
@@ -535,12 +490,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_outdata_empty(self):
         test_id = '18711'
 
@@ -567,9 +519,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_indata_unknownparametervalue(self):
         test_id = '18768'
 
@@ -595,12 +545,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_index_negative(self):
         test_id = '18769'
 
@@ -627,9 +574,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_indatahash_empty(self):
         test_id = '18712'
 
@@ -655,12 +600,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_datahash_randomstr(self):
         test_id = '18772'
 
@@ -686,12 +628,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_data_multipleechoresult(self):
         test_id = '18774'
 
@@ -718,12 +657,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_echoclient(self):
         test_id = '18808'
 
@@ -750,12 +686,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_indata_alternatetextechoclient(self):
         test_id = '18809'
 
@@ -782,12 +715,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_indata_specialcharacter(self):
         test_id = '18810'
 
@@ -814,9 +744,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     # @pytest.mark.sdk
     def test_workordersubmit_iv_specialcharacterechoclient(self):
         test_id = '18786'
@@ -843,9 +771,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_requesterId_paramremove(self):
         test_id = '18733'
 
@@ -871,9 +797,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_responsetimeout_string(self):
         test_id = '18798'
 
@@ -899,10 +823,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.set1
-    @pytest.mark.negative
     def test_workordersubmit_dataencryptionalgorithm_list(self):
         test_id = '18793'
 
@@ -929,12 +850,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.set1
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_sdk_dataencryptionalgorithm_list(self):
         with pytest.raises(
                 ValueError,
@@ -953,13 +870,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.set1
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_workloadId_twoworkload(self):
         test_id = '18805'
 
@@ -986,14 +899,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.p1
-    @pytest.mark.set1
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workorderId_null(self):
         test_id = '18717'
 
@@ -1019,13 +927,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.set1
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workerId_nullstring(self):
         test_id = '18718'
 
@@ -1051,13 +955,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.set1
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workloadId_specialcharacters(self):
         test_id = '18730'
 
@@ -1082,13 +982,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.set1
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_encrypteddataencryptionkey_nullechoclient(self):
         test_id = '18785'
 
@@ -1115,10 +1011,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.set1
-    @pytest.mark.negative
     def test_workordersubmit_dataencryptionalgorithm_listsamealgotwice(self):
         test_id = '18788'
 
@@ -1145,12 +1038,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.set1
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_sdk_dataencryptionalgorithm_listsamealgotwice(
             self):
         with pytest.raises(
@@ -1169,10 +1058,7 @@ class TestClass():
                 test_data)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.set1
-    @pytest.mark.positive
     def test_workordersubmit_encrypteddataencryptionkey_hyphenechoclient(self):
         test_id = '20366'
 
@@ -1199,13 +1085,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.set1
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_encrypteddataencryptionkey_remove(self):
         test_id = '18754'
 
@@ -1232,12 +1114,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_outdata_success(self):
         test_id = '18710'
 
@@ -1264,9 +1143,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_indata_bothindexremoveDataDatahash(self):
         test_id = '18714'
 
@@ -1292,9 +1169,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_indata_oneValidOtherEmptDataDatahash(self):
         test_id = '18715'
 
@@ -1320,9 +1195,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_indata_singleindexremoveDataDatahash(self):
         test_id = '18716'
 
@@ -1348,10 +1221,8 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk_1
-    @pytest.mark.negative
+    @pytest.mark.sdk
     def test_workordersubmit_indata_index2randomstr(self):
         test_id = '18719'
 
@@ -1378,10 +1249,8 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.sdk_1
-    @pytest.mark.negative
+    @pytest.mark.sdk
     def test_workordersubmit_indata_index1randomstr(self):
         test_id = '18720'
 
@@ -1408,12 +1277,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workloadid_emptystring(self):
         test_id = '18722'
 
@@ -1438,12 +1304,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workloadid_hexstring(self):
         test_id = '18723'
 
@@ -1468,9 +1331,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_workload_nullstring(self):
         test_id = '18726'
 
@@ -1495,12 +1356,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workorderid_increasedhexlength(self):
         test_id = '18727'
 
@@ -1526,12 +1384,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workorderidworkloadid_same(self):
         test_id = '18728'
 
@@ -1557,12 +1412,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_data_differentdataheartdisease(self):
         test_id = '18731'
 
@@ -1589,12 +1441,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_requesterId_specialcharacter(self):
         test_id = '18734'
 
@@ -1620,12 +1469,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_requesterNonce_param_empty(self):
         test_id = '18735'
 
@@ -1651,9 +1497,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_requestersignature_differentlength(self):
         test_id = '18492'
 
@@ -1680,12 +1524,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_indataoutdata_success(self):
         test_id = '18703'
 
@@ -1712,12 +1553,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
+    @pytest.mark.proxy
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_workorderId_remove(self):
         test_id = '18725'
 
@@ -1743,9 +1581,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_sessionkeyiv_allspecial_characters(self):
         test_id = '18737'
 
@@ -1771,12 +1607,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_requesterId_differenthexlength(self):
         test_id = '18742'
 
@@ -1802,9 +1635,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_workerEncryptionKey_notdefaulthex(self):
         test_id = '18743'
 
@@ -1830,11 +1661,8 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_sdk_workerEncryptionKey_notdefaulthex(self):
         with pytest.raises(TypeError,
                            match="Worker Encryption Key not valid"):
@@ -1852,12 +1680,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_requesterNonce_notdefaultlength(self):
         test_id = '18745'
 
@@ -1883,9 +1708,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.positive
     def test_workordersubmit_requesterSignature_no(self):
         test_id = '18613'
 
@@ -1912,9 +1735,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_encryptedRequestHash_no(self):
         test_id = '18777'
 
@@ -1941,8 +1762,6 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
-    @pytest.mark.negative
     def test_workordersubmit_mandatoryfields_remove(self):
         test_id = '18781'
 
@@ -1968,9 +1787,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_id_remove(self):
         test_id = '18787'
 
@@ -1996,12 +1813,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workeridworkloadid_same(self):
         test_id = '18794'
 
@@ -2026,9 +1840,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_params_unknownparameter(self):
         test_id = '18700'
 
@@ -2046,9 +1858,7 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_workerId_notdefaultlength_postmsg(self):
         test_id = '20365'
 
@@ -2068,12 +1878,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_workerId_notdefaultlength(self):
         test_id = '18741'
 
@@ -2102,12 +1909,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_workordersubmit_payloadFormat_notJSONRPC(self):
         test_id = '18750'
 
@@ -2124,9 +1928,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_params_empty(self):
         test_id = '18762'
 
@@ -2143,12 +1945,9 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_workordersubmit_OutDataDataEncryptionKey_hyphen(self):
         test_id = '18784'
 
@@ -2175,9 +1974,7 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.workordersubmit
     @pytest.mark.listener
-    @pytest.mark.negative
     def test_workordersubmit_params_twiceechoclient(self):
         test_id = '18791'
 

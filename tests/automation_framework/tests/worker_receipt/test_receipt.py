@@ -39,9 +39,7 @@ class TestClass():
     receipt_lookup_config = os.path.join(
         env.work_order_receipt, "work_order_receipt_lookup.ini")
 
-    @pytest.mark.work_order_create_receipt
     @pytest.mark.sdk
-    @pytest.mark.p1
     @pytest.mark.listener
     def test_work_order_create_receipt_success(self):
         test_id = '18558'
@@ -63,7 +61,6 @@ class TestClass():
 
     @pytest.mark.work_order_retrieve_receipt
     @pytest.mark.sdk
-    @pytest.mark.p1
     def test_work_order_retrieve_receipt_success(self):
         test_id = '21233'
 

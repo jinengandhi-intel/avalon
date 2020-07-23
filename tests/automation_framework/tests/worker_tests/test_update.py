@@ -32,13 +32,9 @@ class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(env.worker_input_file, "worker_update.ini")
 
-    @pytest.mark.worker
-    @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_worker_update_success(self):
         test_id = '18265'
         test_data = read_config(self.config_file, test_id)
@@ -62,13 +58,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_worker_update_unknown_parameter(self):
         test_id = '18266'
         test_data = read_config(self.config_file, test_id)
@@ -92,13 +84,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.positive
+    @pytest.mark.proxy
     def test_worker_update_invalid_parameter(self):
         test_id = '18267'
         test_data = read_config(self.config_file, test_id)
@@ -122,13 +110,9 @@ class TestClass():
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
-    @pytest.mark.worker
-    @pytest.mark.worker_update
     @pytest.mark.listener
     @pytest.mark.sdk
-    @pytest.mark.fabric
-    @pytest.mark.ethereum
-    @pytest.mark.negative
+    @pytest.mark.proxy
     def test_worker_update_empty_details(self):
         test_id = '18293'
         test_data = read_config(self.config_file, test_id)
