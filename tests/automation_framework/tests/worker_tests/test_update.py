@@ -56,6 +56,8 @@ class TestClass():
         assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
+        self.test_obj.teardown(test_data.get("method"))
+
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
@@ -81,6 +83,8 @@ class TestClass():
 
         assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
+
+        self.test_obj.teardown(test_data.get("method"))
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -108,6 +112,8 @@ class TestClass():
         assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
 
+        self.test_obj.teardown(test_data.get("method"))
+
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
@@ -133,5 +139,7 @@ class TestClass():
 
         assert (validate_response_code(response, response_code)
                 is ResultStatus.SUCCESS.value)
+
+        self.test_obj.teardown(test_data.get("method"))
 
         logger.info('\t\t!!! Test completed !!!\n\n')

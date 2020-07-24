@@ -3,6 +3,9 @@ from src.libs.avalon_test_wrapper \
     pre_test_worker_env, pre_test_workorder_env
 import logging
 import env
+import os
+from src.utilities.worker_utilities \
+    import read_config
 from src.libs.avalon_libs import AvalonImpl
 
 avalon_lib_instance = AvalonImpl()
@@ -85,8 +88,47 @@ class AvalonBase():
              'action_obj': action_obj})
         return 0
 
-    def teardown(self):
-        logger.info("**No Teardown Defined**\n%s\n")
+    def reset_status(self):
+        default_data = read_config(
+            os.path.join(env.worker_input_file, "worker_setstatus.ini"),
+            "DEFAULT")
+
+        self.setup_and_build_request_worker_status(default_data)
+
+        response = submit_request(
+            self.uri_client,
+            self.build_request_output['request_obj'],
+            env.worker_lookup_output_json_file_name,
+            default_data)
+
+        return response
+
+    def reset_worker(self):
+        default_data = read_config(
+            os.path.join(env.worker_input_file, "worker_update.ini"),
+            "DEFAULT")
+
+        self.setup_and_build_request_worker_update(default_data)
+
+        response = submit_request(
+            self.uri_client,
+            self.build_request_output['request_obj'],
+            env.worker_lookup_output_json_file_name,
+            default_data)
+
+        return response
+
+    def teardown(self, method_name):
+        if method_name == "WorkerSetStatus":
+            reset_status_response = self.reset_status()
+            logger.info("Reset worker status %s \n", reset_status_response)
+
+        if method_name == "WorkerSetStatus" or \
+                method_name == "WorkerUpdate":
+            reset_worker_response = self.reset_worker()
+            logger.info("Reset worker %s \n", reset_worker_response)
+
+        logger.info("Teardown complete")
 
     def setup_and_build_request_worker_update(self, input_file):
         pre_test_output = pre_test_worker_env(input_file)
