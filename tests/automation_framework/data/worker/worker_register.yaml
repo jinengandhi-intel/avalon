@@ -1,0 +1,51 @@
+Default:
+  id: 1
+  method: WorkerRegister
+  params:
+    applicationTypeId: ''
+    details:
+      dataEncryptionAlgorithm: AES-GCM-256
+      hashingAlgorithm: SHA-256
+      keyEncryptionAlgorithm: RSA-OAEP-3072
+      signingAlgorithm: SECP256K1
+      workerTypeData:
+        enclaveCertificate: ecert
+        encryptionKey: ekey
+        encryptionKeyNonce: enounce
+        encryptionKeySignature: esig
+        proofDataType: ''
+        verificationKey: '0xA'
+    organizationId: ''
+    workerEncryptionKey: ' '
+    workerId: ''
+    workerType: 1
+test_worker_register_unknown_parameter:
+  params: '{"process": "steps"}'
+test_workerregister_applicationTypeId_empty:
+  applicationTypeId: remove
+test_workerregister_dataEncryptionAlgorithm_alternate:
+  dataEncryptionAlgorithm: AES-GCM-128
+test_workerregister_dataEncryptionAlgorithm_list:
+  dataEncryptionAlgorithm: '["AES-GCM-256"]'
+test_workerregister_hashingAlgorithm_KECCAK256:
+  hashingAlgorithm: KECCAK-256
+test_workerregister_hashingAlgorithm_alternate:
+  hashingAlgorithm: SHA-128
+test_workerregister_keyEncryptionAlgorithm_alternate:
+  keyEncryptionAlgorithm: RSA-OAEP-3071
+test_workerregister_organizationId_empty:
+  organizationId: remove
+test_workerregister_proofDataType_invalid:
+  proofDataType: INVALID_TYPE
+test_workerregister_proofDataType_null:
+  proofDataType: 'null'
+test_workerregister_signingAlgorithm_RSAOAEP3072:
+  signingAlgorithm: RSA-OAEP-3072
+test_workerregister_signingAlgorithm_alternate:
+  signingAlgorithm: SECP256K
+test_workerregister_workOrderPayloadFormats_JSONRPCJWT:
+  workOrderPayloadFormats: JSON-RPC-JWT
+test_workerregister_workerId_null:
+  workerId: 'null'
+test_workerregister_workerType_invalid:
+  workerType: '11111111'

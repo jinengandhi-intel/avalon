@@ -238,18 +238,14 @@ def config_data_update(input, key, value):
             config_data_update(v, key, value)
 
 
-def read_config(config_file, test_id):
-    parser = ConfigParser(defaults=None)
-    parser.optionxform = lambda option: option
-    parser.read(config_file)
-    test_config = {}
-    for key, value in parser.items("DEFAULT"):
-        test_config[key] = yaml.safe_load(value)
-    if parser.has_section(test_id):
-        test_items = list(set(parser.items(test_id)) -
-                          set(parser.items("DEFAULT")))
-        logger.info("test items is %s", test_items)
-        for key, value in test_items:
+def read_config(config_file, test_name):
+    yaml_file = open(config_file, "r")
+    parsed_yaml_file = yaml.safe_load(yaml_file)
+    test_config = parsed_yaml_file["Default"]
+
+    if parsed_yaml_file.get(test_name):
+        test_items = parsed_yaml_file[test_name]
+        for key, value in test_items.items():
             config_data_update(test_config, key, value)
 
     logger.info("Test config is %s\n", test_config)

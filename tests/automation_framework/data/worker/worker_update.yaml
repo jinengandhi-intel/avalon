@@ -1,0 +1,13 @@
+Default:
+  id: 2
+  method: WorkerUpdate
+  params:
+    details:
+      hashingAlgorithm: KECCAK-256
+    workerId: ''
+test_worker_update_empty_details:
+  hashingAlgorithm: remove
+test_worker_update_invalid_parameter:
+  details: '{"hashingAlgori": "KECCAK-256"}'
+test_worker_update_unknown_parameter:
+  details: '{"name": "TEST"}'

@@ -1,0 +1,13 @@
+Default:
+  id: 3
+  method: WorkerLookUp
+  params:
+    workerType: 1
+test_worker_lookup_diff_unit_length:
+  workerType: '111111111'
+test_worker_lookup_empty_params:
+  workerType: remove
+test_worker_lookup_jsonrpc_different_version:
+  jsonrpc: x.0
+test_worker_lookup_workerType_not_unsigned_int:
+  workerType: not_uint

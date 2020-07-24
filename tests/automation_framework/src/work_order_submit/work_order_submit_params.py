@@ -300,7 +300,7 @@ class WorkOrderSubmit():
         private_key = crypto_utils.generate_signing_keys()
         if input_json is None:
             submit_config_file = os.path.join(
-                env.work_order_input_file, "work_order_submit.ini")
+                env.work_order_input_file, "work_order_submit.yaml")
             input_json = wconfig.read_config(submit_config_file, "test_id")
 
             input_json = json.loads(input_json)
