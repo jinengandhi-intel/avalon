@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 class TestClass():
     test_obj = AvalonBase()
-    config_file = os.path.join(env.worker_input_file, "worker_register.ini")
+    config_file = os.path.join(env.worker_input_file, "worker_register.yaml")
 
     @pytest.mark.listener
     def test_worker_register_success(self):

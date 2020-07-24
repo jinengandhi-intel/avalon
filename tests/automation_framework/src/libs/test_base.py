@@ -180,4 +180,6 @@ class AvalonBase():
                 self.build_request_output['request_obj'],
                 submit_response)
 
-        return result_response
+            submit_response = result_response
+
+        return submit_response

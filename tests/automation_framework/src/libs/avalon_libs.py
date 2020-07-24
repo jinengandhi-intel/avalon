@@ -69,7 +69,7 @@ class AvalonImpl():
 
         submit_config_file = os.path.join(
             env.work_order_input_file,
-            "work_order_submit.ini")
+            "work_order_submit.yaml")
         submit_request_json = read_config(submit_config_file, "test_id")
 
         configure_data_output = configure_data(
@@ -98,7 +98,7 @@ class AvalonImpl():
 
         getresult_config_file = os.path.join(
             env.work_order_input_file,
-            "work_order_get_result.ini")
+            "work_order_get_result.yaml")
         wo_getresult_request_json = read_config(
             getresult_config_file, "test_id")
 

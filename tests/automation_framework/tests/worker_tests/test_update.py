@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 class TestClass():
     test_obj = AvalonBase()
-    config_file = os.path.join(env.worker_input_file, "worker_update.ini")
+    config_file = os.path.join(env.worker_input_file, "worker_update.yaml")
 
     if env.proxy_mode:
         expected_response = 0
@@ -41,7 +41,7 @@ class TestClass():
         
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(self.expected_response, result_response)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -53,7 +53,7 @@ class TestClass():
         
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(self.expected_response, result_response)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -65,7 +65,7 @@ class TestClass():
         
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(self.expected_response, result_response)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -77,7 +77,7 @@ class TestClass():
         
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(self.expected_response, result_response)
+        assert (validate_response_code(result_response, self.expected_response)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

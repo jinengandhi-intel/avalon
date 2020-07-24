@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(
-        env.work_order_input_file, "work_order_get_result.ini")
+        env.work_order_input_file, "work_order_get_result.yaml")
 
     @pytest.mark.listener
     @pytest.mark.sdk

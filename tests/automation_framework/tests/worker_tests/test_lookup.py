@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 class TestClass():
     test_obj = AvalonBase()
-    config_file = os.path.join(env.worker_input_file, "worker_lookup.ini")
+    config_file = os.path.join(env.worker_input_file, "worker_lookup.yaml")
 
     @pytest.mark.listener
     @pytest.mark.sdk

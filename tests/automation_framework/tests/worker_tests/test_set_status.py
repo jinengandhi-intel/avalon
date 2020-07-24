@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 class TestClass():
     test_obj = AvalonBase()
-    config_file = os.path.join(env.worker_input_file, "worker_setstatus.ini")
+    config_file = os.path.join(env.worker_input_file, "worker_setstatus.yaml")
 
     if env.proxy_mode:
         expected_response = 0

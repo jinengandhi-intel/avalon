@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(
-        env.work_order_input_file, "work_order_submit.ini")
+        env.work_order_input_file, "work_order_submit.yaml")
 
     @pytest.mark.listener
     @pytest.mark.sdk
