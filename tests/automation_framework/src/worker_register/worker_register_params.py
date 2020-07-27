@@ -30,7 +30,7 @@ class WorkerRegister():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_register"
-        self.config_file = os.path.join(env.worker_input_file, "worker_register.ini")
+        self.config_file = os.path.join(env.worker_input_file, "worker_register.yaml")
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
@@ -48,6 +48,7 @@ class WorkerRegister():
         else:
             if self.params_obj.get("workerType") == 1:
                 self.params_obj["workerType"] = "SGX"
+            self.params_obj["details"] = self.details_obj
             final_json = self.params_obj
         logger.info(" Final json %s \n", final_json)
         return final_json

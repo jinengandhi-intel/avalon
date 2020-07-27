@@ -28,21 +28,9 @@ class AvalonImpl():
 
     def worker_lookup(self):
         """
-        Submit's WorkerLookup request to submit_request_listener
-        for listener and worker_lookup_sdk for sdk mode
+        Submit's WorkerLookup request to listener/sdk
         Config need to be set in env.py
         :return: lookup_response - response returned from WorkerLookUp Request
-        {
-            "result": {
-                "totalCount": 1,
-                "lookupTag": "0b03616a46ea9cf574f3f8eedc93a62c691a60dbd3783427c0243bacfe5bba94",
-                "ids": [
-                    "0b03616a46ea9cf574f3f8eedc93a62c691a60dbd3783427c0243bacfe5bba94"
-                ]
-            },
-            "id": 1,
-            "jsonrpc": "2.0"
-        }
         """
         lookup_obj = WorkerLookUp()
         configure_data_output = configure_data(

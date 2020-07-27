@@ -20,7 +20,7 @@ class WorkOrderReceiptRetrieve():
         # self.session_key = self.generate_key()
         # self.session_iv = self.generate_iv()
         self.config_file = os.path.join(
-            env.work_order_receipt, "work_order_retrieve_receipt.ini")
+            env.work_order_receipt, "work_order_retrieve_receipt.yaml")
 
     def add_json_values(self, input_json_temp, tamper, wo_submit):
         input_request_wo_submit = json.loads(wo_submit)

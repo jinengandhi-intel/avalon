@@ -29,7 +29,7 @@ class WorkerSetStatus():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_set_status"
-        self.config_file = os.path.join(env.worker_input_file, "worker_setstatus.ini")
+        self.config_file = os.path.join(env.worker_input_file, "worker_setstatus.yaml")
 
     def configure_data(
             self, input_json, worker_obj, lookup_response):

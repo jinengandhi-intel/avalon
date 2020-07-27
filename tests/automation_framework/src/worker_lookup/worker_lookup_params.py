@@ -30,7 +30,7 @@ class WorkerLookUp():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_lookup"
-        self.config_file = os.path.join(env.worker_input_file, "worker_lookup.ini")
+        self.config_file = os.path.join(env.worker_input_file, "worker_lookup.yaml")
         self.worker_dict = {1 : "SGX", 2 : "MPC", 3 : "ZK"}
 
     def configure_data(

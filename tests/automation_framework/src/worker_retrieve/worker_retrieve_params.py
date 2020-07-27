@@ -30,7 +30,7 @@ class WorkerRetrieve():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_retrieve"
-        self.config_file = os.path.join(env.worker_input_file, "worker_retrieve.ini")
+        self.config_file = os.path.join(env.worker_input_file, "worker_retrieve.yaml")
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):

@@ -28,7 +28,7 @@ class WorkOrderGetResult():
         self.params_obj = {}
         self.tamper = {"params": {}}
         self.config_file = os.path.join(
-            env.work_order_input_file, "work_order_get_result.ini")
+            env.work_order_input_file, "work_order_get_result.yaml")
 
     def add_json_values(self, input_json_temp, tamper, wo_submit):
         """
