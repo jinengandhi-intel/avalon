@@ -81,9 +81,9 @@ def submit_request(uri_client, output_obj, output_file, input_file):
 
 def pre_test_worker_env(input_file):
     """
-    This function sets up the environment required to run the test.
-    For ex: Work Order Submit test requires worker_lookup, retrieve
-    the worker details and pass that as the output.
+    This function sets up the environment required before submitting
+    work order. Performs worker_lookup, worker_retrieve as requested by
+    method parameter present in input file and pass that as the output.
     """
     response = None
     request_method = input_file.get("method")

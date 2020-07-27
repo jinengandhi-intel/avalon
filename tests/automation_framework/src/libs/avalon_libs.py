@@ -27,6 +27,23 @@ logger = logging.getLogger(__name__)
 class AvalonImpl():
 
     def worker_lookup(self):
+        """
+        Submit's WorkerLookup request to submit_request_listener
+        for listener and worker_lookup_sdk for sdk mode
+        Config need to be set in env.py
+        :return: lookup_response - response returned from WorkerLookUp Request
+        {
+            "result": {
+                "totalCount": 1,
+                "lookupTag": "0b03616a46ea9cf574f3f8eedc93a62c691a60dbd3783427c0243bacfe5bba94",
+                "ids": [
+                    "0b03616a46ea9cf574f3f8eedc93a62c691a60dbd3783427c0243bacfe5bba94"
+                ]
+            },
+            "id": 1,
+            "jsonrpc": "2.0"
+        }
+        """
         lookup_obj = WorkerLookUp()
         configure_data_output = configure_data(
             lookup_obj, input_json=None,
@@ -44,6 +61,12 @@ class AvalonImpl():
         return lookup_response
 
     def worker_retrieve(self, lookup_response):
+        """
+        Submit WorkerRetrieve request to listener/sdk
+        Config need to be set in env.py
+        :param lookup_response: Response received from worker_lookup
+        :return: Details of worker present in lookup_response
+        """
         worker_obj = worker.SGXWorkerDetails()
         retrieve_obj = WorkerRetrieve()
         configure_data_output = configure_data(
@@ -65,6 +88,13 @@ class AvalonImpl():
         return retrieve_response
 
     def work_order_submit(self, response_output):
+        """
+        Submit's the WorkOrderSubmit request and form the input params
+        needed to verify the work order details
+        Config need to be set in env.py
+        :param response_output: Request to be sent
+        :return: Returns the response received from WorkOrderSubmit request
+        """
         submit_obj = WorkOrderSubmit()
 
         submit_config_file = os.path.join(
@@ -94,6 +124,12 @@ class AvalonImpl():
         return json_obj
 
     def work_order_get_result(self, wo_submit):
+        """
+        Submit's WorkOrderGetResult request to listener/sdk
+        Config need to be set in env.py
+        :param wo_submit:
+        :return:
+        """
         wo_getresult_obj = WorkOrderGetResult()
 
         getresult_config_file = os.path.join(
@@ -122,6 +158,12 @@ class AvalonImpl():
         return get_result_response
 
     def work_order_create_receipt(self, wo_submit):
+        """
+        Submit the WorkOrderCreateReceipt for sdk
+        Config needed to be set in env.py
+        :param wo_submit: Response received from WorkOrderSubmit request
+        :return: Response received from creating receipt
+        """
         if env.test_mode == "sdk":
             receipt_retrieve_obj = WorkOrderReceiptCreate()
 

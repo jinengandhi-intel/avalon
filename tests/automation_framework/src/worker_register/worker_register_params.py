@@ -15,6 +15,7 @@
 import json
 import logging
 import env
+import os
 import src.utilities.worker_utilities as wconfig
 
 logger = logging.getLogger(__name__)
@@ -29,29 +30,24 @@ class WorkerRegister():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_register"
+        self.config_file = os.path.join(env.worker_input_file, "worker_register.ini")
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
-        logger.info(" Request json %s \n", input_json)
-        wconfig.add_json_values(self, input_json, pre_test_response)
-        final_json = json.loads(wconfig.to_string(self, detail_obj=True))
-        logger.info(" Final json %s \n", final_json)
-        return final_json
+        return self.form_worker_register_input(input_json, worker_obj, pre_test_response)
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
+        return self.form_worker_register_input(input_json, worker_obj, pre_test_response)
+    
+    def form_worker_register_input(self, input_json, worker_obj, pre_test_response):
         logger.info(" Request json %s \n", input_json)
         wconfig.add_json_values(self, input_json, pre_test_response)
-        if self.params_obj.get("workerType") == 1:
-            self.params_obj["workerType"] = "SGX"
-        register_params = {
-            "worker_id": wconfig.get_parameter(
-                self.params_obj, "workerId"),
-            "workerType": wconfig.get_parameter(
-                self.params_obj, "workerType"),
-            "organization_id": wconfig.get_parameter(
-                self.params_obj, "organizationId"),
-            "application_type_id": wconfig.get_parameter(
-                    self.params_obj, "applicationTypeId"),
-            "details": input_json["params"].get("details")}
-        return register_params
+        if env.test_mode == "listener":
+            final_json = json.loads(wconfig.to_string(self, detail_obj=True))
+        else:
+            if self.params_obj.get("workerType") == 1:
+                self.params_obj["workerType"] = "SGX"
+            final_json = self.params_obj
+        logger.info(" Final json %s \n", final_json)
+        return final_json

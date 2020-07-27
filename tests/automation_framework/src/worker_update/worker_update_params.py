@@ -15,6 +15,7 @@
 import json
 import logging
 import env
+import os
 import avalon_sdk.worker.worker_details as worker
 import avalon_crypto_utils.crypto_utility as crypto_utils
 import src.utilities.worker_utilities as wconfig
@@ -30,41 +31,25 @@ class WorkerUpdate():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_update"
+        self.config_file = os.path.join(env.worker_input_file, "worker_update.ini")
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
-        worker_obj = worker.SGXWorkerDetails()
-        if input_json is not None:
-            wconfig.add_json_values(self, input_json, pre_test_response)
-        wconfig.set_parameter(
-            self.params_obj,
-            "workerId",
-            crypto_utils.strip_begin_end_public_key(
-                pre_test_response["result"]["ids"][0]))
-
-        input_worker_retrieve = json.loads(
-            wconfig.to_string(self, detail_obj=True))
-        logger.info('*****Worker details Updated with Worker ID***** \
-                           \n%s\n', input_worker_retrieve)
-        return input_worker_retrieve
+        return self.form_worker_lookup_input(input_json, pre_test_response)
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
-        if env.proxy_mode:
-            worker_id = pre_test_response[2][0]
+        return self.form_worker_lookup_input(input_json, pre_test_response)
+    
+    def form_worker_lookup_input(self, input_json, pre_test_response):
+        retrieve_request = wconfig.worker_retrieve_input(self, input_json, pre_test_response)
+        if env.test_mode == "listener":
+            update_params = json.loads(
+                wconfig.to_string(self, detail_obj=True))
         else:
-            if "result" in pre_test_response and \
-                    "ids" in pre_test_response["result"].keys():
-                if pre_test_response["result"]["totalCount"] != 0:
-                    worker_id = pre_test_response["result"]["ids"][0]
-                else:
-                    logger.error("ERROR: No workers found")
-                    worker_id = None
-            else:
-                logger.error("ERROR: Failed to lookup worker")
-                worker_id = None
-        details = input_json["params"]["details"]
+            details = input_json["params"]["details"]
+            update_params = {"worker_id": retrieve_request, "details": details}
 
-        update_params = {"worker_id": worker_id, "details": details}
-
+        logger.info('*****Worker details Updated with Worker ID***** \
+                            \n%s\n', update_params)
         return update_params

@@ -16,6 +16,7 @@ import json
 import logging
 import env
 import random
+import os
 import avalon_crypto_utils.crypto_utility as crypto_utils
 import src.utilities.worker_utilities as wconfig
 
@@ -29,48 +30,22 @@ class WorkerRetrieve():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_retrieve"
+        self.config_file = os.path.join(env.worker_input_file, "worker_retrieve.ini")
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
-        pre_test_response["workerId"] = self.retrieve_worker_id(
-            pre_test_response)
-        if input_json is not None:
-            wconfig.add_json_values(self, input_json, pre_test_response)
-        else:
-            wconfig.set_parameter(self.params_obj, "workerId",
-                                  crypto_utils.strip_begin_end_public_key
-                                  (pre_test_response["workerId"]))
+        return self.form_worker_retrieve_input(input_json, pre_test_response)
 
-        input_worker_retrieve = json.loads(wconfig.to_string(self))
-        logger.info('*****Worker details Updated with Worker ID***** \
-                           \n%s\n', input_worker_retrieve)
-        return input_worker_retrieve
-
-    def retrieve_worker_id(self, pre_test_response):
-        worker_id = None
-        if env.proxy_mode:
-            worker_id = random.choice(pre_test_response[2])
-        else:
-            if "result" in pre_test_response and \
-                    "ids" in pre_test_response["result"].keys():
-                if pre_test_response["result"]["totalCount"] != 0:
-                    worker_id = random.choice(
-                        pre_test_response["result"]["ids"])
-                else:
-                    logger.error("ERROR: No workers found")
-            else:
-                logger.error("ERROR: Failed to lookup worker")
-        return worker_id
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
-        worker_id = None
-        if input_json is not None:
-            if "workerId" in input_json["params"].keys():
-                if input_json["params"]["workerId"] != "":
-                    worker_id = input_json["params"]["workerId"]
-                else:
-                    worker_id = self.retrieve_worker_id(pre_test_response)
-        else:
-            worker_id = self.retrieve_worker_id(pre_test_response)
-        return worker_id
+        return self.form_worker_retrieve_input(input_json, pre_test_response)
+    
+
+    def form_worker_retrieve_input(self, input_json, pre_test_response):
+        retrieve_request = wconfig.worker_retrieve_input(self, input_json, pre_test_response)
+        if env.test_mode == "listener":
+            retrieve_request = json.loads(wconfig.to_string(self))
+        logger.info('*****Worker details Updated with Worker ID***** \
+                        \n%s\n', retrieve_request)
+        return retrieve_request

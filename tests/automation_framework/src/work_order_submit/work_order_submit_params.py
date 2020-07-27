@@ -23,6 +23,7 @@ import secrets
 from avalon_sdk.work_order.work_order_params import WorkOrderParams
 import src.utilities.worker_utilities as wconfig
 from ecdsa.util import sigencode_der, sigdecode_der
+import copy
 
 logger = logging.getLogger(__name__)
 NO_OF_BYTES = 16
@@ -42,10 +43,18 @@ class WorkOrderSubmit():
         self.private_key = ''
         self.worker_obj = ''
         self.encrypted_session_key = ''
+        self.config_file = os.path.join(
+        env.work_order_input_file, "work_order_submit.ini")
 
     def add_json_values(self, input_json_temp, pre_test_response,
                         private_key, tamper):
-
+        """
+        This function will update the params_obj for WorkOrderSubmit listener request
+        :param input_json_temp: Input JSON as per EEA spec
+        :param pre_test_response: Response received from workerRetrieve request
+        :param private_key: signature created by the Enclave
+        :param tamper: tamper request
+        """
         self.private_key = private_key
         input_params_list = input_json_temp["params"].keys()
         input_json = input_json_temp["params"]
@@ -105,6 +114,10 @@ class WorkOrderSubmit():
                     wconfig.set_parameter(self.params_obj, key, value)
 
     def _compute_encrypted_request_hash(self):
+        """
+        This function will compute encrypted request Hash
+        :return: encrypted request hash
+        """
         first_string = wconfig.get_parameter(
             self.params_obj, "requesterNonce") or ""
         worker_order_id = wconfig.get_parameter(
@@ -143,6 +156,11 @@ class WorkOrderSubmit():
         return encrypted_request_hash
 
     def _compute_hash_string(self, data):
+        """
+        This function will compute the message hash and encode it in UTF-8
+        :param data: Data, as specified by workload
+        :return: computed and encoded string
+        """
         final_hash_str = ""
         hash_string = ""
         for data_item in data:
@@ -167,6 +185,9 @@ class WorkOrderSubmit():
         return final_hash_str
 
     def _compute_requester_signature(self):
+        """
+        This function will compute requester signature and update the verifying key
+        """
         if wconfig.get_parameter(
                 self.params_obj,
                 "requesterSignature") is not None:
@@ -183,15 +204,20 @@ class WorkOrderSubmit():
             self.params_obj["verifyingKey"] = self.public_key
 
     def add_in_data(self, input_json_inData):
+        """
+        This function will add inData params to the params_obj
+        :param input_json_inData: inData for WorkOrderSubmit as per EEA spec
+        """
+        data = copy.deepcopy(input_json_inData)
         if "inData" not in self.params_obj:
             self.params_obj["inData"] = []
 
         try:
-            input_json_inData.sort(key=lambda x: x['index'])
+            data.sort(key=lambda x: x['index'])
         except Exception:
             logger.debug("Sorting Indata based on Index failed \n")
 
-        for inData_item in input_json_inData:
+        for inData_item in data:
             in_data_copy = self.params_obj["inData"]
             mod_data_copy = self._add_data_item(in_data_copy, inData_item)
             if mod_data_copy is not None:
@@ -202,6 +228,10 @@ class WorkOrderSubmit():
                 self.params_obj["inData"] = in_data_copy
 
     def add_out_data(self, input_json_outData):
+        """
+        This functions adds the outData to the params_obj
+        :param input_json_outData: outData for WorkOrderSubmit as per EEA spec
+        """
         if "outData" not in self.params_obj:
             self.params_obj["outData"] = []
 
@@ -281,7 +311,8 @@ class WorkOrderSubmit():
             data_copy.append(enc_indata_item)
 
             return data_copy
-        except Exception:
+        except Exception as e:
+            logger.exception("Exception occured %s, in add_data_item", e)
             return None
 
     def compute_signature(self, tamper):
@@ -379,7 +410,7 @@ class WorkOrderSubmit():
         return wo_params
 
     def get_default_params(self, pre_response, input_dict):
-        d_params = wconfig.read_yaml(__file__, pre_response)
+        d_params = wconfig.read_yaml(self, pre_response)
         try:
             d_params["requesterNonce"] = secrets.token_hex(16)
             d_params["requesterId"] = secrets.token_hex(32)
@@ -403,5 +434,5 @@ class WorkOrderSubmit():
                             self.encrypted_session_key)
 
         except Exception as e:
-            logger.error("Exception Occurred inside get_default_params ", e)
+            logger.error("Exception Occurred inside get_default_params %s", e)
         return d_params

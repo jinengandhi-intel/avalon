@@ -100,13 +100,17 @@ def update_global_params(default_params):
 
 
 def read_yaml(calling_path, response=None, input_data={}):
-    config_file = calling_path.replace(".py", ".yaml")
-    test_mode = env.test_mode
-    file_contents = open(config_file, "r")
-    default_params = yaml.load(file_contents)["{}_config".format(test_mode)]
-    update_global_params(default_params)
-    file_contents.close()
+    # config_file = calling_path.replace(".py", ".yaml")
+    # test_mode = env.test_mode
+    # file_contents = open(config_file, "r")
+    # default_params = yaml.load(file_contents)["{}_config".format(test_mode)]
+    # logger.info("Worker Utilities default params is %s", default_params)
 
+    default_params = read_config(calling_path.config_file, "")["params"]
+    # logger.info("Ini Default params is %s", default_params)
+
+    update_global_params(default_params)
+    # file_contents.close()
     if response:
         if 'workerId' in response.keys():
             default_params["workerId"] = response['workerId']
@@ -135,8 +139,7 @@ def add_json_values(caller, input_json_temp, pre_test_response):
     input_json = input_json_temp["params"].copy()
     input_json["id"] = input_json_temp["id"]
     input_param_list = input_json_temp["params"].keys()
-
-    config_yaml = read_yaml(config_path, pre_test_response, input_json)
+    config_yaml = read_yaml(caller, pre_test_response, input_json)
     for key in input_param_list:
         if key == "details":
             details_input_list = input_json["details"].keys()
@@ -250,3 +253,42 @@ def read_config(config_file, test_name):
 
     logger.info("Test config is %s\n", test_config)
     return test_config
+
+def retrieve_worker_id(pre_test_response):
+    worker_id = None
+    if env.proxy_mode:
+        worker_id = random.choice(pre_test_response[2])
+    else:
+        if "result" in pre_test_response and \
+                "ids" in pre_test_response["result"].keys():
+            if pre_test_response["result"]["totalCount"] != 0:
+                worker_id = random.choice(
+                    pre_test_response["result"]["ids"])
+            else:
+                logger.error("ERROR: No workers found")
+        else:
+            logger.error("ERROR: Failed to lookup worker")
+    return worker_id
+
+def worker_retrieve_input(caller, input_json, pre_test_response):
+    if env.test_mode == "listener":
+        pre_test_response["workerId"] = retrieve_worker_id(
+        pre_test_response)
+        if input_json is not None:
+            add_json_values(caller, input_json, pre_test_response)
+        else:
+            # set_parameter(caller.params_obj, "workerId",
+            #                     crypto_utils.strip_begin_end_public_key
+            #                     (pre_test_response["workerId"]))
+            set_parameter(caller.params_obj, "workerId", pre_test_response["workerId"])
+    else:
+        worker_id = None
+        if input_json is not None:
+            if "workerId" in input_json["params"].keys():
+                if input_json["params"]["workerId"] != "":
+                    worker_id = input_json["params"]["workerId"]
+                else:
+                    worker_id = retrieve_worker_id(pre_test_response)
+        else:
+            worker_id = retrieve_worker_id(pre_test_response)
+        return worker_id

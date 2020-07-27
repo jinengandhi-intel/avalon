@@ -27,7 +27,14 @@ class WorkOrderReceiptCreate():
 
     def add_json_values(self, input_json_params,
                         worker_obj, private_key, tamper, wo_submit):
-
+        """
+        This functions should form the param inputs for WorkOrderReceiptCreate listener request
+        :param input_json_params: Input json as per EEA spec
+        :param worker_obj: worker object
+        :param private_key: signature created by the Enclave
+        :param tamper: tamper request
+        :param wo_submit: workOrderSubmit response
+        """
         self.private_key = private_key
         self.worker_obj = worker_obj
         # logger.info("------ Loaded string data: ABCDEFGHIJKLMNOP
@@ -72,7 +79,11 @@ class WorkOrderReceiptCreate():
                 wo_receipt_sign)
 
     def compute_signature(self, tamper):
-
+        """
+        This function is used to compute the requester signature
+        :param tamper: tamper_request
+        :return: JSON with update tampered request
+        """
         self._compute_requester_signature()
 
         input_after_sign = wconfig.to_string(self)
@@ -82,11 +93,21 @@ class WorkOrderReceiptCreate():
         return tampered_request
 
     def _compute_requester_signature(self):
+        """
+        Set verifyingKey work order parameter
+        """
         self.public_key = crypto_utility.get_verifying_key(self.private_key)
         self.params_obj["receiptVerificationKey"] = self.public_key
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
+        """
+        This function forms the request for WorkOrderReceiptCreate as per EEA spec
+        :param input_json: Input JSON as per EEA spec
+        :param worker_obj: worker object
+        :param pre_test_response: response received from WorkOrderSubmit request
+        :return: Fully formed JSON which can be submitted to listener
+        """
         if input_json is None:
             with open(os.path.join(
                     env.work_order_receipt,
@@ -107,6 +128,23 @@ class WorkOrderReceiptCreate():
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
+        """
+        This functions forms the input for WorkOrderReceiptCreate SDK function
+        :param input_json: containing input data as per EEA spec
+        :param worker_obj: worker object
+        :param pre_test_response: Response received from WorkOrderSubmit request
+        :return: dictionary containing following fields and values associated with them
+            {"workOrderId": "",
+             "workerServiceId": "",
+             "workerId": "",
+             "requesterId": "",
+             "receiptCreateStatus": ,
+             "workOrderRequestHash": "",
+             "requesterGeneratedNonce": "",
+             "signatureRules": "",
+             "receiptVerificationKey": "",
+             "requesterSignature":""}
+        """
         logger.info("***Pre test*****\n%s\n", pre_test_response)
         logger.info("***Input json*****\n%s\n", input_json)
         jrpc_req_id = input_json["id"]

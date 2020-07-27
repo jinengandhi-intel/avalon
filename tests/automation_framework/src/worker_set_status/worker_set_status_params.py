@@ -17,6 +17,7 @@ import logging
 import avalon_crypto_utils.crypto_utility as crypto_utils
 import src.utilities.worker_utilities as wconfig
 import env
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -28,33 +29,25 @@ class WorkerSetStatus():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_set_status"
+        self.config_file = os.path.join(env.worker_input_file, "worker_setstatus.ini")
 
     def configure_data(
             self, input_json, worker_obj, lookup_response):
-        logger.info(" Request json %s \n", input_json)
-        lookup_response["workerId"] = lookup_response["result"]["ids"][0]
-        wconfig.add_json_values(self, input_json, lookup_response)
-        final_json = json.loads(wconfig.to_string(self))
-        logger.info(" Final json %s \n", final_json)
-        return final_json
+        return self.form_set_status_input(input_json, worker_obj, lookup_response)
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
+        return self.form_set_status_input(input_json, worker_obj, pre_test_response)
+
+    def form_set_status_input(self, input_json, worker_obj, pre_test_response):
         logger.info(" Request json %s \n", input_json)
-        if env.proxy_mode:
-            worker_id = pre_test_response[2][0]
+        set_status_request = wconfig.worker_retrieve_input(self, input_json, pre_test_response)
+        if env.test_mode == "listener":
+            final_json = json.loads(wconfig.to_string(self))
         else:
-            if "result" in pre_test_response and \
-                    "ids" in pre_test_response["result"].keys():
-                if pre_test_response["result"]["totalCount"] != 0:
-                    worker_id = pre_test_response["result"]["ids"][0]
-                else:
-                    logger.error("ERROR: No workers found")
-                    worker_id = None
-            else:
-                logger.error("ERROR: Failed to lookup worker")
-                worker_id = None
-        if "status" in input_json["params"].keys():
-            status = input_json["params"]["status"]
-        set_status_params = {"worker_id": worker_id, "status": status}
-        return set_status_params
+            if "status" in input_json["params"].keys():
+                status = input_json["params"]["status"]
+            final_json = {"worker_id": set_status_request, "status": status}
+        logger.info(" Final json %s \n", final_json)
+        return final_json
+            

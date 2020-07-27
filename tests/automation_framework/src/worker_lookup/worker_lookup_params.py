@@ -15,11 +15,12 @@
 import json
 import logging
 import src.utilities.worker_utilities as wconfig
+import os
+import env
 
 
 logger = logging.getLogger(__name__)
 WORKER_TYPE = "workerType"
-ID = "id"
 
 
 class WorkerLookUp():
@@ -29,33 +30,28 @@ class WorkerLookUp():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "worker_lookup"
+        self.config_file = os.path.join(env.worker_input_file, "worker_lookup.ini")
+        self.worker_dict = {1 : "SGX", 2 : "MPC", 3 : "ZK"}
 
     def configure_data(
             self, input_json, worker_obj, pre_test_response):
-        if input_json is None:
-            wconfig.set_parameter(self.params_obj, WORKER_TYPE, 1)
-        else:
-            wconfig.add_json_values(self, input_json, pre_test_response)
-        final_json = json.loads(wconfig.to_string(self))
-        return final_json
+        return self.form_worker_lookup_input(input_json, pre_test_response)
 
     def configure_data_sdk(
             self, input_json, worker_obj, pre_test_response):
-
+        return self.form_worker_lookup_input(input_json, pre_test_response)
+    
+    def form_worker_lookup_input(self, input_json, pre_test_response):
         if input_json is None:
-            worker_type = 'SGX'
+            worker_value = 1
+            wconfig.set_parameter(self.params_obj, "workerType", worker_value)
         else:
-            try:
-                worker_value = input_json["params"]["workerType"]
-                if worker_value == 1:
-                    worker_type = 'SGX'
-                elif worker_value == 2:
-                    worker_type = 'MPC'
-                elif worker_value == 3:
-                    worker_type = 'ZK'
-                else:
-                    worker_type = worker_value
-            except LookupError:
-                worker_type = ""
+            worker_value = input_json["params"].get("workerType")
+            wconfig.add_json_values(self, input_json, pre_test_response)
 
-        return worker_type
+        if env.test_mode == "listener":
+            lookup_request = json.loads(wconfig.to_string(self))
+        else:
+            lookup_request = self.worker_dict.get(worker_value, worker_value)
+        logger.info("WorkerLookUp Request: %s", lookup_request)
+        return lookup_request

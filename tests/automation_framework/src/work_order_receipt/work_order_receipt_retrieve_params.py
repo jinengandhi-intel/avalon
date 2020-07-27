@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import src.utilities.worker_utilities as wconfig
 import avalon_crypto_utils.signature as signature
 logger = logging.getLogger(__name__)
@@ -18,6 +19,8 @@ class WorkOrderReceiptRetrieve():
         self.output_json_file_name = "work_order_retrieve_receipt"
         # self.session_key = self.generate_key()
         # self.session_iv = self.generate_iv()
+        self.config_file = os.path.join(
+            env.work_order_receipt, "work_order_retrieve_receipt.ini")
 
     def add_json_values(self, input_json_temp, tamper, wo_submit):
         input_request_wo_submit = json.loads(wo_submit)

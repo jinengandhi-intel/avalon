@@ -193,10 +193,10 @@ def worker_register_sdk(register_params, input_json):
             json.dumps(register_params["details"]))
     else:
         worker_register_result = worker_registry.worker_register(
-            register_params["worker_id"],
+            register_params["workerId"],
             worker_dict[register_params["workerType"]],
-            register_params["organization_id"],
-            register_params["application_type_id"],
+            register_params.get("organizationId"),
+            register_params.get("applicationTypeId"),
             json.dumps(register_params["details"]), jrpc_req_id)
     logger.info("\n Worker register response: {}\n".format(
         json.dumps(worker_register_result, indent=4)))

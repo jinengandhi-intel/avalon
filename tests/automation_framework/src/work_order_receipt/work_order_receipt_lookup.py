@@ -15,5 +15,12 @@ class WorkOrderReceiptLookUp():
         self.output_json_file_name = "work_order_retrieve_lookup"
 
     def configure_data_sdk(self, input_json, worker_obj, wo_submit):
+        """
+        This functions returns the requester id present in workOrderSubmit response
+        :param input_json: Input JSON as per EEA spec
+        :param worker_obj: worker object
+        :param wo_submit: workOrderSubmit response
+        :return: requester_id from WorkOrderSubmit response
+        """
         requester_id = wo_submit.get_requester_id()
         return requester_id
