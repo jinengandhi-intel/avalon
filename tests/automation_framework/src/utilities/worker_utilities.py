@@ -114,6 +114,8 @@ def read_yaml(calling_path, response=None, input_data={}):
     if response:
         if 'workerId' in response.keys():
             default_params["workerId"] = response['workerId']
+        if 'workOrderId' in input_data.keys():
+            default_params["workOrderId"] = response['params']['workOrderId']
         if "details" in input_data.keys():
             details = response.get("result", {}).get("details", {})
             if (env.test_mode == "listener") and input_data:
@@ -292,3 +294,15 @@ def worker_retrieve_input(caller, input_json, pre_test_response):
         else:
             worker_id = retrieve_worker_id(pre_test_response)
         return worker_id
+
+def workorder_getresult_input(caller, input_json, pre_test_response):
+    if env.test_mode == "listener":
+        add_json_values(caller, input_json, pre_test_response)
+    else:
+        workorder_id = None
+        if "workOrderId" in input_json["params"].keys():
+            if input_json["params"]["workOrderId"] == "":
+                workorder_id = pre_test_response.get_work_order_id()
+            else:
+                workorder_id = input_json["params"]["workOrderId"]
+        return workorder_id

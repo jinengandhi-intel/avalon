@@ -30,24 +30,6 @@ class WorkOrderGetResult():
         self.config_file = os.path.join(
             env.work_order_input_file, "work_order_get_result.yaml")
 
-    def add_json_values(self, input_json_temp, tamper, wo_submit):
-        """
-        This functions should form the param inputs for WorkOrderGetResult listener request
-        :param input_json_temp: input json for WorkOrderGetResult as per EEA spec
-        :param tamper: Tamper Request
-        :param wo_submit: Response received from WorkOrderSubmit request
-        """
-        params = input_json_temp["params"]
-        for keys in params.keys():
-            if "workOrderId" in keys:
-                value = params["workOrderId"] \
-                    if params["workOrderId"] != '' \
-                    else wo_submit["params"]["workOrderId"]
-                wconfig.set_parameter(self.params_obj, "workOrderId", value)
-            else:
-                wconfig.set_parameter(
-                    self.params_obj, keys, input_json_temp["params"][keys])
-
     def configure_data(self, input_json, worker_obj, pre_test_response):
         """
         This function should form the json request for WorkOrderGetResult listener request
@@ -56,13 +38,7 @@ class WorkOrderGetResult():
         :param pre_test_response: Response received from WorkOrderSubmit request
         :return: Fully formed JSON which can be submitted to listener
         """
-        wconfig.set_parameter(self.id_obj, "id", (pre_test_response["id"] + 1))
-
-        logger.info("listen Pre test*****\n%s\n", pre_test_response)
-        self.add_json_values(
-            input_json, self.tamper, pre_test_response)
-        input_get_result = json.loads(wconfig.to_string(self))
-        return input_get_result
+        return self.form_workorder_getresult_input(input_json, pre_test_response)
 
     def configure_data_sdk(self, input_json, worker_obj, pre_test_response):
         """
@@ -72,12 +48,12 @@ class WorkOrderGetResult():
         :param pre_test_response: Response received from WorkOrderSubmit request
         :return: workOrderId present in submit_response
         """
-        jrpc_req_id = input_json["id"]
-        workorder_id = None
-        if "workOrderId" in input_json["params"].keys():
-            if input_json["params"]["workOrderId"] == "":
-                workorder_id = pre_test_response.get_work_order_id()
-            else:
-                workorder_id = input_json["params"]["workOrderId"]
-            logger.info("workorder_id %s", workorder_id)
-        return workorder_id
+        return self.form_workorder_getresult_input(input_json, pre_test_response)
+
+    def form_workorder_getresult_input(self, input_json, pre_test_response):
+        getresult_request = wconfig.workorder_getresult_input(self, input_json, pre_test_response)
+        if env.test_mode == "listener":
+            getresult_request = json.loads(wconfig.to_string(self))
+        logger.info('*****GetResult Request***** \
+                        \n%s\n', getresult_request)
+        return getresult_request
