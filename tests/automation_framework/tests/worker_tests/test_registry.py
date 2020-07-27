@@ -35,7 +35,7 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -45,127 +45,138 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_hashingAlgorithm_KECCAK256(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_signingAlgorithm_RSAOAEP3072(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_dataEncryptionAlgorithm_list(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_orgnizationid_32bytes(self):
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_applicationTypeId_32bytes(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_workOrderPayloadFormats_JSONRPCJWT(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_workerId_null(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_hashingAlgorithm_alternate(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_signingAlgorithm_alternate(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_keyEncryptionAlgorithm_alternate(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_dataEncryptionAlgorithm_alternate(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
@@ -175,62 +186,67 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_organizationId_empty(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_applicationTypeId_empty(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_proofDataType_empty(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_proofDataType_invalid(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
+    @pytest.mark.proxy
     def test_workerregister_proofDataType_null(self):
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, -32601)
+        assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

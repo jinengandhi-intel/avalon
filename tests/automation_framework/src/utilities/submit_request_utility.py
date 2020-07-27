@@ -198,8 +198,11 @@ def worker_register_sdk(register_params, input_json):
             register_params["organization_id"],
             register_params["application_type_id"],
             json.dumps(register_params["details"]), jrpc_req_id)
+    if env.proxy_mode and (not isinstance(worker_register_result, dict)):
+        response = worker_register_result.value
+        worker_register_result = {"error": {"code": response, "message": ""}}
     logger.info("\n Worker register response: {}\n".format(
-        json.dumps(worker_register_result, indent=4)))
+        worker_register_result))
     return worker_register_result
 
 

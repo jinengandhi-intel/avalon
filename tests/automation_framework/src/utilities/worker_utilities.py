@@ -150,7 +150,7 @@ def add_json_values(caller, input_json_temp, pre_test_response):
         else:
             value = input_json[key] \
                 if input_json[key] != "" else config_yaml[key]
-        set_parameter(caller.params_obj, key, value)
+            set_parameter(caller.params_obj, key, value)
     tamper = caller.tamper
     for key in tamper["params"].keys():
         set_parameter(caller.params_obj, key, tamper["params"][key])

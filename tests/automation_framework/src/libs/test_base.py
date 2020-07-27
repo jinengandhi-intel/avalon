@@ -92,11 +92,7 @@ class AvalonBase():
              'action_obj': action_obj})
         return 0
 
-    def reset_status(self):
-        default_data = read_config(
-            os.path.join(env.worker_input_file, "worker_setstatus.ini"),
-            "DEFAULT")
-
+    def reset_status(self, default_data):
         self.setup_and_build_request_worker_status(default_data)
 
         response = submit_request(
@@ -107,11 +103,7 @@ class AvalonBase():
 
         return response
 
-    def reset_worker(self):
-        default_data = read_config(
-            os.path.join(env.worker_input_file, "worker_update.ini"),
-            "DEFAULT")
-
+    def reset_worker(self, default_data):
         self.setup_and_build_request_worker_update(default_data)
 
         response = submit_request(
@@ -122,14 +114,16 @@ class AvalonBase():
 
         return response
 
-    def teardown(self, method_name):
+    def teardown(self, config):
+        test_data = read_config(config, "")
+        method_name = test_data.get("method")
         if method_name == "WorkerSetStatus":
-            reset_status_response = self.reset_status()
+            reset_status_response = self.reset_status(test_data)
             logger.info("Reset worker status %s \n", reset_status_response)
 
         if method_name == "WorkerSetStatus" or \
                 method_name == "WorkerUpdate":
-            reset_worker_response = self.reset_worker()
+            reset_worker_response = self.reset_worker(test_data)
             logger.info("Reset worker %s \n", reset_worker_response)
 
         logger.info("Teardown complete")
