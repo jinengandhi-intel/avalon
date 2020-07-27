@@ -358,7 +358,7 @@ def workorder_receiptretrieve_sdk(workorderId, input_json):
         json.dumps(receipt_update_retrieve, indent=4)
     ))
 
-    return receipt_update_retrieve
+    return wo_receipt_resp
 
 
 def workorder_getresult_sdk(workorderId, input_json):

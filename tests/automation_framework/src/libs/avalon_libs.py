@@ -152,19 +152,26 @@ class AvalonImpl():
         :param wo_submit: Response received from WorkOrderSubmit request
         :return: Response received from creating receipt
         """
-        if env.test_mode == "sdk":
-            receipt_retrieve_obj = WorkOrderReceiptCreate()
+        receipt_create_obj = WorkOrderReceiptCreate()
 
-            create_receipt_config = os.path.join(
-                env.work_order_receipt, "work_order_create_receipt.yaml")
-            receipt_request_json = read_config(
-                create_receipt_config, "test_config")
+        create_receipt_config = os.path.join(
+            env.work_order_receipt, "work_order_create_receipt.yaml")
+        receipt_request_json = read_config(
+            create_receipt_config, "test_config")
 
-            wo_create_receipt = receipt_retrieve_obj.configure_data_sdk(
-                input_json=receipt_request_json, worker_obj=None,
-                pre_test_response=wo_submit)
+        configure_data_output = configure_data(
+            receipt_create_obj,
+            input_json=receipt_request_json, worker_obj=None,
+            pre_test_response=wo_submit)
+
+        if env.test_mode == "listener":
+            receipt_create_response = submit_request_listener(
+                env.uri_client, configure_data_output,
+                env.wo_create_receipt_output_json_file_name)
+        else:
             receipt_create_response = workorder_receiptcreate_sdk(
-                wo_create_receipt, receipt_request_json)
-            logger.info("***Receipt created***\n%s\n", receipt_create_response)
-            logger.info("***Receipt request***\n%s\n", wo_create_receipt)
-            return wo_create_receipt
+                configure_data_output, receipt_request_json)
+        logger.info("***Receipt created***\n%s\n", receipt_create_response)
+        logger.info("***Receipt request***\n%s\n", configure_data_output)
+
+        return configure_data_output

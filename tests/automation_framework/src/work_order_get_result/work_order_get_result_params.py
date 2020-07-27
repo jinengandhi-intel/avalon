@@ -51,7 +51,7 @@ class WorkOrderGetResult():
         return self.form_workorder_getresult_input(input_json, pre_test_response)
 
     def form_workorder_getresult_input(self, input_json, pre_test_response):
-        getresult_request = wconfig.workorder_getresult_input(self, input_json, pre_test_response)
+        getresult_request = wconfig.workorder_getresult_receipt_input(self, input_json, pre_test_response)
         if env.test_mode == "listener":
             getresult_request = json.loads(wconfig.to_string(self))
         logger.info('*****GetResult Request***** \

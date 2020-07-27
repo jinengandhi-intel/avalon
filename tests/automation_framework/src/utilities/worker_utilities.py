@@ -116,6 +116,8 @@ def read_yaml(calling_path, response=None, input_data={}):
             default_params["workerId"] = response['workerId']
         if 'workOrderId' in input_data.keys():
             default_params["workOrderId"] = response['params']['workOrderId']
+        if 'requesterId' in input_data.keys():
+            default_params["requesterId"] = response['params']['requesterId']
         if "details" in input_data.keys():
             details = response.get("result", {}).get("details", {})
             if (env.test_mode == "listener") and input_data:
@@ -129,7 +131,6 @@ def read_yaml(calling_path, response=None, input_data={}):
                 if "workerEncryptionKey" in input_keys:
                     default_params[key] = \
                         details["workerTypeData"]['encryptionKey']
-
     return default_params
 
 
@@ -282,14 +283,24 @@ def worker_retrieve_input(caller, input_json, pre_test_response):
             worker_id = retrieve_worker_id(pre_test_response)
         return worker_id
 
-def workorder_getresult_input(caller, input_json, pre_test_response):
+def workorder_getresult_receipt_input(caller, input_json, pre_test_response):
     if env.test_mode == "listener":
         add_json_values(caller, input_json, pre_test_response)
     else:
         workorder_id = None
-        if "workOrderId" in input_json["params"].keys():
-            if input_json["params"]["workOrderId"] == "":
-                workorder_id = pre_test_response.get_work_order_id()
-            else:
-                workorder_id = input_json["params"]["workOrderId"]
-        return workorder_id
+        requester_id = None
+        if input_json["method"] == "WorkOrderReceiptLookUp":
+            if "requesterId" in input_json["params"].keys():
+                if input_json["params"]["requesterId"] == "":
+                    requester_id = pre_test_response.get_requester_id()
+                else:
+                    requester_id = input_json["params"]["requesterId"]
+            return requester_id
+        else:
+            if "workOrderId" in input_json["params"].keys():
+                if input_json["params"]["workOrderId"] == "":
+                    workorder_id = pre_test_response.get_work_order_id()
+                else:
+                    workorder_id = input_json["params"]["workOrderId"]
+            return workorder_id
+

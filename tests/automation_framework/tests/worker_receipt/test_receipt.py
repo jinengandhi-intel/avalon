@@ -48,6 +48,7 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_work_order_retrieve_receipt_success(self):
 
         result_response = self.test_obj.run_test(self.retrieve_receipt_config)
@@ -88,6 +89,7 @@ class TestClass():
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
+    @pytest.mark.listener
     def test_work_order_receipt_lookup_success(self):
 
         result_response = self.test_obj.run_test(self.receipt_lookup_config)

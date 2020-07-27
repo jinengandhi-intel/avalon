@@ -24,6 +24,8 @@ class WorkOrderReceiptCreate():
         self.request_mode = "file"
         self.tamper = {"params": {}}
         self.output_json_file_name = "work_order_create_receipt"
+        self.config_file = os.path.join(
+            env.work_order_receipt, "work_order_create_receipt.yaml")
 
     def add_json_values(self, input_json_params,
                         worker_obj, private_key, tamper, wo_submit):
@@ -43,7 +45,7 @@ class WorkOrderReceiptCreate():
         wo_request_hash = self.sig_obj.calculate_request_hash(input_json_temp)
         final_hash_str = crypto_utility.byte_array_to_base64(wo_request_hash)
         input_params_list = input_json_params["params"].keys()
-        config_yaml = wconfig.read_yaml(__file__, worker_obj, input_json_temp)
+        config_yaml = wconfig.read_yaml(self, worker_obj, wo_submit)
         config_yaml["workOrderId"] = wo_submit["params"]["workOrderId"]
         config_yaml["workerServiceId"] = wo_submit["params"]["workerId"]
         for c_key, c_val in config_yaml.items():

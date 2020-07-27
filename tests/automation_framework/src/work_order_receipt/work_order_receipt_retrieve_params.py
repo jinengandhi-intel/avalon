@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import env
 import src.utilities.worker_utilities as wconfig
 import avalon_crypto_utils.signature as signature
 import env
@@ -34,11 +35,19 @@ class WorkOrderReceiptRetrieve():
 
     def configure_data(
             self, input_json, worker_obj, wo_submit):
-        self.add_json_values(input_json, self.tamper, wo_submit)
-        final_json = json.loads(wconfig.to_string(self))
-        return final_json
+        #wconfig.add_json_values(input_json, self.tamper, wo_submit)
+        #final_json = json.loads(wconfig.to_string(self))
+        return self.form_worker_receipt_retrieve_input(input_json, wo_submit)
 
     def configure_data_sdk(
             self, input_json, worker_obj, wo_submit):
-        workorder_id = wo_submit.get_work_order_id()
-        return workorder_id
+        return self.form_worker_receipt_retrieve_input(input_json, wo_submit)
+
+    def form_worker_receipt_retrieve_input(self, input_json, wo_submit):
+        receipt_retrieve_request = wconfig.workorder_getresult_receipt_input(
+            self, input_json, wo_submit)
+        if env.test_mode == "listener":
+            receipt_retrieve_request = json.loads(wconfig.to_string(self))
+        logger.info('***** Receipt Retrieve Request ***** \
+                        \n%s\n', receipt_retrieve_request)
+        return receipt_retrieve_request
