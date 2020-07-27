@@ -6,13 +6,13 @@ Default:
 test_workordergetresult_emptyparameter:
   workOrderId: remove
 test_workordergetresult_unknownparameter:
-  workOrderId123: '""'
+  workOrderId123: ''
 test_workordergetresult_workorderid_alphabetsonly:
   workOrderId: abcdefghijklmnop
 test_workordergetresult_workorderid_different:
   workOrderId: 11b2dd896b3c2198fa6ef0c51988800faa82dbc12010ec710aacce938f87a06p
 test_workordergetresult_workorderid_nonhexstring:
-  workOrderId: '"001122"'
+  workOrderId: '001122'
 test_workordergetresult_workorderid_null:
   workOrderId: 'null'
 test_workordergetresult_workorderid_specialchar:

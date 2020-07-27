@@ -136,7 +136,7 @@ class AvalonImpl():
             env.work_order_input_file,
             "work_order_get_result.yaml")
         wo_getresult_request_json = read_config(
-            getresult_config_file, "test_id")
+            getresult_config_file, "")
 
         configure_data_output = configure_data(
             wo_getresult_obj, input_json=wo_getresult_request_json,

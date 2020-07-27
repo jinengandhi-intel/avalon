@@ -44,7 +44,7 @@ class WorkOrderSubmit():
         self.worker_obj = ''
         self.encrypted_session_key = ''
         self.config_file = os.path.join(
-        env.work_order_input_file, "work_order_submit.ini")
+        env.work_order_input_file, "work_order_submit.yaml")
 
     def add_json_values(self, input_json_temp, pre_test_response,
                         private_key, tamper):
@@ -209,8 +209,8 @@ class WorkOrderSubmit():
         :param input_json_inData: inData for WorkOrderSubmit as per EEA spec
         """
         data = copy.deepcopy(input_json_inData)
-        if "inData" not in self.params_obj:
-            self.params_obj["inData"] = []
+        # if "inData" not in self.params_obj:
+        self.params_obj["inData"] = []
 
         try:
             data.sort(key=lambda x: x['index'])
@@ -232,8 +232,8 @@ class WorkOrderSubmit():
         This functions adds the outData to the params_obj
         :param input_json_outData: outData for WorkOrderSubmit as per EEA spec
         """
-        if "outData" not in self.params_obj:
-            self.params_obj["outData"] = []
+        # if "outData" not in self.params_obj:
+        self.params_obj["outData"] = []
 
         for outData_item in input_json_outData:
             out_data_copy = self.params_obj["outData"]

@@ -913,7 +913,7 @@ class TestClass():
                 result_response,
                 "worker "
                 "6ba1f459476bc43b65fd554f6b65910a8f551e4bcb"
-                "0eee6a96dcebaeb14f2ae923456234564567"
+                "0eee6a96dcebaeb14f2ae923456234564567 "
                 "doesn't exists")
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
