@@ -44,3 +44,8 @@ if test_mode == "listener":
     result_path = os.path.join(currentPath, "results")
     if not os.path.exists(result_path):
         os.mkdir(result_path)
+
+if proxy_mode:
+    expected_error_code = 0
+else:
+    expected_error_code = -32601

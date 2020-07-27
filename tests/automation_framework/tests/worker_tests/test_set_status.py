@@ -30,11 +30,6 @@ class TestClass():
     test_obj = AvalonBase()
     config_file = os.path.join(env.worker_input_file, "worker_setstatus.yaml")
 
-    if env.proxy_mode:
-        expected_response = 0
-    else:
-        expected_response = -32601
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -42,8 +37,10 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, self.expected_response)
-                is ResultStatus.SUCCESS.value)
+        assert (
+            validate_response_code(
+                result_response,
+                env.expected_error_code) is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -52,10 +49,12 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, self.expected_response)
-                is ResultStatus.SUCCESS.value)
+        assert (
+            validate_response_code(
+                result_response,
+                env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(test_data.get("method"))
+        self.test_obj.teardown(self.config_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -64,10 +63,12 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, self.expected_response)
-                is ResultStatus.SUCCESS.value)
+        assert (
+            validate_response_code(
+                result_response,
+                env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(test_data.get("method"))
+        self.test_obj.teardown(self.config_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -76,10 +77,12 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, self.expected_response)
-                is ResultStatus.SUCCESS.value)
+        assert (
+            validate_response_code(
+                result_response,
+                env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(test_data.get("method"))
+        self.test_obj.teardown(self.config_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -90,10 +93,12 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, self.expected_response)
-                is ResultStatus.SUCCESS.value)
+        assert (
+            validate_response_code(
+                result_response,
+                env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(test_data.get("method"))
+        self.test_obj.teardown(self.config_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -104,10 +109,12 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, self.expected_response)
-                is ResultStatus.SUCCESS.value)
+        assert (
+            validate_response_code(
+                result_response,
+                env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(test_data.get("method"))
+        self.test_obj.teardown(self.config_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -118,10 +125,12 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, self.expected_response)
-                is ResultStatus.SUCCESS.value)
+        assert (
+            validate_response_code(
+                result_response,
+                env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(test_data.get("method"))
+        self.test_obj.teardown(self.config_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -130,9 +139,11 @@ class TestClass():
 
         result_response = self.test_obj.run_test(self.config_file)
 
-        assert (validate_response_code(result_response, self.expected_response)
-                is ResultStatus.SUCCESS.value)
+        assert (
+            validate_response_code(
+                result_response,
+                env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(test_data.get("method"))
+        self.test_obj.teardown(self.config_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
