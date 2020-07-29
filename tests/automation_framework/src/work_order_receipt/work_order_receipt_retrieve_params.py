@@ -35,8 +35,6 @@ class WorkOrderReceiptRetrieve():
 
     def configure_data(
             self, input_json, worker_obj, wo_submit):
-        #wconfig.add_json_values(input_json, self.tamper, wo_submit)
-        #final_json = json.loads(wconfig.to_string(self))
         return self.form_worker_receipt_retrieve_input(input_json, wo_submit)
 
     def configure_data_sdk(

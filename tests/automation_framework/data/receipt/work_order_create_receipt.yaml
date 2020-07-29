@@ -7,7 +7,7 @@ Default:
     requesterGeneratedNonce: ''
     requesterId: '0x3456'
     requesterSignature: ''
-    signatureRules: ''
+    signatureRules: "SHA-256/SECP256K1"
     workOrderId: ''
     workOrderRequestHash: ''
     workerId: ''

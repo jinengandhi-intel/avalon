@@ -18,8 +18,7 @@ from src.utilities.submit_request_utility import \
     worker_lookup_sdk, \
     worker_retrieve_sdk, workorder_receiptcreate_sdk, \
     workorder_submit_sdk, workorder_getresult_sdk
-from src.utilities.worker_utilities \
-    import configure_data, read_config
+import src.utilities.worker_utilities as wconfig   
 import avalon_sdk.worker.worker_details as worker
 logger = logging.getLogger(__name__)
 
@@ -33,7 +32,7 @@ class AvalonImpl():
         :return: lookup_response - response returned from WorkerLookUp Request
         """
         lookup_obj = WorkerLookUp()
-        configure_data_output = configure_data(
+        configure_data_output = wconfig.configure_data(
             lookup_obj, input_json=None,
             worker_obj=None,
             pre_test_response=None)
@@ -57,7 +56,7 @@ class AvalonImpl():
         """
         worker_obj = worker.SGXWorkerDetails()
         retrieve_obj = WorkerRetrieve()
-        configure_data_output = configure_data(
+        configure_data_output = wconfig.configure_data(
             retrieve_obj, input_json=None, worker_obj=None,
             pre_test_response=lookup_response)
         logger.info('*****Worker details Updated with Worker ID***** \
@@ -88,9 +87,9 @@ class AvalonImpl():
         submit_config_file = os.path.join(
             env.work_order_input_file,
             "work_order_submit.yaml")
-        submit_request_json = read_config(submit_config_file, "test_id")
+        submit_request_json = wconfig.read_config(submit_config_file, "test_id")
 
-        configure_data_output = configure_data(
+        configure_data_output = wconfig.configure_data(
             submit_obj, input_json=submit_request_json,
             worker_obj=None, pre_test_response=response_output)
 
@@ -98,8 +97,7 @@ class AvalonImpl():
             submit_response = submit_request_listener(
                 env.uri_client, configure_data_output,
                 env.wo_submit_output_json_file_name)
-            input_work_order_submit = submit_obj.compute_signature(
-                submit_obj.tamper)
+            input_work_order_submit = wconfig.compute_signature(submit_obj)
             json_obj = json.loads(input_work_order_submit)
             json_obj["sessionKey"] = submit_obj.session_key
             json_obj["sessionKeyIv"] = submit_obj.session_iv
@@ -123,10 +121,10 @@ class AvalonImpl():
         getresult_config_file = os.path.join(
             env.work_order_input_file,
             "work_order_get_result.yaml")
-        wo_getresult_request_json = read_config(
+        wo_getresult_request_json = wconfig.read_config(
             getresult_config_file, "")
 
-        configure_data_output = configure_data(
+        configure_data_output = wconfig.configure_data(
             wo_getresult_obj, input_json=wo_getresult_request_json,
             worker_obj=None,
             pre_test_response=wo_submit)
@@ -156,10 +154,10 @@ class AvalonImpl():
 
         create_receipt_config = os.path.join(
             env.work_order_receipt, "work_order_create_receipt.yaml")
-        receipt_request_json = read_config(
+        receipt_request_json = wconfig.read_config(
             create_receipt_config, "test_config")
 
-        configure_data_output = configure_data(
+        configure_data_output = wconfig.configure_data(
             receipt_create_obj,
             input_json=receipt_request_json, worker_obj=None,
             pre_test_response=wo_submit)

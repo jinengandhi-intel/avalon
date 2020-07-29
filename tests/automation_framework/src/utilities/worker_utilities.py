@@ -23,6 +23,9 @@ import secrets
 import random
 from enum import IntEnum, unique
 from configparser import ConfigParser
+import avalon_crypto_utils.crypto_utility as crypto_utils
+from ecdsa.util import sigencode_der, sigdecode_der
+import copy
 
 """
 status code defined for test case
@@ -46,7 +49,10 @@ inputs_params = [
     "workerId",
     "organizationId",
     "applicationTypeId",
-    "requesterGeneratedNonce"]
+    "requesterGeneratedNonce",
+    "requesterNonce",
+    "requesterId",
+    "workOrderId"]
 
 
 def set_parameter(input_dict, param, value):
@@ -93,56 +99,64 @@ def update_global_params(default_params):
     organizationId = secrets.token_hex(32)
     applicationTypeId = secrets.token_hex(32)
     requesterGeneratedNonce = str(random.randint(1, 10 ** 10))
+    requesterNonce = secrets.token_hex(16)
+    requesterId = secrets.token_hex(32)
+    workOrderId = secrets.token_hex(32)
     default_keys = default_params.keys()
     for param in inputs_params:
         if param in default_keys:
             default_params[param] = eval(param)
 
 
-def read_yaml(calling_path, response=None, input_data={}):
-    # config_file = calling_path.replace(".py", ".yaml")
-    # test_mode = env.test_mode
-    # file_contents = open(config_file, "r")
-    # default_params = yaml.load(file_contents)["{}_config".format(test_mode)]
-    # logger.info("Worker Utilities default params is %s", default_params)
-
-    default_params = read_config(calling_path.config_file, "")["params"]
-    # logger.info("Ini Default params is %s", default_params)
-
+def read_yaml(caller, response=None, input_data={}):
+    config_data = read_config(caller.config_file, "")
+    default_params = copy.deepcopy(config_data["params"])
     update_global_params(default_params)
-    # file_contents.close()
+
     if response:
-        if 'workerId' in response.keys():
-            default_params["workerId"] = response['workerId']
-        if 'workOrderId' in input_data.keys():
-            default_params["workOrderId"] = response['params']['workOrderId']
-        if 'requesterId' in input_data.keys():
-            default_params["requesterId"] = response['params']['requesterId']
-        if "details" in input_data.keys():
-            details = response.get("result", {}).get("details", {})
-            if (env.test_mode == "listener") and input_data:
-                input_keys = input_data.keys()
-                for key in ['hashingAlgorithm']:
-                    if key in input_keys:
-                        default_params[key] = details[key]
-                for key in ['organizationId', 'applicationTypeId']:
-                    if key in input_keys:
-                        default_params[key] = response["result"][key]
-                if "workerEncryptionKey" in input_keys:
+        response_key_list = list(response.keys())
+        details = response.get("result", {}).get("details", {})
+        if input_data != {}:
+            input_keys = input_data.keys()
+            for key in input_keys:
+                if key in ['hashingAlgorithm']:
+                    default_params[key] = details[key]
+                if key in ['organizationId', 'applicationTypeId']:
+                    default_params[key] = response["result"][key]
+                if key == "workerEncryptionKey":
                     default_params[key] = \
-                        details["workerTypeData"]['encryptionKey']
+                            details["workerTypeData"]['encryptionKey']        
+                if key == "encryptedSessionKey":
+                    if input_data["encryptedSessionKey"] != "":
+                        caller.encrypted_session_key = input_data["encryptedSessionKey"]
+                    else:
+                        caller.encrypted_session_key = \
+                            crypto_utils.generate_encrypted_key(
+                                caller.session_key,
+                                details['workerTypeData']['encryptionKey'])
+                if env.test_mode == "listener":
+                    if key == "sessionKeyIv":
+                        default_params["sessionKeyIv"] = crypto_utils.byte_array_to_hex(
+                            caller.session_iv)
+                    if key == "workerEncryptionKey":
+                        default_params["workerEncryptionKey"] = \
+                                crypto_utils.strip_begin_end_public_key(
+                                default_params["workerEncryptionKey"])   
+        if "workloadId" in input_data.keys():
+            default_params["workloadId"] = input_data["workloadId"]
+        if hasattr(caller, "encrypted_session_key"):
+            if caller.encrypted_session_key and (env.test_mode == "listener"):
+                default_params["encryptedSessionKey"] = \
+                    crypto_utils.byte_array_to_hex(caller.encrypted_session_key)
     return default_params
 
 
-def add_json_values(caller, input_json_temp, pre_test_response):
-    frame = inspect.stack()[1]
-    module = inspect.getmodule(frame[0])
-    config_path = module.__file__
-
-    input_json = input_json_temp["params"].copy()
+def add_json_values(caller, input_json_temp, pre_test_response={}):
+    input_json = copy.deepcopy(input_json_temp["params"])
     input_json["id"] = input_json_temp["id"]
     input_param_list = input_json_temp["params"].keys()
     config_yaml = read_yaml(caller, pre_test_response, input_json)
+
     for key in input_param_list:
         if key == "details":
             details_input_list = input_json["details"].keys()
@@ -153,14 +167,67 @@ def add_json_values(caller, input_json_temp, pre_test_response):
                 else:
                     value = details_json[d_key]
                 set_parameter(caller.details_obj, d_key, value)
+        elif key == "workerServiceId":
+            set_parameter(caller.params_obj, "workerServiceId", pre_test_response["params"]["workerId"])
+        elif key == "workOrderId":
+            if input_json_temp["method"] != "WorkOrderSubmit":
+                value = input_json[key] if input_json[key] != "" else pre_test_response["params"]["workOrderId"]
+            else:
+               value = input_json[key] if input_json[key] != "" else config_yaml[key]
+            set_parameter(caller.params_obj, "workOrderId", value)
+        elif key == "requesterId":
+            if input_json_temp["method"] != "WorkOrderSubmit":
+                value = input_json[key] if input_json[key] != "" else pre_test_response["params"]["requesterId"]
+            else:
+               value = input_json[key] if input_json[key] != "" else config_yaml[key]
+            set_parameter(caller.params_obj, "requesterId", value)
+        elif (key == "workerId") and (input_json_temp["method"] != "WorkerRegister"):
+            if input_json_temp["method"] != "WorkOrderSubmit" and (pre_test_response.get("params") != None):
+                value = input_json[key] if input_json[key] != "" else pre_test_response["params"]["workerId"]
+            else:
+               value = input_json[key] if input_json[key] != "" else pre_test_response[key]
+            set_parameter(caller.params_obj, "workerId", value)
         else:
             value = input_json[key] \
                 if input_json[key] != "" else config_yaml[key]
+            if (key == "workloadId") and (input_json[key] != ""):
+                    value = value.encode("UTF-8").hex()
             set_parameter(caller.params_obj, key, value)
-    tamper = caller.tamper
-    for key in tamper["params"].keys():
-        set_parameter(caller.params_obj, key, tamper["params"][key])
 
+        tamper = caller.tamper
+        for key in tamper["params"].keys():
+            set_parameter(caller.params_obj, key, tamper["params"][key])
+    if caller.params_obj.get("workerEncryptionKey") is not None:
+        if env.test_mode == "listener":
+            caller.params_obj["workerEncryptionKey"] = caller.params_obj["workerEncryptionKey"].encode("UTF-8").hex()
+        value = input_json["workerEncryptionKey"] if \
+            input_json["workerEncryptionKey"] != "" else \
+            caller.params_obj.get("workerEncryptionKey", '')
+        caller.params_obj["workerEncryptionKey"] = value
+    
+    for key in ["inData", "outData"]:
+        if key in input_param_list:
+            if input_json[key] != "":
+                input_json_data = input_json[key]
+                add_in_out_data(caller, input_json_data, key)
+            else:
+                caller.params_obj[key] = ""
+
+    if "encryptedRequestHash" in input_param_list:
+        if input_json["encryptedRequestHash"] != "":
+            caller.params_obj["encryptedRequestHash"] = \
+                input_json["encryptedRequestHash"]
+        else:
+            caller.params_obj["encryptedRequestHash"] = \
+                compute_encrypted_request_hash(caller)
+    
+    if "workOrderRequestHash" in input_param_list:
+        wo_request_hash = caller.sig_obj.calculate_request_hash(pre_test_response["params"])
+        final_hash_str = crypto_utils.byte_array_to_base64(wo_request_hash)
+        set_parameter(caller.params_obj, "workOrderRequestHash", final_hash_str)
+    
+    if "requesterSignature" in input_param_list and (input_json_temp["method"] == "WorkOrderReceiptCreate"):
+        receipt_requester_signature(caller)
 
 def tamper_request(input_json, tamper_instance, tamper):
     '''Function to tamper the input request at required instances.
@@ -214,7 +281,6 @@ def config_data_update(input, key, value):
         if value == "remove":
             del input[key]
         elif isinstance(value, dict):
-            #value = yaml.safe_load(value)
             for n_k, n_v in value.items():
                 if isinstance(n_v, dict):
                     config_data_update(input[key], n_k, n_v)
@@ -230,7 +296,6 @@ def config_data_update(input, key, value):
         elif isinstance(v, dict):
             config_data_update(v, key, value)
 
-
 def read_config(config_file, test_name):
     yaml_file = open(config_file, "r")
     parsed_yaml_file = yaml.load(yaml_file)
@@ -241,7 +306,6 @@ def read_config(config_file, test_name):
         for key, value in test_items.items():
             config_data_update(test_config, key, value)
 
-    logger.info("Test config is %s\n", test_config)
     return test_config
 
 def retrieve_worker_id(pre_test_response):
@@ -304,3 +368,210 @@ def workorder_getresult_receipt_input(caller, input_json, pre_test_response):
                     workorder_id = input_json["params"]["workOrderId"]
             return workorder_id
 
+def compute_signature(caller, rVerKey=False):
+    tamper = caller.tamper
+    compute_requester_signature(caller, rVerKey)
+
+    input_after_sign = to_string(caller, True)
+    tamper_instance = 'after_sign'
+    tampered_request = tamper_request(input_after_sign, tamper_instance,
+                                        tamper)
+    return tampered_request
+
+def compute_requester_signature(caller, rVerKey=False):
+    """
+    This function will compute requester signature and update the verifying key
+    """
+    caller.public_key = crypto_utils.get_verifying_key(caller.private_key)
+    if rVerKey:
+        caller.params_obj["receiptVerificationKey"] = caller.public_key
+    else:
+        if get_parameter(caller.params_obj, "requesterSignature") is not None:
+            signature_result = \
+                caller.private_key.sign_digest_deterministic(
+                    bytes(caller.final_hash),
+                    sigencode=sigencode_der)
+            caller.requester_signature = crypto_utils.byte_array_to_base64(
+                signature_result)
+            if caller.params_obj["requesterSignature"] == "":
+                caller.params_obj["requesterSignature"] = \
+                    caller.requester_signature
+            caller.params_obj["verifyingKey"] = caller.public_key
+
+def compute_encrypted_request_hash(caller):
+    """
+    This function will compute encrypted request Hash
+    :return: encrypted request hash
+    """
+    first_string = get_parameter(caller.params_obj, "requesterNonce") or ""
+    worker_order_id = get_parameter(caller.params_obj, "workOrderId") or ""
+    worker_id = get_parameter(caller.params_obj, "workerId") or ""
+    workload_id = get_parameter(caller.params_obj, "workloadId") or ""
+    requester_id = get_parameter(caller.params_obj, "requesterId") or ""
+
+    first_string += \
+        worker_order_id + worker_id + workload_id + requester_id
+
+    concat_hash = first_string.encode("UTF-8")
+    hash_1 = crypto_utils.compute_message_hash(concat_hash)
+
+    in_data = get_parameter(caller.params_obj, "inData")
+    out_data = get_parameter(caller.params_obj, "outData")
+
+    hash_2 = bytearray()
+    if in_data is not None:
+        hash_2 = compute_hash_string(in_data)
+
+    hash_3 = bytearray()
+    if out_data is not None:
+        hash_3 = compute_hash_string(out_data)
+
+    final_string = hash_1 + hash_2 + hash_3
+    caller.final_hash = crypto_utils.compute_message_hash(final_string)
+
+    encrypted_request_hash = crypto_utils.byte_array_to_hex(
+        crypto_utils.encrypt_data(
+            caller.final_hash, caller.session_key,
+            caller.session_iv))
+
+    return encrypted_request_hash
+
+def receipt_requester_signature(caller):
+    wo_receipt_str = (caller.params_obj["workOrderId"] +
+                      caller.params_obj["workerServiceId"] +
+                      caller.params_obj["workerId"] +
+                      caller.params_obj["requesterId"] +
+                      str(caller.params_obj["receiptCreateStatus"]) +
+                      caller.params_obj["workOrderRequestHash"] +
+                      caller.params_obj["requesterGeneratedNonce"])
+
+    wo_receipt_bytes = bytes(wo_receipt_str, "UTF-8")
+    wo_receipt_hash = crypto_utils.compute_message_hash(wo_receipt_bytes)
+    status, wo_receipt_sign = caller.sig_obj.generate_signature(
+        wo_receipt_hash,
+        caller.private_key
+    )
+    set_parameter(caller.params_obj, "requesterSignature", wo_receipt_sign)
+
+def compute_hash_string(data):
+    """
+    This function will compute the message hash and encode it in UTF-8
+    :param data: Data, as specified by workload
+    :return: computed and encoded string
+    """
+    final_hash_str = ""
+    hash_string = ""
+    for data_item in data:
+        data = ""
+        datahash = ""
+        e_key = ""
+        iv = ""
+        if 'dataHash' in data_item:
+            datahash = data_item['dataHash']
+        if 'data' in data_item:
+            data = data_item['data']
+        if 'encryptedDataEncryptionKey' in data_item:
+            e_key = \
+                data_item['encryptedDataEncryptionKey']
+        if 'iv' in data_item:
+            iv = data_item['iv']
+        concat_string = datahash + data + e_key + iv
+        hash_string += concat_string
+
+    final_hash_str = crypto_utils.compute_message_hash(
+        hash_string.encode("UTF-8"))
+    return final_hash_str
+
+def add_in_out_data(caller, input_json_data, key="inData"):
+    """
+    This function will add inData/outData params to the params_obj
+    :param input_json_data: inData/outData for WorkOrderSubmit as per EEA spec
+    """
+    data = copy.deepcopy(input_json_data)
+    caller.params_obj[key] = []
+
+    if key == "inData":
+        try:
+            data.sort(key=lambda x: x['index'])
+        except Exception:
+            logger.debug("Sorting Indata based on Index failed \n")
+
+    for item in data:
+        data_copy = caller.params_obj[key]
+        mod_data_copy = _add_data_item(caller, data_copy, item)
+        if mod_data_copy is not None:
+            caller.params_obj[key] = mod_data_copy
+        else:
+            data_copy = caller.params_obj[key]
+            data_copy.append(item)
+            caller.params_obj[key] = data_copy
+
+def _add_data_item(caller, data_copy, data_item):
+    try:
+        index = data_item['index']
+        data = data_item['data'].encode('UTF-8')
+        if 'encryptedDataEncryptionKey' in data_item:
+            e_key = \
+                data_item['encryptedDataEncryptionKey'].encode('UTF-8')
+        else:
+            e_key = "null".encode('UTF-8')
+        if (not e_key) or (e_key == "null".encode('UTF-8')):
+            enc_data = crypto_utils.encrypt_data(
+                data, caller.session_key, caller.session_iv)
+            base64_enc_data = \
+                (crypto_utils.byte_array_to_base64(enc_data))
+            if 'dataHash' in data_item:
+                if not data_item['dataHash']:
+                    dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                        crypto_utils.compute_message_hash(data)))
+                else:
+                    dataHash_enc_data = (
+                        crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(
+                                data_item['dataHash'])))
+            logger.debug("encrypted indata - %s",
+                            crypto_utils.byte_array_to_base64(enc_data))
+        elif e_key == "-".encode('UTF-8'):
+            # Skip encryption and just encode workorder data
+            # to base64 format
+            base64_enc_data = (crypto_utils.byte_array_to_base64(data))
+            if 'dataHash' in data_item:
+                if not data_item['dataHash']:
+                    dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                        crypto_utils.compute_message_hash(data)))
+                else:
+                    dataHash_enc_data = (
+                        crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(
+                                data_item['dataHash'])))
+        else:
+            data_key = None
+            data_iv = None
+            enc_data = crypto_utils.encrypt_data(data, data_key, data_iv)
+            base64_enc_data = \
+                (crypto_utils.byte_array_to_base64(enc_data))
+            if 'dataHash' in data_item:
+                if not data_item['dataHash']:
+                    dataHash_enc_data = (crypto_utils.byte_array_to_hex(
+                        crypto_utils.compute_message_hash(data)))
+                else:
+                    dataHash_enc_data = (
+                        crypto_utils.byte_array_to_hex(
+                            crypto_utils.compute_message_hash(
+                                data_item['dataHash'])))
+            logger.debug("encrypted indata - %s",
+                            crypto_utils.byte_array_to_base64(enc_data))
+
+        enc_indata_item = {'index': index,
+                            'dataHash': dataHash_enc_data,
+                            'data': base64_enc_data}
+
+        for key in ["encryptedDataEncryptionKey", "iv"]:
+            if data_item.get(key) is not None:
+                enc_indata_item[key] = data_item[key]
+        data_copy.append(enc_indata_item)
+
+        return data_copy
+    except Exception as e:
+        logger.exception("Exception occured %s, in add_data_item", e)
+        return None

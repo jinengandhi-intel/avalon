@@ -151,3 +151,4 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
+        

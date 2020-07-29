@@ -75,7 +75,7 @@ class TestClass():
         
         result_response = self.test_obj.run_test(self.config_file, direct_avalon_listener=True)
 
-        logger.info("**********Received Response*********\n%s\n", response)
+        logger.info("**********Received Response*********\n%s\n", result_response)
 
         assert (
             check_negative_test_responses(

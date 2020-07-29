@@ -1,4 +1,5 @@
 Default:
+  jsonrpc: 2.0
   id: 11
   method: WorkOrderGetResult
   params:
