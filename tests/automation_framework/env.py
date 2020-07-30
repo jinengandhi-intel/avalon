@@ -55,3 +55,4 @@ if proxy_mode:
     expected_error_code = 0
 else:
     expected_error_code = -32601
+

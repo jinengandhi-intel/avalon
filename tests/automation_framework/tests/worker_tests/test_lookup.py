@@ -18,11 +18,10 @@ import os
 import env
 from src.utilities.verification_utils \
     import check_worker_lookup_response
-from src.utilities.worker_utilities \
-    import ResultStatus, read_config
 from src.utilities.verification_utils \
     import check_negative_test_responses
 import operator
+from src.utilities.worker_utilities import ResultStatus
 from src.libs.test_base import AvalonBase
 
 logger = logging.getLogger(__name__)

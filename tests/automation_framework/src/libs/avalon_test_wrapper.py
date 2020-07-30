@@ -3,26 +3,6 @@ import os
 import json
 import logging
 import re
-from src.worker_lookup.worker_lookup_params \
-    import WorkerLookUp
-from src.work_order_receipt.work_order_receipt_params \
-    import WorkOrderReceiptCreate
-from src.work_order_receipt.work_order_receipt_retrieve_params \
-    import WorkOrderReceiptRetrieve
-from src.worker_retrieve.worker_retrieve_params \
-    import WorkerRetrieve
-from src.worker_register.worker_register_params \
-    import WorkerRegister
-from src.worker_set_status.worker_set_status_params \
-    import WorkerSetStatus
-from src.worker_update.worker_update_params \
-    import WorkerUpdate
-from src.work_order_get_result.work_order_get_result_params \
-    import WorkOrderGetResult
-from src.work_order_submit.work_order_submit_params \
-    import WorkOrderSubmit
-from src.work_order_receipt.work_order_receipt_lookup \
-    import WorkOrderReceiptLookUp
 from src.libs.avalon_libs import AvalonImpl
 from src.utilities.submit_request_utility import \
     submit_request_listener, worker_lookup_sdk, \
@@ -31,6 +11,7 @@ from src.utilities.submit_request_utility import \
     worker_setstatus_sdk, workorder_receiptretrieve_sdk, \
     worker_update_sdk, workorder_getresult_sdk, workorder_receiptlookup_sdk
 from src.utilities.worker_utilities import configure_data
+from src.libs.avalon_request import AvalonRequest
 
 TCFHOME = os.environ.get("TCF_HOME", "../../")
 logger = logging.getLogger(__name__)
@@ -38,7 +19,7 @@ avalon_lib_instance = AvalonImpl()
 
 
 def build_request_obj(input_json_obj,
-                      pre_test_output=None, pre_test_response=None):
+                        pre_test_response=None, method_name=""):
     """
     This function is used after the pre_test_env and for the
     actual request method passed in the test JSON file. Depending on the
@@ -54,9 +35,8 @@ def build_request_obj(input_json_obj,
     worker_lookup SDK function requires worker_type parameter
     worker_retrieve SDK function requires worker_id parameter.
     """
-    action_obj = eval(input_json_obj.get("method") + "()")
-    request_obj = configure_data(
-        action_obj, input_json_obj, pre_test_output, pre_test_response)
+    action_obj = AvalonRequest()
+    request_obj = configure_data(action_obj, input_json_obj, pre_test_response)
     return request_obj, action_obj
 
 

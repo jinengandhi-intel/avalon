@@ -1,8 +1,0 @@
-listener_config:
-  workerId : ''
-  workerServiceId : ''
-  workOrderId : ''
-  requesterId : "0x3456"
-  signatureRules : "SHA-256/SECP256K1"
-  receiptCreateStatus : 0
-  requesterGeneratedNonce : ''

@@ -9,8 +9,6 @@ from src.utilities.worker_utilities \
 import inspect
 import json
 from src.libs.avalon_libs import AvalonImpl
-from src.utilities.worker_utilities \
-    import ResultStatus, read_config
 
 avalon_lib_instance = AvalonImpl()
 logger = logging.getLogger(__name__)
@@ -77,8 +75,7 @@ class AvalonBase():
         pre_test_output = pre_test_worker_env(input_file)
         wo_submit = pre_test_workorder_env(input_file, pre_test_output)
         request_obj, action_obj = build_request_obj(
-            input_file, pre_test_output=pre_test_output,
-            pre_test_response=wo_submit)
+            input_file, pre_test_response=wo_submit)
         logger.info("AvalonBase wo_submit %s", wo_submit)
         self.build_request_output.update(
             {'request_obj': request_obj,
@@ -112,9 +109,10 @@ class AvalonBase():
         """
         pre_test_output = pre_test_worker_env(input_file)
         wo_submit = pre_test_workorder_env(input_file, pre_test_output)
+
         request_obj, action_obj = build_request_obj(
-            input_file, pre_test_output=pre_test_output,
-            pre_test_response=wo_submit)
+            input_file, pre_test_response=wo_submit)
+
         self.build_request_output.update(
             {'request_obj': request_obj,
              'pre_test_output': pre_test_output,
@@ -134,9 +132,10 @@ class AvalonBase():
         logger.info("***wo_submit*****\n%s\n", wo_submit)
         # submit_request = json.loads(wo_submit)
         result_response = self.getresult(wo_submit, {"error": {"code": 5}})
+
         request_obj, action_obj = build_request_obj(
-            input_file, pre_test_output=pre_test_output,
-            pre_test_response=wo_submit)
+            input_file, pre_test_response=wo_submit)
+
         self.build_request_output.update(
             {'request_obj': request_obj,
              'pre_test_output': pre_test_output,

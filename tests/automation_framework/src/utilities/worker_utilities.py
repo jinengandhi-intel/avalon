@@ -266,15 +266,14 @@ def tamper_request(input_json, tamper_instance, tamper):
     tampered_json = json.dumps(input_json_temp)
     return tampered_json
 
+def configure_data(action_obj, input_json, pre_test_response, method_name=""):
+    if input_json is not None:
+        method_name = input_json["method"]
 
-def configure_data(action_obj, input_json, worker_obj, pre_test_response):
-    if env.test_mode == "listener":
-        configure_data_output = action_obj.configure_data(
-            input_json, worker_obj, pre_test_response)
-    else:
-        configure_data_output = action_obj.configure_data_sdk(
-            input_json, worker_obj, pre_test_response)
-    return configure_data_output
+    func_called = "form_{}_request".format(method_name.lower())
+    func = getattr(action_obj, func_called)
+    request_obj = func(input_json, pre_test_response)
+    return request_obj
 
 def config_data_update(input, key, value):
     if key in input.keys():

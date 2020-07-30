@@ -2,28 +2,21 @@ import os
 import env
 import logging
 import json
-from src.worker_lookup.worker_lookup_params \
-    import WorkerLookUp
-from src.utilities.submit_request_utility import \
-    submit_request_listener
-from src.worker_retrieve.worker_retrieve_params \
-    import WorkerRetrieve
-from src.work_order_submit.work_order_submit_params \
-    import WorkOrderSubmit
-from src.work_order_get_result.work_order_get_result_params \
-    import WorkOrderGetResult
-from src.work_order_receipt.work_order_receipt_params \
-    import WorkOrderReceiptCreate
+
 from src.utilities.submit_request_utility import \
     worker_lookup_sdk, \
     worker_retrieve_sdk, workorder_receiptcreate_sdk, \
-    workorder_submit_sdk, workorder_getresult_sdk
+    workorder_submit_sdk, workorder_getresult_sdk, \
+    submit_request_listener
+from src.libs.avalon_request import AvalonRequest
 import src.utilities.worker_utilities as wconfig   
 import avalon_sdk.worker.worker_details as worker
+
 logger = logging.getLogger(__name__)
 
 
 class AvalonImpl():
+    action_obj = AvalonRequest()
 
     def worker_lookup(self):
         """
@@ -31,10 +24,10 @@ class AvalonImpl():
         Config need to be set in env.py
         :return: lookup_response - response returned from WorkerLookUp Request
         """
-        lookup_obj = WorkerLookUp()
         configure_data_output = wconfig.configure_data(
-            lookup_obj, input_json=None,
-            worker_obj=None,
+            self.action_obj,
+            input_json=None,
+            method_name="WorkerLookUp",
             pre_test_response=None)
         if env.test_mode == "listener":
             lookup_response = submit_request_listener(
@@ -55,10 +48,10 @@ class AvalonImpl():
         :return: Details of worker present in lookup_response
         """
         worker_obj = worker.SGXWorkerDetails()
-        retrieve_obj = WorkerRetrieve()
         configure_data_output = wconfig.configure_data(
-            retrieve_obj, input_json=None, worker_obj=None,
-            pre_test_response=lookup_response)
+            self.action_obj, input_json=None, 
+            pre_test_response=lookup_response,
+            method_name="WorkerRetrieve")
         logger.info('*****Worker details Updated with Worker ID***** \
                                        \n%s\n', configure_data_output)
         if env.test_mode == "listener":
@@ -82,7 +75,6 @@ class AvalonImpl():
         :param response_output: Request to be sent
         :return: Returns the response received from WorkOrderSubmit request
         """
-        submit_obj = WorkOrderSubmit()
 
         submit_config_file = os.path.join(
             env.work_order_input_file,
@@ -90,19 +82,20 @@ class AvalonImpl():
         submit_request_json = wconfig.read_config(submit_config_file, "test_id")
 
         configure_data_output = wconfig.configure_data(
-            submit_obj, input_json=submit_request_json,
-            worker_obj=None, pre_test_response=response_output)
+            self.action_obj, input_json=submit_request_json,
+             pre_test_response=response_output,
+            method_name="WorkOrderSubmit")
 
         if env.test_mode == "listener":
             submit_response = submit_request_listener(
                 env.uri_client, configure_data_output,
                 env.wo_submit_output_json_file_name)
-            input_work_order_submit = wconfig.compute_signature(submit_obj)
+            input_work_order_submit = wconfig.compute_signature(self.action_obj)
             json_obj = json.loads(input_work_order_submit)
-            json_obj["sessionKey"] = submit_obj.session_key
-            json_obj["sessionKeyIv"] = submit_obj.session_iv
+            json_obj["sessionKey"] = self.action_obj.session_key
+            json_obj["sessionKeyIv"] = self.action_obj.session_iv
             json_obj["requesterNonce"] = \
-                submit_obj.params_obj["requesterNonce"]
+                self.action_obj.params_obj["requesterNonce"]
         else:
             submit_response = workorder_submit_sdk(configure_data_output)
             json_obj = configure_data_output
@@ -116,7 +109,6 @@ class AvalonImpl():
         :param wo_submit:
         :return:
         """
-        wo_getresult_obj = WorkOrderGetResult()
 
         getresult_config_file = os.path.join(
             env.work_order_input_file,
@@ -125,8 +117,8 @@ class AvalonImpl():
             getresult_config_file, "")
 
         configure_data_output = wconfig.configure_data(
-            wo_getresult_obj, input_json=wo_getresult_request_json,
-            worker_obj=None,
+            self.action_obj, input_json=wo_getresult_request_json,
+            method_name="WorkOrderGetResult",
             pre_test_response=wo_submit)
 
         # submit work order get result request and retrieve response
@@ -150,7 +142,6 @@ class AvalonImpl():
         :param wo_submit: Response received from WorkOrderSubmit request
         :return: Response received from creating receipt
         """
-        receipt_create_obj = WorkOrderReceiptCreate()
 
         create_receipt_config = os.path.join(
             env.work_order_receipt, "work_order_create_receipt.yaml")
@@ -158,9 +149,10 @@ class AvalonImpl():
             create_receipt_config, "test_config")
 
         configure_data_output = wconfig.configure_data(
-            receipt_create_obj,
-            input_json=receipt_request_json, worker_obj=None,
-            pre_test_response=wo_submit)
+            self.action_obj,
+            input_json=receipt_request_json, 
+            pre_test_response=wo_submit,
+            method_name="WorkOrderReceiptCreate")
 
         if env.test_mode == "listener":
             receipt_create_response = submit_request_listener(
