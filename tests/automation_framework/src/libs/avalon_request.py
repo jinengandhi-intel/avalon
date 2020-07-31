@@ -37,6 +37,12 @@ class AvalonRequest():
         self.tamper = {"params": {}}
            
     def form_workerupdate_request(self, input_json, pre_test_response):
+        """
+        This method forms the request for WorkerUpdate for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerUpdate", "id": 11}
         self.config_file = env.worker_update_input_file
@@ -53,6 +59,12 @@ class AvalonRequest():
         return update_params
             
     def form_workersetstatus_request(self, input_json, pre_test_response):
+        """
+        This method forms the request for WorkerSetStatus for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerSetStatus", "id": 12}
         self.config_file = env.worker_setstatus_input_file
@@ -68,6 +80,12 @@ class AvalonRequest():
         return final_json
     
     def form_workerretrieve_request(self, input_json, pre_test_response):
+        """
+        This method forms the request for WorkerRetrieve for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerRetrieve", "id": 2}
         self.config_file = env.worker_retrieve_input_file
@@ -79,6 +97,12 @@ class AvalonRequest():
         return retrieve_request
     
     def form_workerregister_request(self, input_json, pre_test_response):
+        """
+        This method forms the request for WorkerRegister for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerRegister", "id": 10}
         self.config_file = env.worker_register_input_file
@@ -95,6 +119,12 @@ class AvalonRequest():
         return final_json
     
     def form_workerlookup_request(self, input_json, pre_test_response):
+        """
+        This method forms the request for WorkerLookup for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerLookUp", "id": 1}
         self.config_file = env.worker_lookup_input_file
@@ -114,6 +144,12 @@ class AvalonRequest():
         return lookup_request
     
     def form_workordersubmit_request(self, input_json, pre_test_response):
+        """
+        This method forms the request for WorkOrderSubmit for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.session_key = crypto_utils.generate_key()
         self.session_iv = crypto_utils.generate_iv()
@@ -174,6 +210,12 @@ class AvalonRequest():
         return wo_params
     
     def form_workorderreceiptlookup_request(self, input_json, wo_submit):
+        """
+        This method forms the request for WorkOrderReceiptLookUp for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderReceiptLookUp", "id": 11}
         self.config_file = env.receipt_lookup_input_file
@@ -187,6 +229,12 @@ class AvalonRequest():
         return receipt_lookup_request
     
     def form_workorderreceiptcreate_request(self, input_json, pre_test_response):
+        """
+        This method forms the request for WorkOrderReceiptCreate for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderReceiptCreate", "id": 6}
         self.sig_obj = signature.ClientSignature()
@@ -224,6 +272,12 @@ class AvalonRequest():
         return wo_create_receipt
     
     def form_workorderreceiptretrieve_request(self, input_json, wo_submit):
+        """
+        This method forms the request for WorkOrderReceiptRetrieve for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderReceiptRetrieve", "id": 11}
         self.sig_obj = signature.ClientSignature()
@@ -239,6 +293,12 @@ class AvalonRequest():
         return receipt_retrieve_request
 
     def form_workordergetresult_request(self, input_json, pre_test_response):
+        """
+        This method forms the request for WorkOrderGetResult for listener and
+        sdk as per EEA spec document
+        input_json: Input JSON data as per spec
+        pre_test_response: response from previous api call
+        """
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderGetResult", "id": 4}
         self.config_file = env.work_order_getresult_input_file

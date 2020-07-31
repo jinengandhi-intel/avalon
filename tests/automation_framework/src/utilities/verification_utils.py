@@ -85,6 +85,9 @@ def is_valid_params(request_elements, keys_count=None):
 
 
 def verify_work_order_signature(response, worker_obj, requester_nonce):
+    """
+    This function will verify the work order signature
+    """
     verify_key = \
         worker_obj['result']['details']['workerTypeData']['verificationKey']
 
@@ -107,6 +110,9 @@ def verify_work_order_signature(response, worker_obj, requester_nonce):
 
 
 def decrypt_work_order_response(response, session_key, session_iv):
+    """
+    This function will decrypt the work order response
+    """
     decrypted_data = ""
     try:
         decrypted_data = enclave_helper.decrypted_response(response,
@@ -124,6 +130,9 @@ def decrypt_work_order_response(response, session_key, session_iv):
 
 
 def decode_work_order_response(out_data):
+    """
+    This function will decode the work order response
+    """
     decode_data_err = 1
     output = []
     try:
@@ -138,6 +147,9 @@ def decode_work_order_response(out_data):
 
 
 def verify_test(response, expected_res, worker_obj, work_order_obj):
+    """
+    This function will verifies the test response
+    """
     if not isinstance(work_order_obj, dict):
         session_key = work_order_obj.session_key
         session_iv = work_order_obj.session_iv
@@ -178,6 +190,9 @@ def verify_test(response, expected_res, worker_obj, work_order_obj):
 
 
 def check_worker_lookup_response(response, operator, value):
+    """
+    This function will verifies the worker lookup response
+    """
     if env.proxy_mode:
         if operator(response[0], value):
             err_cd = 0
@@ -192,6 +207,9 @@ def check_worker_lookup_response(response, operator, value):
 
 
 def check_worker_retrieve_response(response):
+    """
+    This function will verifies the worker retrieve response
+    """
     if response["result"]["workerType"] == 1:
         err_cd = 0
     else:
@@ -201,7 +219,9 @@ def check_worker_retrieve_response(response):
 
 
 def check_worker_create_receipt_response(response):
-
+    """
+    This function will verifies the create receipt response
+    """
     if env.blockchain_type == "ethereum":
         if response[0] == 1:
             err_cd = 0
@@ -217,6 +237,9 @@ def check_worker_create_receipt_response(response):
 
 
 def check_worker_retrieve_receipt_response(response):
+    """
+    This function will verify the retrieve receipt response
+    """
     if env.blockchain_type == "ethereum":
         if response[0] == 1:
             err_cd = 0
@@ -232,6 +255,9 @@ def check_worker_retrieve_receipt_response(response):
 
 
 def check_negative_test_responses(response, expected_res):
+    """
+    This function will verify the negative test response
+    """
     error_msg = response.get("error", {}).get("message")
     if expected_res == "Invalid data format for work order id":
         if error_msg == "Invalid data format for work order id" or\
@@ -247,12 +273,9 @@ def check_negative_test_responses(response, expected_res):
 
 
 def check_workorder_receipt_lookup_response(response, operator, value):
-    ''' if env.blockchain_type == "ethereum":
-        if operator(response[0], value):
-            err_cd = 0
-        else:
-            err_cd = 1
-    else:'''
+    """
+    This function will verify the receipt lookup response
+    """
     if env.blockchain_type == "fabric":
         if operator(response[0], value):
             err_cd = 0

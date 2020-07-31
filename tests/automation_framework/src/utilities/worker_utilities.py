@@ -56,15 +56,24 @@ inputs_params = [
 
 
 def set_parameter(input_dict, param, value):
+    """
+    This function will set the parameter in input_dict
+    """
     input_dict[param] = value
 
 
 def get_parameter(input_dict, param):
+    """
+    This function will get the parameter from input_dict
+    """
     if param in input_dict.keys():
         return input_dict[param]
 
 
 def get_params(class_obj):
+    """
+    This function will copy the params_obj and inData/outData from class object
+    """
     params_copy = class_obj.params_obj.copy()
     if "inData" in params_copy:
         params_copy.pop("inData")
@@ -74,10 +83,17 @@ def get_params(class_obj):
 
 
 def get_details(class_obj):
+    """
+    This function will copy the details_obj from class object
+    """
     return class_obj.details_obj.copy()
 
 
 def to_string(class_obj, in_data_check=False, detail_obj=False):
+    """
+    This function will form the Json Request for listener from id_obj,
+    params_obj, details_obj
+    """
     json_rpc_request = class_obj.id_obj
     json_rpc_request["params"] = get_params(class_obj)
     if in_data_check:
@@ -95,6 +111,9 @@ def to_string(class_obj, in_data_check=False, detail_obj=False):
 
 
 def update_global_params(default_params):
+    """
+    This function will set the default params
+    """
     workerId = secrets.token_hex(32)
     organizationId = secrets.token_hex(32)
     applicationTypeId = secrets.token_hex(32)
@@ -109,6 +128,9 @@ def update_global_params(default_params):
 
 
 def read_yaml(caller, response=None, input_data={}):
+    """
+    This function will read the default config from yaml file
+    """
     config_data = read_config(caller.config_file, "")
     default_params = copy.deepcopy(config_data["params"])
     update_global_params(default_params)
@@ -152,6 +174,10 @@ def read_yaml(caller, response=None, input_data={}):
 
 
 def add_json_values(caller, input_json_temp, pre_test_response={}):
+    """
+    This function will add the input values extracted from default params
+    or pre_test_response based upon conditions
+    """
     input_json = copy.deepcopy(input_json_temp["params"])
     input_json["id"] = input_json_temp["id"]
     input_param_list = input_json_temp["params"].keys()
@@ -266,7 +292,12 @@ def tamper_request(input_json, tamper_instance, tamper):
     tampered_json = json.dumps(input_json_temp)
     return tampered_json
 
+
 def configure_data(action_obj, input_json, pre_test_response, method_name=""):
+    """
+    This function will call the respective functions from AvalonRequest class obj
+    based upon method specified in input_json method or specified method name
+    """
     if input_json is not None:
         method_name = input_json["method"]
 
@@ -275,7 +306,11 @@ def configure_data(action_obj, input_json, pre_test_response, method_name=""):
     request_obj = func(input_json, pre_test_response)
     return request_obj
 
+
 def config_data_update(input, key, value):
+    """
+    This function will update the key parameters from yaml files
+    """
     if key in input.keys():
         if value == "remove":
             del input[key]
@@ -295,7 +330,12 @@ def config_data_update(input, key, value):
         elif isinstance(v, dict):
             config_data_update(v, key, value)
 
+
 def read_config(config_file, test_name):
+    """
+    This function will read the yaml file and update test section
+    with default section and forms the input json request
+    """
     yaml_file = open(config_file, "r")
     parsed_yaml_file = yaml.load(yaml_file)
     test_config = parsed_yaml_file["Default"]
@@ -307,7 +347,11 @@ def read_config(config_file, test_name):
 
     return test_config
 
+
 def retrieve_worker_id(pre_test_response):
+    """
+    This function will retrieve the worker id from pre_test_response
+    """
     worker_id = None
     if env.proxy_mode:
         worker_id = random.choice(pre_test_response[2])
@@ -323,16 +367,21 @@ def retrieve_worker_id(pre_test_response):
             logger.error("ERROR: Failed to lookup worker")
     return worker_id
 
+
 def worker_retrieve_input(caller, input_json, pre_test_response):
+<<<<<<< Updated upstream
     if env.test_mode == env.listener_string:
+=======
+    """
+    This function will retrieve the workerId or requesterId from pre_test_response
+    """
+    if env.test_mode == "listener":
+>>>>>>> Stashed changes
         pre_test_response["workerId"] = retrieve_worker_id(
         pre_test_response)
         if input_json is not None:
             add_json_values(caller, input_json, pre_test_response)
         else:
-            # set_parameter(caller.params_obj, "workerId",
-            #                     crypto_utils.strip_begin_end_public_key
-            #                     (pre_test_response["workerId"]))
             set_parameter(caller.params_obj, "workerId", pre_test_response["workerId"])
     else:
         worker_id = None
@@ -367,7 +416,11 @@ def workorder_getresult_receipt_input(caller, input_json, pre_test_response):
                     workorder_id = input_json["params"]["workOrderId"]
             return workorder_id
 
+
 def compute_signature(caller, rVerKey=False):
+    """
+    This function will compute the requester signature
+    """
     tamper = caller.tamper
     compute_requester_signature(caller, rVerKey)
 
@@ -435,7 +488,11 @@ def compute_encrypted_request_hash(caller):
 
     return encrypted_request_hash
 
+
 def receipt_requester_signature(caller):
+    """
+    This function will form the requester signature based upon params_obj
+    """
     wo_receipt_str = (caller.params_obj["workOrderId"] +
                       caller.params_obj["workerServiceId"] +
                       caller.params_obj["workerId"] +
@@ -481,6 +538,7 @@ def compute_hash_string(data):
         hash_string.encode("UTF-8"))
     return final_hash_str
 
+
 def add_in_out_data(caller, input_json_data, key="inData"):
     """
     This function will add inData/outData params to the params_obj
@@ -505,7 +563,11 @@ def add_in_out_data(caller, input_json_data, key="inData"):
             data_copy.append(item)
             caller.params_obj[key] = data_copy
 
+
 def _add_data_item(caller, data_copy, data_item):
+    """
+    This function will decode data_item present in inData/outData
+    """
     try:
         index = data_item['index']
         data = data_item['data'].encode('UTF-8')

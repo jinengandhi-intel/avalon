@@ -64,6 +64,9 @@ def _create_work_order_receipt_instance(blockchain_type, config):
 
 def submit_request_listener(
         uri_client, input_json_str):
+    """
+    Submit the JSON request to the listener
+    """
     request_method = input_json_str["method"]
     input_json_str = json.dumps(input_json_str)
 
@@ -99,6 +102,9 @@ def submit_request_listener(
 
 
 def workorder_submit_sdk(wo_params, input_json_obj=None):
+    """
+    This function will send the WorkOrderSubmit request for SDK Model
+    """
     if input_json_obj is None:
         req_id = 3
     else:
@@ -126,6 +132,10 @@ def workorder_submit_sdk(wo_params, input_json_obj=None):
 
 
 def worker_lookup_sdk(worker_type, input_json=None):
+    """
+    This function will send the WorkerLookUp request for SDK Model.
+    It will handle both ethereum and sdk function calls
+    """
     logger.info("WorkerLookUp SDK code path\n")
     if input_json is None:
         jrpc_req_id = 3
@@ -159,6 +169,11 @@ def worker_lookup_sdk(worker_type, input_json=None):
 
 
 def worker_register_sdk(register_params, input_json):
+    """
+    This function will send the WorkerRegister request for SDK Model
+    It will take care of both Ethereum function call and SDK/Fabric
+    function call
+    """
     logger.info("WorkerRegister SDK code path\n")
     jrpc_req_id = input_json["id"]
     if input_json is None:
@@ -194,6 +209,11 @@ def worker_register_sdk(register_params, input_json):
 
 
 def worker_setstatus_sdk(set_status_params, input_json):
+    """
+    This function will send the WorkerSetStatus request for SDK Model
+    It will take care of both Ethereum function call and SDK/Fabric
+    function call
+    """
     logger.info("WorkerSetStatus SDK code path\n")
     logger.info("Worker status params %s \n", set_status_params)
     if input_json is None:
@@ -225,6 +245,11 @@ def worker_setstatus_sdk(set_status_params, input_json):
 
 
 def worker_retrieve_sdk(worker_id, input_json=None):
+    """
+    This function will send the WorkerRetrieve request for SDK Model
+    It will take care of both Ethereum function call and SDK/Fabric
+    function call
+    """
     logger.info("WorkerRetrieve SDK code path\n")
     worker_obj = worker_details.SGXWorkerDetails()
     if input_json is None:
@@ -265,6 +290,11 @@ def worker_retrieve_sdk(worker_id, input_json=None):
 
 
 def worker_update_sdk(update_params, input_json=None):
+    """
+    This function will send the WorkerUpdate request for SDK Model
+    It will take care of both Ethereum function call and SDK/Fabric
+    function call
+    """
     logger.info("WorkerUpdate SDK code path\n")
     logger.info("Worker update params %s \n", update_params)
     worker_obj = worker_details.SGXWorkerDetails()
@@ -292,6 +322,11 @@ def worker_update_sdk(update_params, input_json=None):
 
 
 def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
+    """
+    This function will send the WorkOrderReceiptCreate request for SDK Model
+    It will take care of both Ethereum function call and SDK/Fabric
+    function call
+    """
     logger.info("WorkerReceiptCreate SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
@@ -319,6 +354,11 @@ def workorder_receiptcreate_sdk(wo_create_receipt, input_json):
 
 
 def workorder_receiptretrieve_sdk(workorderId, input_json):
+    """
+    This function will send the WorkOrderReceiptRetrieve request for SDK Model
+    It will take care of both Ethereum function call and SDK/Fabric
+    function call
+    """
     logger.info("ReceiptRetrieve SDK code path\n")
     jrpc_req_id = input_json["id"]
     config = config_file_read()
@@ -349,6 +389,11 @@ def workorder_receiptretrieve_sdk(workorderId, input_json):
 
 
 def workorder_getresult_sdk(workorderId, input_json):
+    """
+    This function will send the WorkerRegister request for SDK Model
+    It will take care of both Ethereum function call and SDK/Fabric
+    function call
+    """
     jrpc_req_id = input_json["id"]
     config = config_file_read()
     work_order = _create_work_order_instance(env.blockchain_type, config)
@@ -366,6 +411,11 @@ def workorder_getresult_sdk(workorderId, input_json):
 
 
 def workorder_receiptlookup_sdk(requesterId, input_json):
+    """
+    This function will send the WorkOrderReceiptLookUp request for SDK Model
+    It will take care of both Ethereum function call and SDK/Fabric
+    function call
+    """
     jrpc_req_id = input_json["id"]
     config = config_file_read()
 

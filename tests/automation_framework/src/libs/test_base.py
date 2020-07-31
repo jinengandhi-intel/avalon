@@ -240,7 +240,11 @@ class AvalonBase():
         return response
 
     def avalon_uncomputed(self, test_data=None):
-
+        """
+        This function will be called by run_test, and send the request to listener
+        :param test_data: test input data
+        :return Response from listener
+        """
         json_str = json.dumps(test_data, indent=4)
         logger.info(
             '**********Received Request post message*********\n%s\n',
@@ -250,7 +254,12 @@ class AvalonBase():
         return response
 
     def avalon_computed(self, test_data):
-
+        """
+        This function will be called by run_test and calls the respective function
+        as per input json method defined
+        :params test_data: test input data
+        :return Response from listener
+        """
         submit_response = ""
         method_name = test_data.get("method")
         if "WorkOrderSubmit" in method_name:
@@ -299,6 +308,10 @@ class AvalonBase():
         return submit_response
 
     def run_test(self, config_file, direct_avalon_listener=None):
+        """
+        This test will be called by all the test functions for
+        running the tests.
+        """
         test_name = inspect.stack()[1].function
         test_data = read_config(config_file, test_name)
         submit_response = ""
