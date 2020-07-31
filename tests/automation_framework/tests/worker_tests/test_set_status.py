@@ -14,7 +14,6 @@
 
 import pytest
 import logging
-import os
 import env
 from src.utilities.verification_utils \
     import check_worker_lookup_response, check_worker_retrieve_response, \
@@ -28,14 +27,13 @@ logger = logging.getLogger(__name__)
 
 class TestClass():
     test_obj = AvalonBase()
-    config_file = os.path.join(env.worker_input_file, "worker_setstatus.yaml")
 
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_set_status_success(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_setstatus_input_file)
 
         assert (
             validate_response_code(
@@ -47,42 +45,42 @@ class TestClass():
     @pytest.mark.listener
     def test_worker_set_status_unknown_parameter(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_setstatus_input_file)
 
         assert (
             validate_response_code(
                 result_response,
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(self.config_file)
+        self.test_obj.teardown(env.worker_setstatus_input_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_set_status_invalid_parameter(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_setstatus_input_file)
 
         assert (
             validate_response_code(
                 result_response,
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(self.config_file)
+        self.test_obj.teardown(env.worker_setstatus_input_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_set_status_params_status_0(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_setstatus_input_file)
 
         assert (
             validate_response_code(
                 result_response,
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(self.config_file)
+        self.test_obj.teardown(env.worker_setstatus_input_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -91,14 +89,14 @@ class TestClass():
     @pytest.mark.proxy
     def test_worker_set_status_params_status_2(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_setstatus_input_file)
 
         assert (
             validate_response_code(
                 result_response,
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(self.config_file)
+        self.test_obj.teardown(env.worker_setstatus_input_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -107,14 +105,14 @@ class TestClass():
     @pytest.mark.proxy
     def test_worker_set_status_params_status_3(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_setstatus_input_file)
 
         assert (
             validate_response_code(
                 result_response,
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(self.config_file)
+        self.test_obj.teardown(env.worker_setstatus_input_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
@@ -123,27 +121,27 @@ class TestClass():
     @pytest.mark.proxy
     def test_worker_set_status_params_status_4(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_setstatus_input_file)
 
         assert (
             validate_response_code(
                 result_response,
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(self.config_file)
+        self.test_obj.teardown(env.worker_setstatus_input_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_set_status_params_status_5(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_setstatus_input_file)
 
         assert (
             validate_response_code(
                 result_response,
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        self.test_obj.teardown(self.config_file)
+        self.test_obj.teardown(env.worker_setstatus_input_file)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

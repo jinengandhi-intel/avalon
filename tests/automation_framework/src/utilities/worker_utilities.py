@@ -134,7 +134,7 @@ def read_yaml(caller, response=None, input_data={}):
                             crypto_utils.generate_encrypted_key(
                                 caller.session_key,
                                 details['workerTypeData']['encryptionKey'])
-                if env.test_mode == "listener":
+                if env.test_mode == env.listener_string:
                     if key == "sessionKeyIv":
                         default_params["sessionKeyIv"] = crypto_utils.byte_array_to_hex(
                             caller.session_iv)
@@ -145,7 +145,7 @@ def read_yaml(caller, response=None, input_data={}):
         if "workloadId" in input_data.keys():
             default_params["workloadId"] = input_data["workloadId"]
         if hasattr(caller, "encrypted_session_key"):
-            if caller.encrypted_session_key and (env.test_mode == "listener"):
+            if caller.encrypted_session_key and (env.test_mode == env.listener_string):
                 default_params["encryptedSessionKey"] = \
                     crypto_utils.byte_array_to_hex(caller.encrypted_session_key)
     return default_params
@@ -198,7 +198,7 @@ def add_json_values(caller, input_json_temp, pre_test_response={}):
         for key in tamper["params"].keys():
             set_parameter(caller.params_obj, key, tamper["params"][key])
     if caller.params_obj.get("workerEncryptionKey") is not None:
-        if env.test_mode == "listener":
+        if env.test_mode == env.listener_string:
             caller.params_obj["workerEncryptionKey"] = caller.params_obj["workerEncryptionKey"].encode("UTF-8").hex()
         value = input_json["workerEncryptionKey"] if \
             input_json["workerEncryptionKey"] != "" else \
@@ -324,7 +324,7 @@ def retrieve_worker_id(pre_test_response):
     return worker_id
 
 def worker_retrieve_input(caller, input_json, pre_test_response):
-    if env.test_mode == "listener":
+    if env.test_mode == env.listener_string:
         pre_test_response["workerId"] = retrieve_worker_id(
         pre_test_response)
         if input_json is not None:
@@ -347,7 +347,7 @@ def worker_retrieve_input(caller, input_json, pre_test_response):
         return worker_id
 
 def workorder_getresult_receipt_input(caller, input_json, pre_test_response):
-    if env.test_mode == "listener":
+    if env.test_mode == env.listener_string:
         add_json_values(caller, input_json, pre_test_response)
     else:
         workorder_id = None

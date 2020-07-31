@@ -6,7 +6,7 @@ import os
 import sys
 import logging
 import config.config as pconfig
-TCFHOME = os.environ.get("TCF_HOME", "../../")
+
 logger = logging.getLogger(__name__)
 sys.path.append(os.getcwd())
 
@@ -16,11 +16,9 @@ def setup_config(args=None):
     """ Fixture to setup initial config for pytest session. """
 
     # parse out the configuration file first
-    conffiles = ["tcs_config.toml"]
-    confpaths = [".", TCFHOME + "/config"]
-
     try:
-        config = pconfig.parse_configuration_files(conffiles, confpaths)
+        config = pconfig.parse_configuration_files(
+            env.tcs_config_conffiles, env.confpaths)
         config_json_str = json.dumps(config, indent=4)
     except pconfig.ConfigurationException as e:
         logger.error(str(e))

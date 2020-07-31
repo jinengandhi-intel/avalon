@@ -13,7 +13,6 @@ from src.utilities.submit_request_utility import \
 from src.utilities.worker_utilities import configure_data
 from src.libs.avalon_request import AvalonRequest
 
-TCFHOME = os.environ.get("TCF_HOME", "../../")
 logger = logging.getLogger(__name__)
 avalon_lib_instance = AvalonImpl()
 
@@ -40,7 +39,7 @@ def build_request_obj(input_json_obj,
     return request_obj, action_obj
 
 
-def submit_request(uri_client, output_obj, output_file, input_file):
+def submit_request(uri_client, output_obj, input_file):
     """
     Single function that is called from the test with the relevant
     input parameters. For listener, output_obj is the JSON obj, for
@@ -48,9 +47,9 @@ def submit_request(uri_client, output_obj, output_file, input_file):
     as an output from build_request_obj function.
     """
     request_method = input_file.get("method")
-    if env.test_mode == "listener":
+    if env.test_mode == env.listener_string:
         submit_response = submit_request_listener(
-            uri_client, output_obj, output_file)
+            uri_client, output_obj)
     else:
         work_type = (re.findall('WorkOrder|Worker', request_method))[0]
         work_func = re.split(work_type, request_method)[1]

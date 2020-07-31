@@ -1,6 +1,5 @@
 import pytest
 import logging
-import os
 import env
 from src.libs.test_base import AvalonBase
 from src.utilities.verification_utils \
@@ -13,15 +12,14 @@ logger = logging.getLogger(__name__)
 
 class TestClass():
     test_obj = AvalonBase()
-    config_file = os.path.join(
-        env.work_order_input_file, "work_order_get_result.yaml")
 
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_workordergetresult_success(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (
             verify_test(
@@ -36,7 +34,8 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_workorderid_different(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (
             check_negative_test_responses(
@@ -50,7 +49,8 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_workorderid_specialchar(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (
             check_negative_test_responses(
@@ -64,7 +64,8 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_workorderid_null(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (
             check_negative_test_responses(
@@ -78,7 +79,8 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_workorderid_nonhexstring(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (
             check_negative_test_responses(
@@ -93,7 +95,8 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_workorderid_alphabetsonly(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (
             check_negative_test_responses(
@@ -107,7 +110,8 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_workorderid_withoutquotes(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (
             check_negative_test_responses(
@@ -121,7 +125,8 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_emptyparameter(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (validate_response_code(result_response, 2)
                 is ResultStatus.SUCCESS.value)
@@ -132,7 +137,8 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_unknownparameter(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file)
 
         assert (validate_response_code(result_response, 2)
                 is ResultStatus.SUCCESS.value)
@@ -142,7 +148,9 @@ class TestClass():
     @pytest.mark.listener
     def test_workordergetresult_workorderId_empty(self):
 
-        result_response = self.test_obj.run_test(self.config_file, direct_avalon_listener=True)
+        result_response = self.test_obj.run_test(
+            env.work_order_getresult_input_file,
+            direct_avalon_listener=True)
 
         assert (
             check_negative_test_responses(
@@ -151,4 +159,3 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')
-        

@@ -14,7 +14,6 @@
 
 import pytest
 import logging
-import os
 import env
 from src.utilities.verification_utils \
     import check_worker_lookup_response, check_worker_retrieve_response, \
@@ -28,14 +27,13 @@ logger = logging.getLogger(__name__)
 
 class TestClass():
     test_obj = AvalonBase()
-    config_file = os.path.join(env.worker_input_file, "worker_retrieve.yaml")
 
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_retrieve_success(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_retrieve_input_file)
 
         assert (check_worker_retrieve_response(result_response)
                 is ResultStatus.SUCCESS.value)
@@ -47,7 +45,7 @@ class TestClass():
     @pytest.mark.proxy
     def test_worker_retrieve_empty_params(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_retrieve_input_file)
 
         assert (
             check_negative_test_responses(
@@ -60,7 +58,7 @@ class TestClass():
     @pytest.mark.listener
     def test_workerretrieve_params_unknownparameter(self):
 
-        result_response = self.test_obj.run_test(self.config_file)
+        result_response = self.test_obj.run_test(env.worker_retrieve_input_file)
 
         assert (
             check_negative_test_responses(

@@ -22,12 +22,11 @@ from avalon_sdk.connector.blockchains.ethereum.ethereum_work_order \
     import EthereumWorkOrderProxyImpl
 import avalon_sdk.worker.worker_details as worker_details
 logger = logging.getLogger(__name__)
-TCFHOME = os.environ.get("TCF_HOME", "../../")
 
 
 def config_file_read():
     config = pconfig.parse_configuration_files(
-        env.conffiles, env.confpaths)
+        env.tcf_connector_conffile, env.confpaths)
     config["tcf"]["json_rpc_uri"] = env.uri_client_sdk
     return config
 
@@ -64,15 +63,9 @@ def _create_work_order_receipt_instance(blockchain_type, config):
 
 
 def submit_request_listener(
-        uri_client, input_json_str, output_json_file_name):
-    req_time = time.strftime("%Y%m%d_%H%M%S")
+        uri_client, input_json_str):
     request_method = input_json_str["method"]
     input_json_str = json.dumps(input_json_str)
-    # write request to file
-    signed_input_file = ('./results/' + output_json_file_name + '_' + req_time
-                         + '_request.json')
-    with open(signed_input_file, 'w') as req_file:
-        req_file.write(json.dumps(input_json_str, ensure_ascii=False))
 
     if request_method == "WorkOrderGetResult":
         logger.info("- Validating WorkOrderGetResult Response-")
@@ -101,12 +94,6 @@ def submit_request_listener(
             input_json_str)
         response = uri_client._postmsg(input_json_str)
         logger.info('**********Received Response*********\n%s\n', response)
-
-    # write response to file
-    response_output_file = ('./results/' + output_json_file_name + '_'
-                            + req_time + '_response.json')
-    with open(response_output_file, 'w') as resp_file:
-        resp_file.write(json.dumps(response, ensure_ascii=False))
 
     return response
 

@@ -18,7 +18,6 @@ class AvalonBase():
     def __init__(self):
         self.uri_client = env.uri_client
         self.build_request_output = {}
-        self.output_json_file_name = ""
 
     def setup_and_build_request_worker_register(self, input_file):
         """
@@ -148,7 +147,6 @@ class AvalonBase():
         response = submit_request(
             self.uri_client,
             self.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
             default_data)
 
         return response
@@ -159,7 +157,6 @@ class AvalonBase():
         response = submit_request(
             self.uri_client,
             self.build_request_output['request_obj'],
-            env.worker_lookup_output_json_file_name,
             default_data)
 
         return response
@@ -243,9 +240,11 @@ class AvalonBase():
         return response
 
     def avalon_uncomputed(self, test_data=None):
-                
-        json_str=json.dumps(test_data, indent=4)
-        logger.info('**********Received Request post message*********\n%s\n', json_str)
+
+        json_str = json.dumps(test_data, indent=4)
+        logger.info(
+            '**********Received Request post message*********\n%s\n',
+            json_str)
         response = self.uri_client._postmsg(json_str)
         logger.info('**********Received Response*********\n%s\n', response)
         return response
@@ -257,58 +256,37 @@ class AvalonBase():
         if "WorkOrderSubmit" in method_name:
             self.setup_and_build_request_wo_submit(
                 test_data)
-            self.output_json_file_name = \
-                env.wo_submit_output_json_file_name
         elif "WorkOrderGetResult" in method_name:
             self.setup_and_build_request_wo_getresult(
                 test_data)
-            self.output_json_file_name = \
-                env.wo_result_output_json_file_name
         elif "WorkerLookUp" in method_name:
             self.setup_and_build_request_worker_lookup(
                 test_data)
-            self.output_json_file_name = \
-                env.worker_lookup_output_json_file_name
         elif "WorkerRetrieve" in method_name:
             self.setup_and_build_request_worker_retrieve(
                 test_data)
-            self.output_json_file_name = \
-                env.worker_retrieve_output_json_file_name
         elif "WorkerRegister" in method_name:
             self.setup_and_build_request_worker_register(
                 test_data)
-            self.output_json_file_name = \
-                env.worker_register_output_json_file_name
         elif "WorkerSetStatus" in method_name:
             self.setup_and_build_request_worker_status(
                 test_data)
-            self.output_json_file_name = \
-                env.worker_setstatus_output_json_file_name
         elif "WorkerUpdate" in method_name:
             self.setup_and_build_request_worker_update(
                 test_data)
-            self.output_json_file_name = \
-                env.worker_update_output_json_file_name
         elif "WorkOrderReceiptCreate" in method_name:
             self.setup_and_build_request_create_receipt(
                 test_data)
-            self.output_json_file_name = \
-                env.wo_create_receipt_output_json_file_name
         elif "WorkOrderReceiptRetrieve" in method_name:
             self.setup_and_build_request_receipt_retrieve(
                 test_data)
-            self.output_json_file_name = \
-                env.wo_retrieve_receipt_output_json_file_name
         elif "WorkOrderReceiptLookUp" in method_name:
             self.setup_and_build_request_create_receipt(
                 test_data)
-            self.output_json_file_name = \
-                env.wo_receipt_lookup_output_json_file_name
 
         submit_response = submit_request(
             self.uri_client,
             self.build_request_output['request_obj'],
-            self.output_json_file_name,
             test_data)
 
         if "WorkOrderSubmit" in method_name:
@@ -323,7 +301,6 @@ class AvalonBase():
     def run_test(self, config_file, direct_avalon_listener=None):
         test_name = inspect.stack()[1].function
         test_data = read_config(config_file, test_name)
-        result_response = ""
         submit_response = ""
         if direct_avalon_listener:
             submit_response = self.avalon_uncomputed(test_data)
