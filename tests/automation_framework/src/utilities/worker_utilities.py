@@ -369,14 +369,10 @@ def retrieve_worker_id(pre_test_response):
 
 
 def worker_retrieve_input(caller, input_json, pre_test_response):
-<<<<<<< Updated upstream
-    if env.test_mode == env.listener_string:
-=======
     """
     This function will retrieve the workerId or requesterId from pre_test_response
     """
-    if env.test_mode == "listener":
->>>>>>> Stashed changes
+    if env.test_mode == env.listener_string:
         pre_test_response["workerId"] = retrieve_worker_id(
         pre_test_response)
         if input_json is not None:
