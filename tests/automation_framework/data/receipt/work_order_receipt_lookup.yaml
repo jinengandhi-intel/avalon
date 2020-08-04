@@ -1,5 +1,0 @@
-Default:
-  id: 11
-  method: WorkOrderReceiptLookUp
-  params:
-    requesterId: '0x3456'

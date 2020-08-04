@@ -1,0 +1,10 @@
+Default:
+  id: 11
+  method: WorkerRetrieve
+  params:
+    workerId: ''
+test_worker_retrieve_empty_params:
+  workerId: remove
+test_workerretrieve_params_unknownparameter:
+  params:
+    unknownEncoding: unknownEncoding

@@ -1,0 +1,21 @@
+Default:
+  id: 3
+  method: WorkerSetStatus
+  params:
+    status: 1
+    workerId: ''
+test_worker_set_status_invalid_parameter:
+  status: active
+test_worker_set_status_params_status_0:
+  status: 0
+test_worker_set_status_params_status_2:
+  status: 2
+test_worker_set_status_params_status_3:
+  status: 3
+test_worker_set_status_params_status_4:
+  status: 4
+test_worker_set_status_params_status_5:
+  status: 5
+test_worker_set_status_unknown_parameter:
+  params:
+    value: 1

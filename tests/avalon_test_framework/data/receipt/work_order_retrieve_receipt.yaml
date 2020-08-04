@@ -1,0 +1,5 @@
+Default:
+  id: 11
+  method: WorkOrderReceiptRetrieve
+  params:
+    workOrderId: ''
