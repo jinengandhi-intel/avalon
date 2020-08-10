@@ -24,8 +24,11 @@ from src.libs.avalon_test_base import AvalonBase
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.usefixtures("setup_teardown")
 class TestClass():
     test_obj = AvalonBase()
+    pytestmark = pytest.mark.setup_teardown_data(
+        test_obj, "WorkerSetStatus")
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -39,8 +42,6 @@ class TestClass():
                 result_response,
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_worker_set_status_unknown_parameter(self):
 
@@ -52,8 +53,6 @@ class TestClass():
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
         self.test_obj.teardown(env.worker_setstatus_input_file)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_set_status_invalid_parameter(self):
@@ -67,8 +66,6 @@ class TestClass():
 
         self.test_obj.teardown(env.worker_setstatus_input_file)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_worker_set_status_params_status_0(self):
 
@@ -80,8 +77,6 @@ class TestClass():
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
         self.test_obj.teardown(env.worker_setstatus_input_file)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -97,8 +92,6 @@ class TestClass():
 
         self.test_obj.teardown(env.worker_setstatus_input_file)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -112,8 +105,6 @@ class TestClass():
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
         self.test_obj.teardown(env.worker_setstatus_input_file)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -129,8 +120,6 @@ class TestClass():
 
         self.test_obj.teardown(env.worker_setstatus_input_file)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_worker_set_status_params_status_5(self):
 
@@ -142,5 +131,3 @@ class TestClass():
                 env.expected_error_code) is ResultStatus.SUCCESS.value)
 
         self.test_obj.teardown(env.worker_setstatus_input_file)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')

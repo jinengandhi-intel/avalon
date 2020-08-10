@@ -65,7 +65,6 @@ class AvalonRequest():
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerSetStatus", "id": 12}
         self.config_file = env.worker_setstatus_input_file
-        logger.info(" Request json %s \n", input_json)
         set_status_request = wconfig.worker_retrieve_input(self, input_json, pre_test_response)
         if env.test_mode == env.listener_string:
             final_json = json.loads(wconfig.to_string(self))
@@ -73,7 +72,7 @@ class AvalonRequest():
             if "status" in input_json["params"].keys():
                 status = input_json["params"]["status"]
             final_json = {"worker_id": set_status_request, "status": status}
-        logger.info(" Final json %s \n", final_json)
+            logger.info(" Request json %s \n", final_json)
         return final_json
     
     def form_workerretrieve_request(self, input_json, pre_test_response):
@@ -103,7 +102,6 @@ class AvalonRequest():
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerRegister", "id": 10}
         self.config_file = env.worker_register_input_file
-        logger.info(" Request json %s \n", input_json)
         wconfig.add_json_values(self, input_json, pre_test_response)
         if env.test_mode == env.listener_string:
             final_json = json.loads(wconfig.to_string(self, detail_obj=True))
@@ -112,7 +110,7 @@ class AvalonRequest():
                 self.params_obj["workerType"] = "SGX"
             self.params_obj["details"] = self.details_obj
             final_json = self.params_obj
-        logger.info(" Final json %s \n", final_json)
+        logger.info(" Request json %s \n", final_json)
         return final_json
     
     def form_workerlookup_request(self, input_json, pre_test_response):

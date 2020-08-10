@@ -26,8 +26,11 @@ from src.libs.avalon_test_base import AvalonBase
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.usefixtures("setup_teardown")
 class TestClass():
     test_obj = AvalonBase()
+    pytestmark = pytest.mark.setup_teardown_data(
+        test_obj, "WorkerLookUp")
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -38,8 +41,6 @@ class TestClass():
 
         assert (check_worker_lookup_response(result_response, operator.gt, 0)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -54,8 +55,6 @@ class TestClass():
                 "WorkType should be an Integer of range 1-3") is
             ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_worker_lookup_empty_params(self):
 
@@ -64,8 +63,6 @@ class TestClass():
         assert (check_negative_test_responses(result_response,
                                               "Empty params in the request")
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_lookup_jsonrpc_different_version(self):
@@ -80,11 +77,9 @@ class TestClass():
                 "Improper Json request Missing or Invalid parameter or value")
             is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_worker_lookup_withoutid_params(self):
-        
+
 
         result_response = self.test_obj.run_test(env.worker_lookup_input_file, direct_avalon_listener=True)
 
@@ -93,7 +88,6 @@ class TestClass():
                 result_response,
                 "Improper Json request Missing or Invalid parameter or value")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_worker_lookup_diff_unit_length(self):
@@ -121,7 +115,7 @@ class TestClass():
 
     @pytest.mark.listener
     def test_workerlookup_params_unknownparameter(self):
-        
+
 
         result_response = self.test_obj.run_test(env.worker_lookup_input_file, direct_avalon_listener=True)
 

@@ -11,8 +11,11 @@ from src.libs.pre_processing_libs \
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.usefixtures("setup_teardown")
 class TestClass():
     test_obj = AvalonBase()
+    pytestmark = pytest.mark.setup_teardown_data(
+        test_obj, "WorkOrderGetResult")
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -25,8 +28,8 @@ class TestClass():
         assert (
             verify_test(
                 result_response, 0,
-                self.test_obj.build_request_output['pre_test_output'],
-                self.test_obj.build_request_output['action_obj'])
+                self.test_obj.setup_output['pre_test_output'],
+                self.test_obj.setup_output['pre_test_workorder_output'])
             is ResultStatus.SUCCESS.value)
         logger.info('\t\t!!! Test completed !!!\n\n')
 

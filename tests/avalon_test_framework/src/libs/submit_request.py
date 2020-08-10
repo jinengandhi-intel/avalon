@@ -96,7 +96,6 @@ def submit_request_listener(
             '**********Received Request*********\n%s\n',
             input_json_str)
         response = uri_client._postmsg(input_json_str)
-        logger.info('**********Received Response*********\n%s\n', response)
 
     return response
 

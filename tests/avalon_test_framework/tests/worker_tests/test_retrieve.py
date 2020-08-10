@@ -21,12 +21,17 @@ from src.libs.verification_libs \
 from src.libs.pre_processing_libs \
     import ResultStatus
 from src.libs.avalon_test_base import AvalonBase
+from src.libs.pre_processing_libs \
+    import read_config
 
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.usefixtures("setup_teardown")
 class TestClass():
     test_obj = AvalonBase()
+    pytestmark = pytest.mark.setup_teardown_data(
+        test_obj, "WorkerRetrieve")
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -50,7 +55,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Worker Id not found")
+                "Invalid data format for Worker id")
             is ResultStatus.SUCCESS.value)
 
         logger.info('\t\t!!! Test completed !!!\n\n')

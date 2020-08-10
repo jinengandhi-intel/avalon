@@ -24,8 +24,11 @@ from src.libs.avalon_test_base import AvalonBase
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.usefixtures("setup_teardown")
 class TestClass():
     test_obj = AvalonBase()
+    pytestmark = pytest.mark.setup_teardown_data(
+        test_obj, "WorkerRegister")
 
     @pytest.mark.listener
     def test_worker_register_success(self):
@@ -35,8 +38,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_worker_register_unknown_parameter(self):
 
@@ -44,8 +45,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -57,8 +56,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -68,8 +65,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -81,8 +76,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -91,8 +84,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -104,8 +95,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -115,8 +104,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -128,8 +115,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -139,8 +124,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -152,8 +135,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -163,8 +144,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -176,8 +155,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_workerregister_workerType_invalid(self):
 
@@ -185,8 +162,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -198,8 +173,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -209,8 +182,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -222,8 +193,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -234,8 +203,6 @@ class TestClass():
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -245,5 +212,3 @@ class TestClass():
 
         assert (validate_response_code(result_response, env.expected_error_code)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')

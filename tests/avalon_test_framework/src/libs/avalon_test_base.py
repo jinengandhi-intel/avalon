@@ -24,105 +24,7 @@ class AvalonBase():
     def __init__(self):
         self.uri_client = env.uri_client
         self.build_request_output = {}
-
-    def setup_and_build_request_worker_register(self, input_file):
-        """
-        Set up the environment required to run the WorkerRegister
-        tests, build the request for WorkerRegister and update the
-        output to build_request_obj
-        :param input_file: test data for WorkerRegister as per EEA spec
-        :return: 0
-        """
-        request_obj, action_obj = self.build_request_obj(input_file)
-        self.build_request_output.update({'request_obj': request_obj})
-        return 0
-
-    def setup_and_build_request_worker_lookup(self, input_file):
-        """
-        Set up's the environment required to run the WorkerLookUp
-        tests, build the request for WorkerLookUp and update the
-        output to build_request_obj
-        :param input_file: test data for WorkerLookUp as per EEA spec
-        :return: 0
-        """
-        request_obj, action_obj = self.build_request_obj(input_file)
-        self.build_request_output.update({'request_obj': request_obj})
-        return 0
-
-    def setup_and_build_request_wo_submit(self, input_file):
-        """
-        Set up's the environment for the WorkOrderSubmit test cases,
-        This function submits the WorkerLookUp and WorkerRetrieve
-        request before forming WorkOrderSubmit request,
-        and it update it's output to build_request_obj
-        :param input_file: test data for WorkOrderSubmit as per EEA spec
-        :return: 0
-        """
-        pre_test_output = self.pre_test_worker_env(input_file)
-        request_obj, action_obj = self.build_request_obj(
-            input_file, pre_test_response=pre_test_output)
-        self.build_request_output.update(
-            {'request_obj': request_obj,
-             'pre_test_output': pre_test_output,
-             'action_obj': action_obj})
-        return 0
-
-    def setup_and_build_request_wo_getresult(self, input_file):
-        """
-        Set up's the environment for WorkOrderGetResult test case.
-        This function submits the request for worker related functions
-        like WorkerLookUp, WorkerRetrieve and submits the WorkOrderSubmit
-        request. It also forms the request for WorkOrderGetResult
-        request and update the output to build_request_obj
-        :param input_file: test data for WorkOrderGetResult as per EEA spec
-        :return: 0
-        """
-        pre_test_output = self.pre_test_worker_env(input_file)
-        wo_submit = self.pre_test_workorder_env(input_file, pre_test_output)
-        request_obj, action_obj = self.build_request_obj(
-            input_file, pre_test_response=wo_submit)
-        logger.info("AvalonBase wo_submit %s", wo_submit)
-        self.build_request_output.update(
-            {'request_obj': request_obj,
-             'pre_test_output': pre_test_output,
-             'action_obj': wo_submit})
-        return 0
-
-    def setup_and_build_request_worker_retrieve(self, input_file):
-        """
-        Set up's the environment for WorkerRetrieve request tests and
-        build's the request for WorkerRetrieve, also updates its
-        output to build_request_obj
-        :param input_file: test data for WorkerRetrieve as per EEA spec
-        :return: 0
-        """
-        pre_test_output = self.pre_test_worker_env(input_file)
-        request_obj, action_obj = self.build_request_obj(
-            input_file, pre_test_response=pre_test_output)
-        self.build_request_output.update(
-            {'request_obj': request_obj,
-             'pre_test_output': pre_test_output,
-             'action_obj': action_obj})
-        return 0
-
-    def setup_and_build_request_create_receipt(self, input_file):
-        """
-        Set Up's the environment for Receipt Create tests and build's the
-        request for CreateReceipt and updates its output to build_request_obj
-        :param input_file: test data for ReceiptCreate as per EEA spec
-        :return: 0
-        """
-        pre_test_output = self.pre_test_worker_env(input_file)
-        wo_submit = self.pre_test_workorder_env(input_file, pre_test_output)
-
-        request_obj, action_obj = self.build_request_obj(
-            input_file, pre_test_response=wo_submit)
-
-        self.build_request_output.update(
-            {'request_obj': request_obj,
-             'pre_test_output': pre_test_output,
-             'action_obj': action_obj})
-        return 0
+        self.setup_output = {}
 
     def setup_and_build_request_receipt_retrieve(self, input_file):
         """
@@ -141,38 +43,6 @@ class AvalonBase():
         request_obj, action_obj = self.build_request_obj(
             input_file, pre_test_response=wo_submit)
 
-        self.build_request_output.update(
-            {'request_obj': request_obj,
-             'pre_test_output': pre_test_output,
-             'action_obj': action_obj})
-        return 0
-
-    def setup_and_build_request_worker_update(self, input_file):
-        """
-        Set Up's the environment for WorkerUpdate tests and build's request
-        for WorkerUpdate and update the output to build_request_obj
-        :param input_file: test data for WorkerUpdate as per EEA spec
-        :return: 0
-        """
-        pre_test_output = self.pre_test_worker_env(input_file)
-        request_obj, action_obj = self.build_request_obj(
-            input_file, pre_test_response=pre_test_output)
-        self.build_request_output.update(
-            {'request_obj': request_obj,
-             'pre_test_output': pre_test_output,
-             'action_obj': action_obj})
-        return 0
-
-    def setup_and_build_request_worker_status(self, input_file):
-        """
-        Set Up's the environment for WorkerStatus tests and build's request
-        for WorkerStatus and update the output to build_request_obj
-        :param input_file: test data for WorkerUpdate as per EEA spec
-        :return: 0
-        """
-        pre_test_output = self.pre_test_worker_env(input_file)
-        request_obj, action_obj = self.build_request_obj(
-            input_file, pre_test_response=pre_test_output)
         self.build_request_output.update(
             {'request_obj': request_obj,
              'pre_test_output': pre_test_output,
@@ -202,36 +72,19 @@ class AvalonBase():
         """
         submit_response = ""
         method_name = test_data.get("method")
-        if "WorkOrderSubmit" in method_name:
-            self.setup_and_build_request_wo_submit(
-                test_data)
-        elif "WorkOrderGetResult" in method_name:
-            self.setup_and_build_request_wo_getresult(
-                test_data)
-        elif "WorkerLookUp" in method_name:
-            self.setup_and_build_request_worker_lookup(
-                test_data)
-        elif "WorkerRetrieve" in method_name:
-            self.setup_and_build_request_worker_retrieve(
-                test_data)
-        elif "WorkerRegister" in method_name:
-            self.setup_and_build_request_worker_register(
-                test_data)
-        elif "WorkerSetStatus" in method_name:
-            self.setup_and_build_request_worker_status(
-                test_data)
-        elif "WorkerUpdate" in method_name:
-            self.setup_and_build_request_worker_update(
-                test_data)
-        elif "WorkOrderReceiptCreate" in method_name:
-            self.setup_and_build_request_create_receipt(
-                test_data)
-        elif "WorkOrderReceiptRetrieve" in method_name:
-            self.setup_and_build_request_receipt_retrieve(
-                test_data)
-        elif "WorkOrderReceiptLookUp" in method_name:
-            self.setup_and_build_request_create_receipt(
-                test_data)
+        if "WorkOrderGetResult" in method_name \
+                or "Receipt" in method_name:
+            request_obj, action_obj = self.build_request_obj(
+                test_data,
+                self.setup_output['pre_test_workorder_output'])
+        else:
+            request_obj, action_obj = self.build_request_obj(
+                test_data,
+                self.setup_output['pre_test_output'])
+
+        self.build_request_output.update(
+            {'request_obj': request_obj,
+             'action_obj': action_obj})
 
         submit_response = self.submit_request(
             self.uri_client,
@@ -262,15 +115,13 @@ class AvalonBase():
 
         return submit_response
 
-
-    def pre_test_workorder_env(self, input_file, output):
+    def pre_test_workorder_env(self, request_method, output):
         """
             This function sets up the environment required to run the test for
             submit function or receipt and result function
             For ex: Work Order Submit test requires worker_lookup, retrieve
             the worker details and pass that as the output.
             """
-        request_method = input_file["method"]
         wo_submit = avalon_lib_instance.work_order_submit(output)
 
         if request_method in [
@@ -279,26 +130,23 @@ class AvalonBase():
             avalon_lib_instance.work_order_create_receipt(wo_submit)
         return wo_submit
 
-
-    def pre_test_worker_env(self, input_file):
+    def pre_test_worker_env(self, request_method):
         """
         This function sets up the environment required by work order submit,
         work order get result and receipt API's. and pass that as the output.
         """
         response = None
-        request_method = input_file.get("method")
+        #request_method = input_file.get("method")
 
         response = avalon_lib_instance.worker_lookup()
-        logger.info("******Received WorkerLookUp Response******\n%s\n", response)
 
         if request_method not in ["WorkerRetrieve", "WorkerUpdate",
                                   "WorkerSetStatus"]:
             response = avalon_lib_instance.worker_retrieve(response)
         return response
 
-
     def build_request_obj(self, input_json_obj,
-                            pre_test_response=None, method_name=""):
+                          pre_test_response=None):
         """
         This function is used after the pre_test_env and for the
         actual request method passed in the test JSON file. Depending on the
@@ -315,9 +163,9 @@ class AvalonBase():
         worker_retrieve SDK function requires worker_id parameter.
         """
         action_obj = AvalonRequest()
-        request_obj = configure_data(action_obj, input_json_obj, pre_test_response)
+        request_obj = configure_data(
+            action_obj, input_json_obj, pre_test_response)
         return request_obj, action_obj
-
 
     def submit_request(self, uri_client, output_obj, input_file):
         """
@@ -366,8 +214,14 @@ class AvalonBase():
         logger.info('**********Received Response*********\n%s\n', response)
         return response
 
-    def reset_status(self, default_data):
-        self.setup_and_build_request_worker_status(default_data)
+    def reset_worker(self, default_data, method_name):
+
+        pre_test_output = self.pre_test_worker_env(method_name)
+        request_obj, action_obj = self.build_request_obj(
+            default_data, pre_test_response=pre_test_output)
+
+        self.build_request_output.update(
+            {'request_obj': request_obj})
 
         response = self.submit_request(
             self.uri_client,
@@ -376,29 +230,33 @@ class AvalonBase():
 
         return response
 
-    def reset_worker(self, default_data):
-        self.setup_and_build_request_worker_update(default_data)
-
-        response = self.submit_request(
-            self.uri_client,
-            self.build_request_output['request_obj'],
-            default_data)
-
-        return response
-
-    def teardown(self, config):
+    def teardown(self, method_name):
         """
         This function should free the resources which are not required
+        Especially used in cases where we run negative tests for
+        WorkerSetStatus, in such cases we first need to set the status
+        back to 1 and then perform a WorkerUpdate. For WorkerUpdate cases
+        just re-running the WorkerUpdate with default parameters is
+        enough.
         """
-        test_data = read_config(config, "")
-        method_name = test_data.get("method")
-        if method_name == "WorkerSetStatus":
-            reset_status_response = self.reset_status(test_data)
-            logger.info("Reset worker status %s \n", reset_status_response)
+        if method_name is not None:
+            if method_name == "WorkerSetStatus":
+                test_data = read_config(env.worker_setstatus_input_file, "")
+                reset_status_response = self.reset_worker(test_data, method_name)
+                logger.info("Reset worker status %s \n", reset_status_response)
 
-        if method_name == "WorkerSetStatus" or \
-                method_name == "WorkerUpdate":
-            reset_worker_response = self.reset_worker(test_data)
-            logger.info("Reset worker %s \n", reset_worker_response)
+            if method_name == "WorkerSetStatus" or \
+                    method_name == "WorkerUpdate":
+                test_data = read_config(env.worker_update_input_file, "")
+                reset_worker_response = self.reset_worker(test_data, method_name)
+                logger.info("Reset worker %s \n", reset_worker_response)
 
-        logger.info("Teardown complete")
+            self.build_request_output = {}
+
+            logger.info("Teardown complete")
+
+            logger.info('\t\t!!! Test complete !!!\n\n')
+        else:
+            logger.info(
+                "Teardown Failed: Wrong method name provided to Teardown")
+            exit(1)

@@ -27,8 +27,11 @@ from src.libs.avalon_test_base import AvalonBase
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.usefixtures("setup_teardown")
 class TestClass():
     test_obj = AvalonBase()
+    pytestmark = pytest.mark.setup_teardown_data(
+        test_obj, "WorkOrderReceiptCreate")
 
     @pytest.mark.sdk
     @pytest.mark.listener
@@ -42,6 +45,8 @@ class TestClass():
 
     @pytest.mark.sdk
     @pytest.mark.listener
+    @pytest.mark.setup_teardown_data(
+        test_obj, "WorkOrderReceiptRetrieve")
     def test_work_order_retrieve_receipt_success(self):
 
         result_response = self.test_obj.run_test(env.retrieve_receipt_input_file)
@@ -83,6 +88,8 @@ class TestClass():
 
     @pytest.mark.sdk
     @pytest.mark.listener
+    @pytest.mark.setup_teardown_data(
+        test_obj, "WorkOrderReceiptLookUp")
     def test_work_order_receipt_lookup_success(self):
 
         result_response = self.test_obj.run_test(env.receipt_lookup_input_file)
