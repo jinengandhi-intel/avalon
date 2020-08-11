@@ -32,7 +32,9 @@ def config_file_read():
 
 
 def _create_worker_registry_instance(blockchain_type, config):
-    # create worker registry instance for direct/proxy model
+    """
+    This function returns the sdk/proxy implementation class of worker register.
+    """
     if env.proxy_mode and blockchain_type == 'fabric':
         return FabricWorkerRegistryImpl(config)
     elif env.proxy_mode and blockchain_type == 'ethereum':
@@ -42,7 +44,9 @@ def _create_worker_registry_instance(blockchain_type, config):
 
 
 def _create_work_order_instance(blockchain_type, config):
-    # create work order instance for direct/proxy model
+    """
+    This function returns the sdk/proxy implementation class of worker order.
+    """
     if env.proxy_mode and blockchain_type == 'fabric':
         return FabricWorkOrderImpl(config)
     elif env.proxy_mode and blockchain_type == 'ethereum':
@@ -52,7 +56,10 @@ def _create_work_order_instance(blockchain_type, config):
 
 
 def _create_work_order_receipt_instance(blockchain_type, config):
-    # create work order receipt instance for direct/proxy model
+    """
+    This function returns the sdk implementation class for work order receipt.
+    Returns None in case of Proxy mode.
+    """
     if env.proxy_mode and blockchain_type == 'fabric':
         return None
     elif env.proxy_mode and blockchain_type == 'ethereum':
@@ -65,7 +72,9 @@ def _create_work_order_receipt_instance(blockchain_type, config):
 def submit_request_listener(
         uri_client, input_json_str):
     """
-    Submit the JSON request to the listener
+    This function is called from the workorder submit tests.
+    It is used to submit the request directly to listener, when the test mode is
+    set to listener in env.py
     """
     request_method = input_json_str["method"]
     input_json_str = json.dumps(input_json_str)
@@ -102,7 +111,8 @@ def submit_request_listener(
 
 def workorder_submit_sdk(wo_params, input_json_obj=None):
     """
-    This function will send the WorkOrderSubmit request for SDK Model
+    This function sets up the params file for workorder submit API and
+    calls the respective SDK as per the direct/proxy mode set in env.py
     """
     if input_json_obj is None:
         req_id = 3
