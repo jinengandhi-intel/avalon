@@ -182,7 +182,11 @@ def add_json_values(caller, input_json_temp, pre_test_response={}):
     or pre_test_response based upon conditions
     """
     input_json = copy.deepcopy(input_json_temp["params"])
-    input_json["id"] = input_json_temp["id"]
+    if input_json_temp.get("id"):
+        input_json["id"] = input_json_temp["id"]
+    else:
+        logger.info("Removing ID field from the request")
+        caller.id_obj.pop("id")
     input_param_list = input_json_temp["params"].keys()
     config_yaml = read_yaml(caller, pre_test_response, input_json)
 
@@ -232,8 +236,10 @@ def add_json_values(caller, input_json_temp, pre_test_response={}):
             set_parameter(caller.params_obj, key, tamper["params"][key])
     if caller.params_obj.get("workerEncryptionKey") is not None:
         if env['test_mode'] == env['listener_string']:
-            caller.params_obj["workerEncryptionKey"] = caller.params_obj["workerEncryptionKey"].encode(
-                "UTF-8").hex()
+            if type(caller.params_obj["workerEncryptionKey"]) != int:
+                caller.params_obj["workerEncryptionKey"] = \
+                    caller.params_obj["workerEncryptionKey"].encode(
+                        "UTF-8").hex()
         value = input_json["workerEncryptionKey"] if \
             input_json["workerEncryptionKey"] != "" else \
             caller.params_obj.get("workerEncryptionKey", '')

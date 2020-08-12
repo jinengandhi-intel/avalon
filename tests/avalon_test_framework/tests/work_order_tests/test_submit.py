@@ -782,7 +782,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid parameter workerEncryptionKey")
+                "Empty or Invalid dataformat for workerEncryptionKey")
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -844,7 +844,8 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Server error")
+                "Improper Json request Missing or "
+                "Invalid parameter or value")
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -932,7 +933,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid parameter params")
+                "Server error")
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
