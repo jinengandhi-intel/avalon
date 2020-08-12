@@ -19,10 +19,9 @@ from src.libs.verification_libs \
     import verify_test, check_negative_test_responses
 from src.libs.pre_processing_libs \
     import ResultStatus
-from setup import read_configtoml
+from conftest import env
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
 
 
 @pytest.mark.usefixtures("setup_teardown")
@@ -45,7 +44,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -61,7 +59,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -76,7 +73,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for data hash of in data")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -91,7 +87,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for requester id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -108,7 +103,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -124,7 +118,6 @@ class TestClass():
                 result_response,
                 "Empty or Invalid data format for requesterNonce")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -139,7 +132,6 @@ class TestClass():
                 result_response,
                 "Workload cannot be processed by this worker")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_workerEncryptionKey_special_character(self):
@@ -152,7 +144,6 @@ class TestClass():
                 result_response,
                 "Empty or Invalid dataformat for workerEncryptionKey")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_workerencryptionkey_empty(self):
@@ -165,7 +156,6 @@ class TestClass():
                 result_response,
                 "Empty or Invalid dataformat for workerEncryptionKey")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -179,7 +169,6 @@ class TestClass():
                 result_response,
                 "Unsupported dataEncryptionAlgorithm found in the request")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -195,7 +184,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -211,7 +199,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -225,7 +212,6 @@ class TestClass():
                 result_response,
                 "Indata is empty")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -239,7 +225,6 @@ class TestClass():
                 result_response,
                 "Indata is empty")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -255,7 +240,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_indata_unknownparametervalue(self):
@@ -268,7 +252,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for in/out data")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -284,7 +267,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_indatahash_empty(self):
@@ -297,7 +279,6 @@ class TestClass():
                 result_response,
                 "Missing in data parameter index")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -312,7 +293,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for data hash of in data")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -328,7 +308,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -344,7 +323,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -360,7 +338,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -376,7 +353,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     # @pytest.mark.sdk
@@ -390,7 +366,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for initialization vector of in data")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_requesterId_paramremove(self):
@@ -403,7 +378,6 @@ class TestClass():
                 result_response,
                 "Missing parameter requesterId")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_responsetimeout_string(self):
@@ -416,7 +390,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for responseTimeoutMSecs")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_dataencryptionalgorithm_list(self):
@@ -429,8 +402,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for dataEncryptionAlgorithm")
             is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -446,7 +417,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -461,7 +431,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for work order id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -476,7 +445,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for Worker id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -491,7 +459,6 @@ class TestClass():
                 result_response,
                 "Workload cannot be processed by this worker")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -507,7 +474,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_dataencryptionalgorithm_listsamealgotwice(self):
@@ -521,8 +487,6 @@ class TestClass():
                 "Invalid data format for dataEncryptionAlgorithm")
             is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_workordersubmit_encrypteddataencryptionkey_hyphenechoclient(self):
 
@@ -535,7 +499,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -551,7 +514,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -567,7 +529,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_indata_bothindexremoveDataDatahash(self):
@@ -580,9 +541,9 @@ class TestClass():
                 result_response,
                 "Missing in data parameter data")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
+    @pytest.mark.sdk
     def test_workordersubmit_indata_oneValidOtherEmptDataDatahash(self):
 
         result_response = self.test_obj.run_test(
@@ -593,7 +554,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for data hash of in data")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_indata_singleindexremoveDataDatahash(self):
@@ -606,7 +566,6 @@ class TestClass():
                 result_response,
                 "Missing in data parameter data")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -616,12 +575,11 @@ class TestClass():
             env['work_order_submit_input_file'])
 
         assert (
-            check_negative_test_responses(
-                result_response,
-                "Invalid Request")
+            verify_test(
+                result_response, 0,
+                self.test_obj.setup_output['pre_test_output'],
+                self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -631,12 +589,11 @@ class TestClass():
             env['work_order_submit_input_file'])
 
         assert (
-            check_negative_test_responses(
-                result_response,
-                "Invalid Request")
+            verify_test(
+                result_response, 0,
+                self.test_obj.setup_output['pre_test_output'],
+                self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -651,7 +608,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for work load id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -666,7 +622,6 @@ class TestClass():
                 result_response,
                 "Workload cannot be processed by this worker")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_workload_nullstring(self):
@@ -679,7 +634,6 @@ class TestClass():
                 result_response,
                 "Workload cannot be processed by this worker")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -694,7 +648,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for work order id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -709,7 +662,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for work order id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -725,7 +677,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -740,7 +691,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for requester id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -755,7 +705,6 @@ class TestClass():
                 result_response,
                 "Empty or Invalid data format for requesterNonce")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_requestersignature_differentlength(self):
@@ -768,8 +717,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for requesterSignature")
             is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -785,7 +732,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -800,7 +746,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for work order id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_sessionkeyiv_allspecial_characters(self):
@@ -813,7 +758,6 @@ class TestClass():
                 result_response,
                 "Invalid data format for session key iv")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -828,7 +772,6 @@ class TestClass():
                 result_response,
                 "Invalid parameter requesterId")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_workerEncryptionKey_notdefaulthex(self):
@@ -841,7 +784,6 @@ class TestClass():
                 result_response,
                 "Invalid parameter workerEncryptionKey")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -856,7 +798,6 @@ class TestClass():
                 result_response,
                 "Invalid parameter requesterNonce")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_requesterSignature_no(self):
@@ -870,7 +811,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_encryptedRequestHash_no(self):
@@ -884,8 +824,6 @@ class TestClass():
                 "Missing parameter encryptedRequestHash")
             is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     def test_workordersubmit_mandatoryfields_remove(self):
 
         result_response = self.test_obj.run_test(
@@ -896,7 +834,6 @@ class TestClass():
                 result_response,
                 "Invalid params")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_id_remove(self):
@@ -909,7 +846,6 @@ class TestClass():
                 result_response,
                 "Server error")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -924,7 +860,6 @@ class TestClass():
                 result_response,
                 "worker 0xABCD doesn't exists")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_params_unknownparameter(self):
@@ -938,8 +873,6 @@ class TestClass():
                 result_response,
                 "Invalid parameter unknownEncoding")
             is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_workerId_notdefaultlength_postmsg(self):
@@ -956,7 +889,6 @@ class TestClass():
                 "eee6a96dcebaeb14f2ae923456234564567 "
                 "doesn't exists")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -974,7 +906,6 @@ class TestClass():
                 "0eee6a96dcebaeb14f2ae923456234564567 "
                 "doesn't exists")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -990,7 +921,6 @@ class TestClass():
                 result_response,
                 "Invalid payload format")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordersubmit_params_empty(self):
@@ -1004,7 +934,6 @@ class TestClass():
                 result_response,
                 "Invalid parameter params")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -1020,7 +949,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.build_request_output['action_obj'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -1032,8 +960,6 @@ class TestClass():
             result_response = self.test_obj.run_test(
                 env['work_order_submit_input_file'])
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_workordersubmit_sdk_workerencryptionkey_empty(self):
@@ -1044,8 +970,6 @@ class TestClass():
             result_response = self.test_obj.run_test(
                 env['work_order_submit_input_file'])
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_workordersubmit_sdk_workerEncryptionKey_special_character(self):
@@ -1054,8 +978,6 @@ class TestClass():
                                  "Invalid session key or worker encryption key"):
             result_response = self.test_obj.run_test(
                 env['work_order_submit_input_file'])
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -1068,8 +990,6 @@ class TestClass():
             result_response = self.test_obj.run_test(
                 env['work_order_submit_input_file'])
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_workordersubmit_sdk_workerEncryptionKey_notdefaulthex(self):
@@ -1078,5 +998,3 @@ class TestClass():
 
             result_response = self.test_obj.run_test(
                 env['work_order_submit_input_file'])
-
-        logger.info('\t\t!!! Test completed !!!\n\n')

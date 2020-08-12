@@ -21,10 +21,10 @@ import avalon_crypto_utils.signature as signature
 from avalon_sdk.work_order_receipt.work_order_receipt \
     import WorkOrderReceiptRequest
 from error_code.error_status import ReceiptCreateStatus
-from setup import read_configtoml
+from conftest import env
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
+
 
 class AvalonRequest():
     def __init__(self):
@@ -32,7 +32,7 @@ class AvalonRequest():
         self.details_obj = {}
         self.request_mode = "file"
         self.tamper = {"params": {}}
-           
+
     def form_workerupdate_request(self, input_json, pre_test_response):
         """
         This method forms the request for WorkerUpdate for listener and
@@ -43,7 +43,8 @@ class AvalonRequest():
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerUpdate", "id": 11}
         self.config_file = env['worker_update_input_file']
-        retrieve_request = wconfig.worker_retrieve_input(self, input_json, pre_test_response)
+        retrieve_request = wconfig.worker_retrieve_input(
+            self, input_json, pre_test_response)
         if env['test_mode'] == env['listener_string']:
             update_params = json.loads(
                 wconfig.to_string(self, detail_obj=True))
@@ -54,7 +55,7 @@ class AvalonRequest():
         logger.info('*****Worker details Updated with Worker ID***** \
                             \n%s\n', update_params)
         return update_params
-            
+
     def form_workersetstatus_request(self, input_json, pre_test_response):
         """
         This method forms the request for WorkerSetStatus for listener and
@@ -66,7 +67,8 @@ class AvalonRequest():
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerSetStatus", "id": 12}
         self.config_file = env['worker_setstatus_input_file']
         logger.info(" Request json %s \n", input_json)
-        set_status_request = wconfig.worker_retrieve_input(self, input_json, pre_test_response)
+        set_status_request = wconfig.worker_retrieve_input(
+            self, input_json, pre_test_response)
         if env['test_mode'] == env['listener_string']:
             final_json = json.loads(wconfig.to_string(self))
         else:
@@ -75,7 +77,7 @@ class AvalonRequest():
             final_json = {"worker_id": set_status_request, "status": status}
             logger.info(" Request json %s \n", final_json)
         return final_json
-    
+
     def form_workerretrieve_request(self, input_json, pre_test_response):
         """
         This method forms the request for WorkerRetrieve for listener and
@@ -86,13 +88,14 @@ class AvalonRequest():
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerRetrieve", "id": 2}
         self.config_file = env['worker_retrieve_input_file']
-        retrieve_request = wconfig.worker_retrieve_input(self, input_json, pre_test_response)
+        retrieve_request = wconfig.worker_retrieve_input(
+            self, input_json, pre_test_response)
         if env['test_mode'] == env['listener_string']:
             retrieve_request = json.loads(wconfig.to_string(self))
         logger.info('*****Worker details Updated with Worker ID***** \
                         \n%s\n', retrieve_request)
         return retrieve_request
-    
+
     def form_workerregister_request(self, input_json, pre_test_response):
         """
         This method forms the request for WorkerRegister for listener and
@@ -114,7 +117,7 @@ class AvalonRequest():
             final_json = self.params_obj
         logger.info(" Request json %s \n", final_json)
         return final_json
-    
+
     def form_workerlookup_request(self, input_json, pre_test_response):
         """
         This method forms the request for WorkerLookup for listener and
@@ -125,7 +128,7 @@ class AvalonRequest():
         self.params_obj = {}
         self.id_obj = {"jsonrpc": "2.0", "method": "WorkerLookUp", "id": 1}
         self.config_file = env['worker_lookup_input_file']
-        self.worker_dict = {1 : "SGX", 2 : "MPC", 3 : "ZK"}
+        self.worker_dict = {1: "SGX", 2: "MPC", 3: "ZK"}
         if input_json is None:
             worker_value = 1
             wconfig.set_parameter(self.params_obj, "workerType", worker_value)
@@ -139,7 +142,7 @@ class AvalonRequest():
             lookup_request = self.worker_dict.get(worker_value, worker_value)
         logger.info("WorkerLookUp Request: %s", lookup_request)
         return lookup_request
-    
+
     def form_workordersubmit_request(self, input_json, pre_test_response):
         """
         This method forms the request for WorkOrderSubmit for listener and
@@ -159,10 +162,10 @@ class AvalonRequest():
         if input_json is None:
             input_json = wconfig.read_config(self.config_file, "")
             input_json = json.loads(input_json)
-        
+
         wconfig.add_json_values(self, input_json, pre_test_response)
         if env['test_mode'] == env['listener_string']:
-            
+
             input_work_order = wconfig.compute_signature(self)
             logger.info('Compute Signature complete \n')
             wo_params = json.loads(input_work_order)
@@ -198,14 +201,16 @@ class AvalonRequest():
                                     encryptedDataEncryptionKey = \
                                         rows["encryptedDataEncryptionKey"]
                     if key == "inData":
-                        wo_params.add_in_data(rows["data"], dataHash, encryptedDataEncryptionKey)
+                        wo_params.add_in_data(
+                            rows["data"], dataHash, encryptedDataEncryptionKey)
                     else:
-                        wo_params.add_out_data(rows["data"], dataHash, encryptedDataEncryptionKey)
+                        wo_params.add_out_data(
+                            rows["data"], dataHash, encryptedDataEncryptionKey)
 
             # Encrypt work order request hash
             wo_params.add_encrypted_request_hash()
         return wo_params
-    
+
     def form_workorderreceiptlookup_request(self, input_json, wo_submit):
         """
         This method forms the request for WorkOrderReceiptLookUp for listener and
@@ -214,7 +219,10 @@ class AvalonRequest():
         pre_test_response: response from previous api call
         """
         self.params_obj = {}
-        self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderReceiptLookUp", "id": 11}
+        self.id_obj = {
+            "jsonrpc": "2.0",
+            "method": "WorkOrderReceiptLookUp",
+            "id": 11}
         self.config_file = env['receipt_lookup_input_file']
         receipt_lookup_request = wconfig.workorder_getresult_receipt_input(
             self, input_json, wo_submit)
@@ -224,8 +232,9 @@ class AvalonRequest():
             '** Receipt Lookup Request ** \n%s\n',
             receipt_lookup_request)
         return receipt_lookup_request
-    
-    def form_workorderreceiptcreate_request(self, input_json, pre_test_response):
+
+    def form_workorderreceiptcreate_request(
+            self, input_json, pre_test_response):
         """
         This method forms the request for WorkOrderReceiptCreate for listener and
         sdk as per EEA spec document
@@ -233,7 +242,10 @@ class AvalonRequest():
         pre_test_response: response from previous api call
         """
         self.params_obj = {}
-        self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderReceiptCreate", "id": 6}
+        self.id_obj = {
+            "jsonrpc": "2.0",
+            "method": "WorkOrderReceiptCreate",
+            "id": 6}
         self.sig_obj = signature.ClientSignature()
         self.SIGNING_ALGORITHM = "SECP256K1"
         self.HASHING_ALGORITHM = "SHA-256"
@@ -245,18 +257,20 @@ class AvalonRequest():
 
         logger.info("***Pre test*****\n%s\n", pre_test_response)
         logger.info("***Input json*****\n%s\n", input_json)
-        
+
         self.private_key = crypto_utils.generate_signing_keys()
-        
+
         if env['test_mode'] == env['listener_string']:
-            
+
             wconfig.add_json_values(self, input_json, pre_test_response)
             input_work_order = wconfig.compute_signature(self, True)
             logger.info('''Compute Signature complete \n''')
             wo_create_receipt = json.loads(input_work_order)
         else:
 
-            wo_request = json.loads(pre_test_response.to_jrpc_string(input_json["id"]))
+            wo_request = json.loads(
+                pre_test_response.to_jrpc_string(
+                    input_json["id"]))
             wo_receipt_request_obj = WorkOrderReceiptRequest()
             wo_create_receipt = wo_receipt_request_obj.create_receipt(
                 wo_request,
@@ -267,7 +281,7 @@ class AvalonRequest():
             json.dumps(wo_create_receipt, indent=4)
         ))
         return wo_create_receipt
-    
+
     def form_workorderreceiptretrieve_request(self, input_json, wo_submit):
         """
         This method forms the request for WorkOrderReceiptRetrieve for listener and
@@ -276,7 +290,10 @@ class AvalonRequest():
         pre_test_response: response from previous api call
         """
         self.params_obj = {}
-        self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderReceiptRetrieve", "id": 11}
+        self.id_obj = {
+            "jsonrpc": "2.0",
+            "method": "WorkOrderReceiptRetrieve",
+            "id": 11}
         self.sig_obj = signature.ClientSignature()
         self.SIGNING_ALGORITHM = "SECP256K1"
         self.HASHING_ALGORITHM = "SHA-256"
@@ -297,9 +314,13 @@ class AvalonRequest():
         pre_test_response: response from previous api call
         """
         self.params_obj = {}
-        self.id_obj = {"jsonrpc": "2.0", "method": "WorkOrderGetResult", "id": 4}
+        self.id_obj = {
+            "jsonrpc": "2.0",
+            "method": "WorkOrderGetResult",
+            "id": 4}
         self.config_file = env['work_order_getresult_input_file']
-        getresult_request = wconfig.workorder_getresult_receipt_input(self, input_json, pre_test_response)
+        getresult_request = wconfig.workorder_getresult_receipt_input(
+            self, input_json, pre_test_response)
         if env['test_mode'] == env['listener_string']:
             getresult_request = json.loads(wconfig.to_string(self))
         logger.info('*****GetResult Request***** \

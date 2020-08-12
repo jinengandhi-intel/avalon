@@ -22,10 +22,9 @@ from src.libs.pre_processing_libs \
 from src.libs.avalon_test_base import AvalonBase
 from src.libs.pre_processing_libs \
     import read_config
-from setup import read_configtoml
+from conftest import env
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
 
 
 @pytest.mark.usefixtures("setup_teardown")
@@ -39,19 +38,19 @@ class TestClass():
     @pytest.mark.proxy
     def test_worker_retrieve_success(self):
 
-        result_response = self.test_obj.run_test(env['worker_retrieve_input_file'])
+        result_response = self.test_obj.run_test(
+            env['worker_retrieve_input_file'])
 
         assert (check_worker_retrieve_response(result_response)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_retrieve_empty_params(self):
 
-        result_response = self.test_obj.run_test(env['worker_retrieve_input_file'])
+        result_response = self.test_obj.run_test(
+            env['worker_retrieve_input_file'])
 
         assert (
             check_negative_test_responses(
@@ -59,17 +58,14 @@ class TestClass():
                 "Invalid data format for Worker id")
             is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_workerretrieve_params_unknownparameter(self):
 
-        result_response = self.test_obj.run_test(env['worker_retrieve_input_file'])
+        result_response = self.test_obj.run_test(
+            env['worker_retrieve_input_file'])
 
         assert (
             check_negative_test_responses(
                 result_response,
                 "Invalid parameter unknownEncoding")
             is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')

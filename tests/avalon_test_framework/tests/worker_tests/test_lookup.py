@@ -21,10 +21,9 @@ from src.libs.verification_libs \
 import operator
 from src.libs.pre_processing_libs import ResultStatus
 from src.libs.avalon_test_base import AvalonBase
-from setup import read_configtoml
+from conftest import env
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
 
 
 @pytest.mark.usefixtures("setup_teardown")
@@ -37,8 +36,9 @@ class TestClass():
     @pytest.mark.sdk
     @pytest.mark.proxy
     def test_worker_lookup_success(self):
-        
-        result_response = self.test_obj.run_test(env['worker_lookup_input_file'])
+
+        result_response = self.test_obj.run_test(
+            env['worker_lookup_input_file'])
 
         assert (check_worker_lookup_response(result_response, operator.gt, 0)
                 is ResultStatus.SUCCESS.value)
@@ -48,7 +48,8 @@ class TestClass():
     @pytest.mark.proxy
     def test_worker_lookup_workerType_not_unsigned_int(self):
 
-        result_response = self.test_obj.run_test(env['worker_lookup_input_file'])
+        result_response = self.test_obj.run_test(
+            env['worker_lookup_input_file'])
 
         assert (
             check_negative_test_responses(
@@ -59,7 +60,8 @@ class TestClass():
     @pytest.mark.listener
     def test_worker_lookup_empty_params(self):
 
-        result_response = self.test_obj.run_test(env['worker_lookup_input_file'])
+        result_response = self.test_obj.run_test(
+            env['worker_lookup_input_file'])
 
         assert (check_negative_test_responses(result_response,
                                               "Empty params in the request")
@@ -67,10 +69,14 @@ class TestClass():
 
     @pytest.mark.listener
     def test_worker_lookup_jsonrpc_different_version(self):
-        
-        result_response = self.test_obj.run_test(env['worker_lookup_input_file'], direct_avalon_listener=True)
 
-        logger.info("**********Received Response*********\n%s\n", result_response)
+        result_response = self.test_obj.run_test(
+            env['worker_lookup_input_file'],
+            direct_avalon_listener=True)
+
+        logger.info(
+            "**********Received Response*********\n%s\n",
+            result_response)
 
         assert (
             check_negative_test_responses(
@@ -80,9 +86,10 @@ class TestClass():
 
     @pytest.mark.listener
     def test_worker_lookup_withoutid_params(self):
-        
 
-        result_response = self.test_obj.run_test(env['worker_lookup_input_file'], direct_avalon_listener=True)
+        result_response = self.test_obj.run_test(
+            env['worker_lookup_input_file'],
+            direct_avalon_listener=True)
 
         assert (
             check_negative_test_responses(
@@ -93,18 +100,18 @@ class TestClass():
     @pytest.mark.listener
     def test_worker_lookup_diff_unit_length(self):
 
-        result_response = self.test_obj.run_test(env['worker_lookup_input_file'])
+        result_response = self.test_obj.run_test(
+            env['worker_lookup_input_file'])
 
         assert (check_worker_lookup_response(result_response, operator.eq, 0)
                 is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_worker_lookup_method_field_change(self):
-        
 
-        result_response = self.test_obj.run_test(env['worker_lookup_input_file'], direct_avalon_listener=True)
+        result_response = self.test_obj.run_test(
+            env['worker_lookup_input_file'],
+            direct_avalon_listener=True)
 
         assert (
             check_negative_test_responses(
@@ -112,18 +119,15 @@ class TestClass():
                 "Improper Json request Missing or Invalid parameter or value")
             is ResultStatus.SUCCESS.value)
 
-        logger.info('\t\t!!! Test completed !!!\n\n')
-
     @pytest.mark.listener
     def test_workerlookup_params_unknownparameter(self):
 
-
-        result_response = self.test_obj.run_test(env['worker_lookup_input_file'], direct_avalon_listener=True)
+        result_response = self.test_obj.run_test(
+            env['worker_lookup_input_file'],
+            direct_avalon_listener=True)
 
         assert (
             check_negative_test_responses(
                 result_response,
                 "Invalid parameter unknownEncoding")
             is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')

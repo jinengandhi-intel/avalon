@@ -10,11 +10,13 @@ from setup import read_configtoml
 logger = logging.getLogger(__name__)
 sys.path.append(os.getcwd())
 
+env = read_configtoml()
+
+
 @pytest.fixture(scope="session", autouse=True)
 def setup_config(args=None):
     """ Fixture to setup initial config for pytest session. """
 
-    env = read_configtoml()
     # parse out the configuration file first
     try:
         config = pconfig.parse_configuration_files(
@@ -64,7 +66,8 @@ def setup_teardown(request):
                     "WorkOrderReceiptCreate" in method_name:
                 logger.info("Running Setup for %s tests", method_name)
                 pre_test_output = test_obj.pre_test_worker_env(method_name)
-                wo_submit = test_obj.pre_test_workorder_env(method_name, pre_test_output)
+                wo_submit = test_obj.pre_test_workorder_env(
+                    method_name, pre_test_output)
                 test_obj.setup_output.update(
                     {'pre_test_workorder_output': wo_submit})
 

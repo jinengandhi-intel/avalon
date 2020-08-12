@@ -5,10 +5,9 @@ import avalon_crypto_utils.crypto_utility as enclave_helper
 from error_code.error_status import SignatureStatus
 from src.libs.pre_processing_libs import ResultStatus
 import base64
-from setup import read_configtoml
+from conftest import env
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
 
 
 def validate_response_code(response, expected_res):

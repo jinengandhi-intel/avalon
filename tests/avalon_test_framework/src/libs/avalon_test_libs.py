@@ -8,10 +8,9 @@ from src.libs.submit_request import \
 from src.libs.form_input_request import AvalonRequest
 import src.libs.pre_processing_libs as wconfig
 import avalon_sdk.worker.worker_details as worker
-from setup import read_configtoml
+from conftest import env
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
 
 
 class AvalonImpl():

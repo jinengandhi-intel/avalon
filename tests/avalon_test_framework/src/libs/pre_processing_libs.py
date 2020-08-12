@@ -25,7 +25,7 @@ from configparser import ConfigParser
 import avalon_crypto_utils.crypto_utility as crypto_utils
 from ecdsa.util import sigencode_der, sigdecode_der
 import copy
-from setup import read_configtoml
+from conftest import env
 
 
 """
@@ -45,7 +45,7 @@ class GetResultWaitTime(IntEnum):
 
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
+
 
 inputs_params = [
     "workerId",
@@ -149,7 +149,7 @@ def read_yaml(caller, response=None, input_data={}):
                     default_params[key] = response["result"][key]
                 if key == "workerEncryptionKey":
                     default_params[key] = \
-                            details["workerTypeData"]['encryptionKey']        
+                        details["workerTypeData"]['encryptionKey']
                 if key == "encryptedSessionKey":
                     if input_data["encryptedSessionKey"] != "":
                         caller.encrypted_session_key = input_data["encryptedSessionKey"]
@@ -164,12 +164,13 @@ def read_yaml(caller, response=None, input_data={}):
                             caller.session_iv)
                     if key == "workerEncryptionKey":
                         default_params["workerEncryptionKey"] = \
-                                crypto_utils.strip_begin_end_public_key(
-                                default_params["workerEncryptionKey"])   
+                            crypto_utils.strip_begin_end_public_key(
+                                default_params["workerEncryptionKey"])
         if "workloadId" in input_data.keys():
             default_params["workloadId"] = input_data["workloadId"]
         if hasattr(caller, "encrypted_session_key"):
-            if caller.encrypted_session_key and (env['test_mode'] == env['listener_string']):
+            if caller.encrypted_session_key and (
+                    env['test_mode'] == env['listener_string']):
                 default_params["encryptedSessionKey"] = \
                     crypto_utils.byte_array_to_hex(caller.encrypted_session_key)
     return default_params
@@ -196,30 +197,34 @@ def add_json_values(caller, input_json_temp, pre_test_response={}):
                     value = details_json[d_key]
                 set_parameter(caller.details_obj, d_key, value)
         elif key == "workerServiceId":
-            set_parameter(caller.params_obj, "workerServiceId", pre_test_response["params"]["workerId"])
+            set_parameter(
+                caller.params_obj,
+                "workerServiceId",
+                pre_test_response["params"]["workerId"])
         elif key == "workOrderId":
             if input_json_temp["method"] != "WorkOrderSubmit":
                 value = input_json[key] if input_json[key] != "" else pre_test_response["params"]["workOrderId"]
             else:
-               value = input_json[key] if input_json[key] != "" else config_yaml[key]
+                value = input_json[key] if input_json[key] != "" else config_yaml[key]
             set_parameter(caller.params_obj, "workOrderId", value)
         elif key == "requesterId":
             if input_json_temp["method"] != "WorkOrderSubmit":
                 value = input_json[key] if input_json[key] != "" else pre_test_response["params"]["requesterId"]
             else:
-               value = input_json[key] if input_json[key] != "" else config_yaml[key]
+                value = input_json[key] if input_json[key] != "" else config_yaml[key]
             set_parameter(caller.params_obj, "requesterId", value)
         elif (key == "workerId") and (input_json_temp["method"] != "WorkerRegister"):
-            if input_json_temp["method"] != "WorkOrderSubmit" and (pre_test_response.get("params") != None):
+            if input_json_temp["method"] != "WorkOrderSubmit" and (
+                    pre_test_response.get("params") is not None):
                 value = input_json[key] if input_json[key] != "" else pre_test_response["params"]["workerId"]
             else:
-               value = input_json[key] if input_json[key] != "" else pre_test_response[key]
+                value = input_json[key] if input_json[key] != "" else pre_test_response[key]
             set_parameter(caller.params_obj, "workerId", value)
         else:
             value = input_json[key] \
                 if input_json[key] != "" else config_yaml[key]
             if (key == "workloadId") and (input_json[key] != ""):
-                    value = value.encode("UTF-8").hex()
+                value = value.encode("UTF-8").hex()
             set_parameter(caller.params_obj, key, value)
 
         tamper = caller.tamper
@@ -227,12 +232,13 @@ def add_json_values(caller, input_json_temp, pre_test_response={}):
             set_parameter(caller.params_obj, key, tamper["params"][key])
     if caller.params_obj.get("workerEncryptionKey") is not None:
         if env['test_mode'] == env['listener_string']:
-            caller.params_obj["workerEncryptionKey"] = caller.params_obj["workerEncryptionKey"].encode("UTF-8").hex()
+            caller.params_obj["workerEncryptionKey"] = caller.params_obj["workerEncryptionKey"].encode(
+                "UTF-8").hex()
         value = input_json["workerEncryptionKey"] if \
             input_json["workerEncryptionKey"] != "" else \
             caller.params_obj.get("workerEncryptionKey", '')
         caller.params_obj["workerEncryptionKey"] = value
-    
+
     for key in ["inData", "outData"]:
         if key in input_param_list:
             if input_json[key] != "":
@@ -248,14 +254,20 @@ def add_json_values(caller, input_json_temp, pre_test_response={}):
         else:
             caller.params_obj["encryptedRequestHash"] = \
                 compute_encrypted_request_hash(caller)
-    
+
     if "workOrderRequestHash" in input_param_list:
-        wo_request_hash = caller.sig_obj.calculate_request_hash(pre_test_response["params"])
+        wo_request_hash = caller.sig_obj.calculate_request_hash(
+            pre_test_response["params"])
         final_hash_str = crypto_utils.byte_array_to_base64(wo_request_hash)
-        set_parameter(caller.params_obj, "workOrderRequestHash", final_hash_str)
-    
-    if "requesterSignature" in input_param_list and (input_json_temp["method"] == "WorkOrderReceiptCreate"):
+        set_parameter(
+            caller.params_obj,
+            "workOrderRequestHash",
+            final_hash_str)
+
+    if "requesterSignature" in input_param_list and (
+            input_json_temp["method"] == "WorkOrderReceiptCreate"):
         receipt_requester_signature(caller)
+
 
 def tamper_request(input_json, tamper_instance, tamper):
     '''Function to tamper the input request at required instances.
@@ -376,11 +388,14 @@ def worker_retrieve_input(caller, input_json, pre_test_response):
     """
     if env['test_mode'] == env['listener_string']:
         pre_test_response["workerId"] = retrieve_worker_id(
-        pre_test_response)
+            pre_test_response)
         if input_json is not None:
             add_json_values(caller, input_json, pre_test_response)
         else:
-            set_parameter(caller.params_obj, "workerId", pre_test_response["workerId"])
+            set_parameter(
+                caller.params_obj,
+                "workerId",
+                pre_test_response["workerId"])
     else:
         worker_id = None
         if input_json is not None:
@@ -392,6 +407,7 @@ def worker_retrieve_input(caller, input_json, pre_test_response):
         else:
             worker_id = retrieve_worker_id(pre_test_response)
         return worker_id
+
 
 def workorder_getresult_receipt_input(caller, input_json, pre_test_response):
     if env['test_mode'] == env['listener_string']:
@@ -425,8 +441,9 @@ def compute_signature(caller, rVerKey=False):
     input_after_sign = to_string(caller, True)
     tamper_instance = 'after_sign'
     tampered_request = tamper_request(input_after_sign, tamper_instance,
-                                        tamper)
+                                      tamper)
     return tampered_request
+
 
 def compute_requester_signature(caller, rVerKey=False):
     """
@@ -447,6 +464,7 @@ def compute_requester_signature(caller, rVerKey=False):
                 caller.params_obj["requesterSignature"] = \
                     caller.requester_signature
             caller.params_obj["verifyingKey"] = caller.public_key
+
 
 def compute_encrypted_request_hash(caller):
     """
@@ -506,6 +524,7 @@ def receipt_requester_signature(caller):
         caller.private_key
     )
     set_parameter(caller.params_obj, "requesterSignature", wo_receipt_sign)
+
 
 def compute_hash_string(data):
     """
@@ -589,7 +608,7 @@ def _add_data_item(caller, data_copy, data_item):
                             crypto_utils.compute_message_hash(
                                 data_item['dataHash'])))
             logger.debug("encrypted indata - %s",
-                            crypto_utils.byte_array_to_base64(enc_data))
+                         crypto_utils.byte_array_to_base64(enc_data))
         elif e_key == "-".encode('UTF-8'):
             # Skip encryption and just encode workorder data
             # to base64 format
@@ -619,11 +638,11 @@ def _add_data_item(caller, data_copy, data_item):
                             crypto_utils.compute_message_hash(
                                 data_item['dataHash'])))
             logger.debug("encrypted indata - %s",
-                            crypto_utils.byte_array_to_base64(enc_data))
+                         crypto_utils.byte_array_to_base64(enc_data))
 
         enc_indata_item = {'index': index,
-                            'dataHash': dataHash_enc_data,
-                            'data': base64_enc_data}
+                           'dataHash': dataHash_enc_data,
+                           'data': base64_enc_data}
 
         for key in ["encryptedDataEncryptionKey", "iv"]:
             if data_item.get(key) is not None:

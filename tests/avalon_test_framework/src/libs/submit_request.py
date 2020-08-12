@@ -20,10 +20,10 @@ from avalon_sdk.connector.blockchains.ethereum.ethereum_worker_registry \
 from avalon_sdk.connector.blockchains.ethereum.ethereum_work_order \
     import EthereumWorkOrderProxyImpl
 import avalon_sdk.worker.worker_details as worker_details
-from setup import read_configtoml
+from conftest import env
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
+
 
 def config_file_read():
     tcf_connector_conffile = [env['tcf_connector_conffile']]
@@ -37,7 +37,7 @@ def config_file_read():
 def _create_worker_registry_instance(blockchain_type, config):
     """
     This function returns the sdk/proxy implementation class of worker register.
-    """    
+    """
     if env['proxy_mode'] and blockchain_type == 'fabric':
         return FabricWorkerRegistryImpl(config)
     elif env['proxy_mode'] and blockchain_type == 'ethereum':
@@ -49,7 +49,7 @@ def _create_worker_registry_instance(blockchain_type, config):
 def _create_work_order_instance(blockchain_type, config):
     """
     This function returns the sdk/proxy implementation class of worker order.
-    """    
+    """
     if env['proxy_mode'] and blockchain_type == 'fabric':
         return FabricWorkOrderImpl(config)
     elif env['proxy_mode'] and blockchain_type == 'ethereum':
@@ -108,7 +108,9 @@ def submit_request_listener(
             '**********Received Request*********\n%s\n',
             input_json_str)
         response = uri_client._postmsg(input_json_str)
-
+    logger.info(
+        '**********Submit Request Response *********\n%s\n',
+        response)
     return response
 
 

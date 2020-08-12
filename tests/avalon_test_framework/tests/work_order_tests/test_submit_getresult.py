@@ -6,10 +6,9 @@ from src.libs.verification_libs \
     validate_response_code
 from src.libs.pre_processing_libs \
     import ResultStatus
-from setup import read_configtoml
+from conftest import env
 
 logger = logging.getLogger(__name__)
-env = read_configtoml()
 
 
 @pytest.mark.usefixtures("setup_teardown")
@@ -32,7 +31,6 @@ class TestClass():
                 self.test_obj.setup_output['pre_test_output'],
                 self.test_obj.setup_output['pre_test_workorder_output'])
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -47,7 +45,6 @@ class TestClass():
                 result_response,
                 "Invalid work order Id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -62,7 +59,6 @@ class TestClass():
                 result_response,
                 "Invalid work order Id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -77,7 +73,6 @@ class TestClass():
                 result_response,
                 "Invalid work order Id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -93,7 +88,6 @@ class TestClass():
                 "Work order Id not found in the database. "
                 "Hence invalid parameter")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -108,7 +102,6 @@ class TestClass():
                 result_response,
                 "Invalid work order Id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -123,7 +116,6 @@ class TestClass():
                 result_response,
                 "Invalid work order Id")
             is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -135,7 +127,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, 2)
                 is ResultStatus.SUCCESS.value)
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.sdk
     @pytest.mark.proxy
@@ -147,8 +138,6 @@ class TestClass():
 
         assert (validate_response_code(result_response, 2)
                 is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')
 
     @pytest.mark.listener
     def test_workordergetresult_workorderId_empty(self):
@@ -162,5 +151,3 @@ class TestClass():
                 result_response,
                 "Invalid work order Id")
             is ResultStatus.SUCCESS.value)
-
-        logger.info('\t\t!!! Test completed !!!\n\n')

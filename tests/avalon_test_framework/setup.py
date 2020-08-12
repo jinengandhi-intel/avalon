@@ -3,6 +3,7 @@ import toml
 import pytest
 from http_client.http_jrpc_client import HttpJrpcClient
 
+
 def read_configtoml():
     """
     Read the config file for setting up the automation environment.
