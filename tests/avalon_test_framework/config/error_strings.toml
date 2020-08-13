@@ -1,0 +1,75 @@
+# Copyright 2020 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+title = "Avalon Error Strings"
+
+#################################
+# Error strings
+#################################
+
+unknown_params = "Invalid parameter unknownEncoding"
+
+empty_params = "Empty params in the request"
+
+empty_indata = "Indata is empty"
+
+missing_invalid_params = "Improper Json request Missing or Invalid parameter or value"
+
+missing_indata_index = "Missing in data parameter index"
+
+mising_indata_data = "Missing in data parameter data"
+
+missing_requesterid = "Missing parameter requesterId"
+
+invalid_workertype = "WorkType should be an Integer of range 1-3"
+
+invalid_workorderid = "Invalid work order Id"
+
+invalid_datahash = "Invalid data format for data hash of in data"
+
+invalid_requesterid = "Invalid data format for requester id"
+
+invalid_requesternonce = "Empty or Invalid data format for requesterNonce"
+
+invalid_workerencryptionkey = "Empty or Invalid dataformat for workerEncryptionKey"
+
+invalid_dataencryptionalgorithm = "Invalid data format for dataEncryptionAlgorithm"
+
+invalid_indata_outdata = "Invalid data format for in/out data"
+
+invalid_indata_iv = "Invalid data format for initialization vector of in data"
+
+invalid_responsetimeout = "Invalid data format for responseTimeoutMSecs"
+
+invalid_worklorderid_dataformat = "Invalid data format for work order id"
+
+invalid_workerid_dataformat = "Invalid data format for Worker id"
+
+invalid_workloadid_dataformat = "Invalid data format for work load id"
+
+invalid_requestersignature = "Invalid data format for requesterSignature"
+
+invalid_payload = "Invalid payload format"
+
+worker_notsupported_workload = "Workload cannot be processed by this worker"
+
+workorder_not_found = "Work order Id not found in the database. Hence invalid parameter"
+
+worker_doesnot_exist = "worker 6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0eee6a96dcebaeb14f2ae923456234564567 doesn't exists"
+
+
+
+
+
+

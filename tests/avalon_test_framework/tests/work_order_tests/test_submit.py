@@ -19,7 +19,7 @@ from src.libs.verification_libs \
     import verify_test, check_negative_test_responses
 from src.libs.pre_processing_libs \
     import ResultStatus
-from conftest import env
+from conftest import env, error_string
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +71,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for data hash of in data")
+                error_string["invalid_datahash"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -85,7 +85,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for requester id")
+                error_string["invalid_requesterid"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -116,7 +116,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Empty or Invalid data format for requesterNonce")
+                error_string["invalid_requesternonce"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -130,7 +130,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Workload cannot be processed by this worker")
+                error_string["worker_notsupported_workload"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -142,7 +142,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Empty or Invalid dataformat for workerEncryptionKey")
+                error_string["invalid_workerencryptionkey"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -154,7 +154,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Empty or Invalid dataformat for workerEncryptionKey")
+                error_string["invalid_workerencryptionkey"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -210,7 +210,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Indata is empty")
+                error_string["empty_indata"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -223,7 +223,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Indata is empty")
+                error_string["empty_indata"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -250,7 +250,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for in/out data")
+                error_string["invalid_indata_outdata"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -277,7 +277,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Missing in data parameter index")
+                error_string["missing_indata_index"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -291,7 +291,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for data hash of in data")
+                error_string["invalid_datahash"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -355,7 +355,6 @@ class TestClass():
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
-    # @pytest.mark.sdk
     def test_workordersubmit_iv_specialcharacterechoclient(self):
 
         result_response = self.test_obj.run_test(
@@ -364,7 +363,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for initialization vector of in data")
+                error_string["invalid_indata_iv"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -376,7 +375,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Missing parameter requesterId")
+                error_string["missing_requesterid"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -388,7 +387,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for responseTimeoutMSecs")
+                error_string["invalid_responsetimeout"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -400,7 +399,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for dataEncryptionAlgorithm")
+                error_string["invalid_dataencryptionalgorithm"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -429,7 +428,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for work order id")
+                error_string["invalid_worklorderid_dataformat"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -443,7 +442,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for Worker id")
+                error_string["invalid_workerid_dataformat"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -457,7 +456,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Workload cannot be processed by this worker")
+                error_string["worker_notsupported_workload"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -484,7 +483,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for dataEncryptionAlgorithm")
+                error_string["invalid_dataencryptionalgorithm"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -539,7 +538,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Missing in data parameter data")
+                error_string["mising_indata_data"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -552,7 +551,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for data hash of in data")
+                error_string["invalid_datahash"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -564,7 +563,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Missing in data parameter data")
+                error_string["mising_indata_data"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -606,7 +605,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for work load id")
+                error_string["invalid_workloadid_dataformat"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -620,7 +619,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Workload cannot be processed by this worker")
+                error_string["worker_notsupported_workload"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -632,7 +631,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Workload cannot be processed by this worker")
+                error_string["worker_notsupported_workload"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -646,7 +645,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for work order id")
+                error_string["invalid_worklorderid_dataformat"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -660,7 +659,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for work order id")
+                error_string["invalid_worklorderid_dataformat"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -689,7 +688,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for requester id")
+                error_string["invalid_requesterid"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -703,7 +702,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Empty or Invalid data format for requesterNonce")
+                error_string["invalid_requesternonce"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -715,7 +714,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for requesterSignature")
+                error_string["invalid_requestersignature"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -744,7 +743,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for work order id")
+                error_string["invalid_worklorderid_dataformat"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -782,7 +781,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Empty or Invalid dataformat for workerEncryptionKey")
+                error_string["invalid_workerencryptionkey"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -844,8 +843,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Improper Json request Missing or "
-                "Invalid parameter or value")
+                error_string["missing_invalid_params"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -872,7 +870,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid parameter unknownEncoding")
+                error_string["unknown_params"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -885,10 +883,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "worker "
-                "6ba1f459476bc43b65fd554f6b65910a8f551e4bcb0"
-                "eee6a96dcebaeb14f2ae923456234564567 "
-                "doesn't exists")
+                error_string["worker_doesnot_exist"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -902,10 +897,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "worker "
-                "6ba1f459476bc43b65fd554f6b65910a8f551e4bcb"
-                "0eee6a96dcebaeb14f2ae923456234564567 "
-                "doesn't exists")
+                error_string["worker_doesnot_exist"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -920,7 +912,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid payload format")
+                error_string["invalid_payload"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -966,7 +958,7 @@ class TestClass():
     def test_workordersubmit_sdk_workerencryptionkey_empty(self):
         with pytest.raises(
                 ValueError,
-                match="Empty or Invalid dataformat for workerEncryptionKey"):
+                match=error_string["invalid_workerencryptionkey"]):
 
             result_response = self.test_obj.run_test(
                 env['work_order_submit_input_file'])

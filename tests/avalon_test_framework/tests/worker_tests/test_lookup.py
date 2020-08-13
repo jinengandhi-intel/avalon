@@ -21,7 +21,7 @@ from src.libs.verification_libs \
 import operator
 from src.libs.pre_processing_libs import ResultStatus
 from src.libs.avalon_test_base import AvalonBase
-from conftest import env
+from conftest import env, error_string
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +54,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "WorkType should be an Integer of range 1-3") is
+                error_string["invalid_workertype"]) is
             ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -63,8 +63,10 @@ class TestClass():
         result_response = self.test_obj.run_test(
             env['worker_lookup_input_file'])
 
-        assert (check_negative_test_responses(result_response,
-                                              "Empty params in the request")
+        assert (
+                check_negative_test_responses(
+                    result_response,
+                    error_string["empty_params"])
                 is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -74,14 +76,10 @@ class TestClass():
             env['worker_lookup_input_file'],
             direct_avalon_listener=True)
 
-        logger.info(
-            "**********Received Response*********\n%s\n",
-            result_response)
-
         assert (
             check_negative_test_responses(
                 result_response,
-                "Improper Json request Missing or Invalid parameter or value")
+                error_string["missing_invalid_params"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -94,7 +92,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Improper Json request Missing or Invalid parameter or value")
+                error_string["missing_invalid_params"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -103,7 +101,9 @@ class TestClass():
         result_response = self.test_obj.run_test(
             env['worker_lookup_input_file'])
 
-        assert (check_worker_lookup_response(result_response, operator.eq, 0)
+        assert (
+                check_worker_lookup_response(
+                    result_response, operator.eq, 0)
                 is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -116,7 +116,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Improper Json request Missing or Invalid parameter or value")
+                error_string["missing_invalid_params"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -129,5 +129,5 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid parameter unknownEncoding")
+                error_string["unknown_params"])
             is ResultStatus.SUCCESS.value)

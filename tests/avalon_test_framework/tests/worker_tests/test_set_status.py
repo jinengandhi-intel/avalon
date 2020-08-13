@@ -41,7 +41,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     def test_worker_set_status_unknown_parameter(self):
@@ -52,9 +53,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
-
-        self.test_obj.teardown(env['worker_setstatus_input_file'])
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     def test_worker_set_status_invalid_parameter(self):
@@ -65,9 +65,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
-
-        self.test_obj.teardown(env['worker_setstatus_input_file'])
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     def test_worker_set_status_params_status_0(self):
@@ -78,9 +77,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
-
-        self.test_obj.teardown(env['worker_setstatus_input_file'])
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -93,9 +91,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
-
-        self.test_obj.teardown(env['worker_setstatus_input_file'])
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -108,9 +105,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
-
-        self.test_obj.teardown(env['worker_setstatus_input_file'])
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -123,9 +119,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
-
-        self.test_obj.teardown(env['worker_setstatus_input_file'])
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     def test_worker_set_status_params_status_5(self):
@@ -136,6 +131,5 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
-
-        self.test_obj.teardown(env['worker_setstatus_input_file'])
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)

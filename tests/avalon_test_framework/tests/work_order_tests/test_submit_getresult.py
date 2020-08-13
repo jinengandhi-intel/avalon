@@ -6,7 +6,7 @@ from src.libs.verification_libs \
     validate_response_code
 from src.libs.pre_processing_libs \
     import ResultStatus
-from conftest import env
+from conftest import env, error_string
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid work order Id")
+                error_string["invalid_workorder_id"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.sdk
@@ -57,7 +57,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid work order Id")
+                error_string["invalid_workorder_id"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.sdk
@@ -71,7 +71,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid work order Id")
+                error_string["invalid_workorder_id"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.sdk
@@ -85,8 +85,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Work order Id not found in the database. "
-                "Hence invalid parameter")
+                error_string["workorder_not_found"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.sdk
@@ -100,7 +99,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid work order Id")
+                error_string["invalid_workorder_id"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.sdk
@@ -114,7 +113,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid work order Id")
+                error_string["invalid_workorder_id"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.sdk
@@ -149,5 +148,5 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid work order Id")
+                error_string["invalid_workorder_id"])
             is ResultStatus.SUCCESS.value)

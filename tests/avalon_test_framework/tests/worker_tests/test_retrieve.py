@@ -22,7 +22,7 @@ from src.libs.pre_processing_libs \
 from src.libs.avalon_test_base import AvalonBase
 from src.libs.pre_processing_libs \
     import read_config
-from conftest import env
+from conftest import env, error_string
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +55,7 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid data format for Worker id")
+                error_string["invalid_workerid_dataformat"])
             is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
@@ -67,5 +67,5 @@ class TestClass():
         assert (
             check_negative_test_responses(
                 result_response,
-                "Invalid parameter unknownEncoding")
+                error_string["unknown_params"])
             is ResultStatus.SUCCESS.value)
