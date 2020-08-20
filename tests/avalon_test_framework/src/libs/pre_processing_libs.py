@@ -482,7 +482,7 @@ def compute_encrypted_request_hash(caller):
     worker_id = get_parameter(caller.params_obj, "workerId") or ""
     workload_id = get_parameter(caller.params_obj, "workloadId") or ""
     requester_id = get_parameter(caller.params_obj, "requesterId") or ""
-
+    requester_id = str(requester_id)
     first_string += \
         worker_order_id + worker_id + workload_id + requester_id
 

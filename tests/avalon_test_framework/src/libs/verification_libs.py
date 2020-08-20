@@ -245,7 +245,7 @@ def check_worker_retrieve_receipt_response(response):
         else:
             err_cd = 1
     else:
-        if response["result"]["receiptCurrentStatus"] == 2:
+        if response["result"]["receiptCurrentStatus"] == 0:
             err_cd = 0
         else:
             err_cd = 1

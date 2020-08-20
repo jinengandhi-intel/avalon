@@ -62,8 +62,9 @@ def setup_teardown(request):
             elif "WorkOrderSubmit" in method_name:
                 logger.info("Running Setup for WorkOrderSubmit tests")
                 pre_test_output = test_obj.pre_test_worker_env(method_name)
-            elif "WorkOrderGetResult" in method_name or\
-                    "WorkOrderReceiptCreate" in method_name:
+            elif "WorkOrderGetResult" in method_name or \
+                    "WorkOrderReceiptCreate" in method_name or \
+                    "WorkOrderReceiptRetrieve" in method_name:
                 logger.info("Running Setup for %s tests", method_name)
                 pre_test_output = test_obj.pre_test_worker_env(method_name)
                 wo_submit = test_obj.pre_test_workorder_env(

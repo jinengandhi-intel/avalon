@@ -195,6 +195,7 @@ test_workordersubmit_indataoutdata_success:
     outData:
     - data: ''
       encryptedDataEncryptionKey: ''
+      dataHash: ''
       index: 0
       iv: ''
   workloadId: echo-result
@@ -503,6 +504,7 @@ test_workordersubmit_outdata_success:
     outData:
     - data: ''
       encryptedDataEncryptionKey: ''
+      dataHash: ''
       index: 0
       iv: ''
 test_workordersubmit_params_empty:
@@ -536,7 +538,7 @@ test_workordersubmit_requesterId_paramremove:
 test_workordersubmit_requesterId_specialcharacter:
   requesterId: $@*$\!!
 test_workordersubmit_requesterNonce_notdefaultlength:
-  requesterNonce: '0xABCD'
+  requesterNonce: '0xABCDEFG'
 test_workordersubmit_requesterNonce_param_empty:
   requesterNonce: null
 test_workordersubmit_requesterSignature_no:

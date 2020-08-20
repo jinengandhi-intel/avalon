@@ -1,6 +1,6 @@
 Default:
   id: 3
-  jsonrpc: 2.0
+  jsonrpc: "2.0"
   method: WorkerLookUp
   params:
     workerType: 1
