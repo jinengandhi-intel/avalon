@@ -5,12 +5,14 @@ import os
 import sys
 import logging
 import config.config as pconfig
-from setup import read_configtoml
+from setup import \
+    read_configtoml, read_error_strings
 
 logger = logging.getLogger(__name__)
 sys.path.append(os.getcwd())
 
 env = read_configtoml()
+error_string = read_error_strings()
 
 
 @pytest.fixture(scope="session", autouse=True)

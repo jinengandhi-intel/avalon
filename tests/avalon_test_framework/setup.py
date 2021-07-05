@@ -3,12 +3,14 @@ import toml
 import pytest
 from http_client.http_jrpc_client import HttpJrpcClient
 
+TCFHOME = os.environ.get("TCF_HOME", "../../")
+
 
 def read_configtoml():
     """
     Read the config file for setting up the automation environment.
     """
-    TCFHOME = os.environ.get("TCF_HOME", "../../")
+
     config_path = TCFHOME + '/tests/avalon_test_framework/config/config.toml'
     with open(config_path) as fd:
         config = toml.load(fd)
@@ -25,3 +27,15 @@ def read_configtoml():
     config['uri_client'] = HttpJrpcClient("http://avalon-listener:1947")
 
     return config
+
+
+def read_error_strings():
+    """
+    Read the error strings defined in the toml file.
+    """
+    config_path = TCFHOME + '/tests/avalon_test_framework/config/error_strings.toml'
+    with open(config_path) as fd:
+        error_string = toml.load(fd)
+
+    return error_string
+

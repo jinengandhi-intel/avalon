@@ -41,7 +41,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -54,7 +55,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -67,7 +69,8 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
 
     @pytest.mark.listener
     @pytest.mark.sdk
@@ -80,4 +83,5 @@ class TestClass():
         assert (
             validate_response_code(
                 result_response,
-                env['expected_error_code']) is ResultStatus.SUCCESS.value)
+                env['expected_error_code'])
+            is ResultStatus.SUCCESS.value)
